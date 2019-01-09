@@ -21,7 +21,7 @@ page{
   overflow: hidden;
   justify-content: space-between;
   box-sizing: border-box;
-} 
+}
 .content{
   flex: 1;
   display: flex;
@@ -152,7 +152,7 @@ page{
   to {opacity: 1; transform: translate3d(0,0,0); }
 }
 
-.confirm-btn {
+.confirm-btn button{
   font-size: 13pt;
   line-height: 85rpx;
   height: 85rpx;

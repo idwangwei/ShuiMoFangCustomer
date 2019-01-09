@@ -1,5 +1,5 @@
 {
-  "pages":[
+  "pages": [
     "pages/start/start",
     "pages/index/index",
     "pages/goods-details/index",
@@ -9,48 +9,50 @@
     "pages/address-add/index",
     "pages/order-list/index",
     "pages/order-details/index",
-    "pages/wuliu/index",
     "pages/mycoupons/index",
     "pages/my/index",
     "pages/notice/show",
     "pages/recharge/index",
     "pages/withdraw/index",
     "pages/kanjia/index",
-    "pages/authorize/index",
     "pages/score-excharge/index"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black",
-    "onReachBottomDistance":50
+    "navigationBarTextStyle": "black",
+    "onReachBottomDistance": 50,
+    "navigationBarTitleText": "税魔方"
+
   },
   "tabBar": {
     "color": "#6e6d6b",
     "selectedColor": "#e64340",
     "borderStyle": "white",
     "backgroundColor": "#fff",
-    "box-shadow":"0 0 6px 0",
-    "list": [{
-     "pagePath": "pages/index/index",
-      "iconPath": "images/nav/home-off.png",
-      "selectedIconPath": "images/nav/home-on.png",
-      "text": "首页"
-    }, {
-      "pagePath": "pages/shop-cart/index",
-      "iconPath": "images/nav/cart-off.png",
-      "selectedIconPath": "images/nav/cart-on.png",
-      "text": "购物车"
-    },
-    {
-      "pagePath": "pages/my/index",
-      "iconPath": "images/nav/my-off.png",
-      "selectedIconPath": "images/nav/my-on.png",
-      "text": "我的"
-    }]
+    "box-shadow": "0 0 6px 0",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/tab-bar/home-off.png",
+        "selectedIconPath": "images/tab-bar/home-on.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/order-list/index",
+        "iconPath": "images/tab-bar/order-off.png",
+        "selectedIconPath": "images/tab-bar/order-on.png",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/my/index",
+        "iconPath": "images/tab-bar/my-off.png",
+        "selectedIconPath": "images/tab-bar/my-on.png",
+        "text": "我的"
+      }
+    ]
   },
   "navigateToMiniProgramAppIdList": [
-    "wx56c8f077de74b07c"
+
   ]
 }

@@ -7,7 +7,8 @@
 }
 .swiper-container{
   width: 750rpx;
-  position: relative;  
+  position: relative;
+  color: rgb(195, 62, 58);
 }
 .swiper_box {
   width: 100%;
@@ -20,25 +21,25 @@ swiper-item image {
   overflow: hidden;
   height:562.5rpx;
 }
-.swiper-container .dots{  
-  position: absolute;  
-  left: 0;  
-  right: 0;  
-  bottom: 20rpx;  
-  display: flex;  
-  justify-content: center;  
-}  
-.swiper-container .dots .dot{  
-  margin: 0 8rpx;  
-  width: 14rpx;  
-  height: 14rpx;  
-  background: #fff;  
-  border-radius: 50%;  
-  transition: all .6s;  
+.swiper-container .dots{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 20rpx;
+  display: flex;
+  justify-content: center;
+}
+.swiper-container .dots .dot{
+  margin: 0 8rpx;
+  width: 14rpx;
+  height: 14rpx;
+  background: #fff;
+  border-radius: 50%;
+  transition: all .6s;
   opacity: .5;
-}  
-.swiper-container .dots .dot.active{  
-  width: 14rpx;  
+}
+.swiper-container .dots .dot.active{
+  width: 14rpx;
   opacity: 1;
 }
 
@@ -71,7 +72,7 @@ swiper-item image {
 
 .goods-container{
   display: flex;
-  justify-content: space-between;  
+  justify-content: space-between;
   flex-wrap:wrap;
   box-sizing: content-box;
   padding: 24rpx;
@@ -113,7 +114,7 @@ swiper-item image {
 .no-more-goods{
   text-align: center;
   font-size: 24rpx;
-  padding-bottom:48rpx; 
+  padding-bottom:48rpx;
   color: #999;
 }
 .type-container{
@@ -124,7 +125,7 @@ swiper-item image {
 }
 .notice{
   display: flex;
-  justify-content: space-between;  
+  justify-content: space-between;
   flex-wrap:wrap;
   height: 80rpx;
   line-height: 80rpx;
