@@ -1,8 +1,15 @@
 const api = require('./utils/request.js');
 App({
     navigateToLogin: false,
-    onLaunch: function () {
+    onLaunch: function (shareParam) {
         const that = this;
+        //点击分享，绑定推广人
+        const userInfo = wx.getStorageSync('userInfo');
+        if(shareParam.query.shareUserId && !userInfo){
+            this.globalData.shareUserId = shareParam.query.shareUserId;
+        }
+
+
         /**
          * 初次加载判断网络情况
          * 无网络状态下根据实际情况进行调整

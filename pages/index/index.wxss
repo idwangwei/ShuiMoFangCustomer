@@ -6,6 +6,7 @@
   display: block;
 }
 .swiper-container{
+  margin-top: 100rpx;
   width: 750rpx;
   position: relative;
   color: rgb(195, 62, 58);
@@ -75,7 +76,7 @@ swiper-item image {
   justify-content: space-between;
   flex-wrap:wrap;
   box-sizing: content-box;
-  padding: 24rpx;
+  padding: 24rpx 0;
 }
 .goods-box{
   width: 339rpx;
@@ -197,21 +198,21 @@ swiper-item image {
   right:0;
   top:0;
   z-index:500;
-      height: 100rpx;
-  background: gray;
+  height: 100rpx;
+  background: #fff;
   display: flex;
   flex-direction: row;
-    padding:20rpx;
+  padding:0rpx 20rpx;
+  align-items:center;
+
 }
 .search-content{
-   background: white;
-    flex: 1;
+   background: #eee;
+   flex: 1;
    display: flex;
    flex-direction: row;
    align-items: center;
-   padding-top: auto;
-   padding-left: 20rpx;
-   padding-bottom: auto;
+   padding: auto 20rpx;
    margin: auto;
    height: 70rpx;
    border-radius:5px 5px;
@@ -220,23 +221,28 @@ swiper-item image {
   width: 40rpx;
   height: 40rpx;
   margin-right: 20rpx;
+  margin-left: 20rpx;
 }
 .search-input{
   flex: 1;
-  font-size: 28rpx;
+  font-size: 34rpx;
 }
 
-.custom-service-icon{
-  width: 100rpx;
-    height: 100rpx;
-  margin-right: 0rpx;
-  font-size: 28rpx;
-  align-items: center;
-  border-top-left-radius: 0rpx;
-  border-bottom-left-radius: 0rpx;
-  color:#fff;
-  border:none;
+.custom-service-box{
+    width: 80rpx;
+    height: 80rpx;
+    margin-left: 20rpx;
+    position: relative;
 }
-.contact_box{
-    padding: 10rpx;
+.custom-service-btn{
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+}
+.custom-service-img{
+    width: 100%;
+    height: 100%;
 }

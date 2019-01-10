@@ -6,7 +6,10 @@
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-} 
+}
 .wxParse-img {
   display: block !important;
+}
+page{
+  min-height: 100%;
 }

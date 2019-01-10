@@ -21,17 +21,37 @@
 			"current": -1,
 			"list": []
 		},
-		"game": {
-			"current": -1,
-			"list": []
-		},
 		"plugin": {
 			"current": -1,
 			"list": []
 		},
-		"miniprogram": {
+		"game": {
 			"current": -1,
 			"list": []
+		},
+		"miniprogram": {
+			"current": 0,
+			"list": [
+				{
+					"id": 0,
+					"name": "打开分享的小程序卡片",
+					"pathName": "pages/start/start",
+					"query": "userId=13123456789",
+					"scene": "1007"
+				},
+				{
+					"id": 1,
+					"name": "打开带shareTicket的小程序卡片",
+					"pathName": "pages/my/index",
+					"query": "userId=13123456789&hasShareTicket=true",
+					"scene": "1044",
+					"shareInfo": {
+						"groupName": "测试模拟群0",
+						"shareName": "w345kVIy4atSyXpX6etsJxW9snxnkAJY98ap3w6Hw7k@cr4dev",
+						"shareKey": "OZR2UZ3R1eNB-aZ1Ngc5XxlXum2BescirCEIbsdAmWbuTauJYPyxM9xHxKHI8ooHJGGiU24byDcfxKA4X09rSA~~"
+					}
+				}
+			]
 		}
 	}
 }

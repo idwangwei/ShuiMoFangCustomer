@@ -19,8 +19,8 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#e85654",
+    "navigationBarTextStyle": "#fff",
     "onReachBottomDistance": 50,
     "navigationBarTitleText": "税魔方"
 
