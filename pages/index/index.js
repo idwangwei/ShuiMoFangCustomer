@@ -4,10 +4,11 @@ const CONFIG = require('../../config.js');
 //获取应用实例
 Page({
     data: {
-        indicatorDots: true,
-        autoplay: true,
-        interval: 3000,
-        duration: 1000,
+        indicatorDots: true, //swiper是否显示面板指示点
+        autoplay: true, //swiper是否自动切换
+        interval: 3000, //swiper自动切换时间间隔
+        duration: 1000, //swiper滑动动画时长
+        circular:false, //是否采用衔接滑动
         loadingHidden: false, // loading
         userInfo: {},
         swiperCurrent: 0,
@@ -258,5 +259,9 @@ Page({
             curPage: 1
         });
         this.getGoodsList(this.data.activeCategoryId)
+    },
+    handleContact:function (e) {
+        console.log(e.path);
+        console.log(e.query)
     }
 })

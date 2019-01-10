@@ -1,4 +1,4 @@
-const api = require('./utils/request.js')
+const api = require('./utils/request.js');
 App({
     navigateToLogin: false,
     onLaunch: function () {

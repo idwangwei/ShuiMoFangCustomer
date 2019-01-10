@@ -21,7 +21,16 @@ Page({
             })
         }
     },
-    onLoad: function () {},
+    onLoad: function () {
+        try {
+            const userInfo = wx.getStorageSync('userInfo');
+            if (userInfo) {
+                this.goToIndex();
+            }
+        } catch (e) {
+            // Do something when catch error
+        }
+    },
     onShow: function () {},
     onReady: function () {
         const that = this;
