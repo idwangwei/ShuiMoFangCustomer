@@ -4,8 +4,13 @@
     <view class="search-view">
         <view class="search-content">
             <image src="/images/search-pic.png" class="search-icon"/>
-            <input placeholder="请输入搜索内容" class="search-input" maxlength="30" confirm-type="search"
-                   bindinput='listenerSearchInput' bindconfirm='toSearch'></input>
+            <input placeholder="请输入搜索内容"
+                   class="search-input"
+                   maxlength="30"
+                   confirm-type="search"
+                   bindinput='listenerSearchInput'
+                   bindconfirm='toSearch'>
+            </input>
         </view>
         <view class="custom-service-box">
             <button open-type="contact" bindcontact="handleContact" class="custom-service-btn"></button>
@@ -37,6 +42,11 @@
         </swiper>
     </view>
 
+    <view class="goods-dividing-line-box">
+        <view class="dividing-line dividing-line-left"></view>
+        <text>服务项目</text>
+        <view class="dividing-line dividing-line-right"></view>
+    </view>
     <view class="goods-container">
         <view class="goods-box" wx:for-items="{{goods}}" wx:key="{{index}}" bindtap="toDetailsTap"
               data-id="{{item.id}}">
@@ -46,11 +56,8 @@
             <view class="goods-title">{{item.name}}</view>
             <view style='display:flex;'>
                 <view class="goods-price">¥ {{item.minPrice}}</view>
-                <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price"
-                      style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}
-                </view>
             </view>
         </view>
     </view>
-    <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦</view>
+    <view class="no-more-goods">没有更多啦</view>
 </view>

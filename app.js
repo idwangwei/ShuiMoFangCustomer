@@ -3,6 +3,7 @@ App({
     navigateToLogin: false,
     onLaunch: function (shareParam) {
         const that = this;
+
         //点击分享，绑定推广人
         const userInfo = wx.getStorageSync('userInfo');
         if(shareParam.query.shareUserId && !userInfo){
