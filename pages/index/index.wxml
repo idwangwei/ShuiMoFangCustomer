@@ -4,8 +4,13 @@
     <view class="search-view">
         <view class="search-content">
             <image src="/images/search-pic.png" class="search-icon"/>
-            <input placeholder="请输入搜索内容" class="search-input" maxlength="30" confirm-type="search"
-                   bindinput='listenerSearchInput' bindconfirm='toSearch'></input>
+            <input placeholder="请输入搜索内容"
+                   class="search-input"
+                   maxlength="30"
+                   confirm-type="search"
+                   bindinput='listenerSearchInput'
+                   bindconfirm='toSearch'>
+            </input>
         </view>
         <view class="custom-service-box">
             <button open-type="contact" bindcontact="handleContact" class="custom-service-btn"></button>
@@ -22,6 +27,7 @@
                 autoplay="{{autoplay}}"
                 interval="{{interval}}"
                 duration="{{duration}}"
+                style="height:{{swiperHeight}}px"
         >
             <block wx:for="{{banners}}" wx:key="id">
                 <swiper-item>
@@ -29,13 +35,39 @@
                            data-id="{{item.businessId}}"
                            src="{{item.picUrl}}_m"
                            class="slide-image"
-                           width="750rpx"
-                           height="562.5rpx"/>
+                           mode="aspectFill"/>
                 </swiper-item>
             </block>
-
         </swiper>
     </view>
+
+    <view class="contact-info-box">
+        <view class="contact-phone">
+            <view class="contact-phone-icon">
+                <image src="/images/phone-icon.png" mode="scaleToFill"></image>
+            </view>
+            <view class="contact-phone-text" bindtap="makePhoneCall">
+                <view class="contact-phone-text-title">联系电话</view>
+                <view class="contact-phone-text-desc">13123456789</view>
+            </view>
+        </view>
+        <view class="contact-address">
+            <view class="contact-address-icon">
+                <image src="/images/address-icon.png" mode="scaleToFill"></image>
+            </view>
+            <view class="contact-address-text">
+                <view class="contact-address-text-title">联系地址</view>
+                <view class="contact-address-text-desc">四川省成都市高新区天府四街银泰城9号楼3楼</view>
+            </view>
+        </view>
+    </view>
+
+    <view class="goods-dividing-line-box">
+        <view class="dividing-line dividing-line-left"></view>
+        <text>服务项目</text>
+        <view class="dividing-line dividing-line-right"></view>
+    </view>
+
 
     <view class="goods-container">
         <view class="goods-box" wx:for-items="{{goods}}" wx:key="{{index}}" bindtap="toDetailsTap"
@@ -44,13 +76,8 @@
                 <image src="{{item.pic}}_m" class="image" mode="aspectFill" lazy-load="true"/>
             </view>
             <view class="goods-title">{{item.name}}</view>
-            <view style='display:flex;'>
-                <view class="goods-price">¥ {{item.minPrice}}</view>
-                <view wx:if="{{item.originalPrice && item.originalPrice > 0}}" class="goods-price"
-                      style='color:#aaa;text-decoration:line-through'>¥ {{item.originalPrice}}
-                </view>
-            </view>
+            <view class="goods-price">¥ {{item.minPrice}}</view>
         </view>
     </view>
-    <view hidden="{{loadingMoreHidden ? true : false}}" class="no-more-goods">没有更多啦</view>
+    <view class="no-more-goods">没有更多啦</view>
 </view>

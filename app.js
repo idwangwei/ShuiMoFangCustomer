@@ -3,6 +3,7 @@ App({
     navigateToLogin: false,
     onLaunch: function (shareParam) {
         const that = this;
+
         //点击分享，绑定推广人
         const userInfo = wx.getStorageSync('userInfo');
         if(shareParam.query.shareUserId && !userInfo){
@@ -48,48 +49,13 @@ App({
                 wx.hideToast()
             }
         });
-        //  获取商城名称
-        // api.fetchRequest('/config/get-value', {
-        //   key: 'mallName'
-        // }).then(function(res) {
-        //   if (res.data.code == 0) {
-        //     wx.setStorageSync('mallName', res.data.data.value);
-        //   }
-        // })
-        // api.fetchRequest('/score/send/rule', {
-        //   code: 'goodReputation'
-        // }).then(function(res) {
-        //   if (res.data.code == 0) {
-        //     that.globalData.order_reputation_score = res.data.data[0].score;
-        //   }
-        // })
-        // api.fetchRequest('/config/get-value', {
-        //   key: 'recharge_amount_min'
-        // }).then(function(res) {
-        //   if (res.data.code == 0) {
-        //     that.globalData.recharge_amount_min = res.data.data.value;
-        //   }
-        // })
-        // 获取砍价设置
-        // api.fetchRequest('/shop/goods/kanjia/list').then(function(res) {
-        //   if (res.data.code == 0) {
-        //     that.globalData.kanjiaList = res.data.data.result;
-        //   }
-        // })
-        // 判断是否登录
-        // let token = wx.getStorageSync('token');
-        // if (!token) {
-        //   that.goLoginPageTimeOut()
-        //   return
-        // }
-        // api.fetchRequest('/user/check-token', {
-        //   token: token
-        // }).then(function(res) {
-        //   if (res.data.code != 0) {
-        //     wx.removeStorageSync('token')
-        //     that.goLoginPageTimeOut()
-        //   }
-        // })
+
+        wx.getSystemInfo({
+            success(res) {
+                that.globalData.screenWidth = res.screenWidth;
+                that.globalData.screenHeight = res.screenHeight;
+            }
+        })
     },
     sendTempleMsg: function (orderId, trigger, template_id, form_id, page, postJsonString) {
         var that = this;
@@ -142,6 +108,8 @@ App({
         }, 1000)
     },
     globalData: {
-        isConnected: true
+        isConnected: true,
+        screenWidth:750,
+        screenHeight:667
     }
-})
+});

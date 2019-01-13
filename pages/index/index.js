@@ -10,37 +10,16 @@ Page({
         duration: 1000, //swiper滑动动画时长
         circular:false, //是否采用衔接滑动
         loadingHidden: false, // loading
+
         userInfo: {},
-        swiperCurrent: 0,
-        selectCurrent: 0,
         categories: [],
         activeCategoryId: 0,
         goods: [],
-        scrollTop: 0,
-        loadingMoreHidden: true,
-
-        hasNoCoupons: true,
-        coupons: [],
         searchInput: '',
-
         curPage: 1,
         pageSize: 20
     },
 
-    tabClick: function (e) {
-        this.setData({
-            activeCategoryId: e.currentTarget.id,
-            curPage: 1
-        });
-        this.getGoodsList(this.data.activeCategoryId);
-    },
-    //事件处理函数
-    swiperchange: function (e) {
-        //console.log(e.detail.current)
-        this.setData({
-            swiperCurrent: e.detail.current
-        })
-    },
     toDetailsTap: function (e) {
         wx.navigateTo({
             url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
@@ -53,14 +32,12 @@ Page({
             })
         }
     },
-    bindTypeTap: function (e) {
-        this.setData({
-            selectCurrent: e.index
-        })
-    },
     onLoad: function () {
         const that = this;
-
+        //根据设备分辨率动态设置swiper高度，以便完全展示长宽比为5*2的banner图片
+        this.setData({
+            swiperHeight:getApp().globalData.screenWidth * CONFIG.swiperBannerScale
+        });
         /**
          * 示例：
          * 调用接口封装方法
@@ -86,32 +63,8 @@ Page({
             })
         })
         this.getGoodsList(0);
-        // api.fetchRequest('/shop/goods/category/all').then(function (res) {
-        //     var categories = [{
-        //         id: 0,
-        //         name: "全部"
-        //     }];
-        //     if (res.data.code == 0) {
-        //         for (var i = 0; i < res.data.data.length; i++) {
-        //             categories.push(res.data.data[i]);
-        //         }
-        //     }
-        //     that.setData({
-        //         categories: categories,
-        //         activeCategoryId: 0,
-        //         curPage: 1
-        //     });
-        //     that.getGoodsList(0);
-        // })
-        // that.getCoupons();
-        // that.getNotice();
     },
-    onPageScroll(e) {
-        let scrollTop = this.data.scrollTop
-        this.setData({
-            scrollTop: e.scrollTop
-        })
-    },
+
     getGoodsList: function (categoryId, append) {
         if (categoryId == 0) {
             categoryId = "";
@@ -128,9 +81,7 @@ Page({
         }).then(function (res) {
             wx.hideLoading()
             if (res.data.code == 404 || res.data.code == 700) {
-                let newData = {
-                    loadingMoreHidden: false
-                }
+                let newData = {}
                 if (!append) {
                     newData.goods = []
                 }
@@ -145,79 +96,16 @@ Page({
                 goods.push(res.data.data[i]);
             }
             that.setData({
-                loadingMoreHidden: true,
                 goods: goods,
             });
         })
     },
-    getCoupons: function () {
-        var that = this;
-        api.fetchRequest('/discounts/coupons').then(function (res) {
-            if (res.data.code == 0) {
-                that.setData({
-                    hasNoCoupons: false,
-                    coupons: res.data.data
-                });
-            }
-        })
-    },
-    gitCoupon: function (e) {
-        var that = this;
-        api.fetchRequest('/discounts/fetch', {
-            id: e.currentTarget.dataset.id,
-            token: wx.getStorageSync('token')
-        }).then(function (res) {
-            if (res.data.code == 20001 || res.data.code == 20002) {
-                wx.showModal({
-                    title: '错误',
-                    content: '来晚了',
-                    showCancel: false
-                })
-                return;
-            }
-            if (res.data.code == 20003) {
-                wx.showModal({
-                    title: '错误',
-                    content: '你领过了，别贪心哦~',
-                    showCancel: false
-                })
-                return;
-            }
-            if (res.data.code == 30001) {
-                wx.showModal({
-                    title: '错误',
-                    content: '您的积分不足',
-                    showCancel: false
-                })
-                return;
-            }
-            if (res.data.code == 20004) {
-                wx.showModal({
-                    title: '错误',
-                    content: '已过期~',
-                    showCancel: false
-                })
-                return;
-            }
-            if (res.data.code == 0) {
-                wx.showToast({
-                    title: '领取成功，赶紧去下单吧~',
-                    icon: 'success',
-                    duration: 2000
-                })
-            } else {
-                wx.showModal({
-                    title: '错误',
-                    content: res.data.msg,
-                    showCancel: false
-                })
-            }
-        })
-    },
+
     onShareAppMessage: function () {
         return {
-            title: wx.getStorageSync('mallName') + '——' + CONFIG.shareProfile,
+            title: CONFIG.shareProfile,
             path: '/pages/index/index',
+            imageUrl:'/images/share_img.png',
             success: function (res) {
                 // 转发成功
             },
@@ -226,21 +114,10 @@ Page({
             }
         }
     },
-    getNotice: function () {
-        var that = this;
-        api.fetchRequest('/notice/list', {pageSize: 5}).then(function (res) {
-            if (res.data.code == 0) {
-                that.setData({
-                    noticeList: res.data.data
-                });
-            }
-        })
-    },
     listenerSearchInput: function (e) {
         this.setData({
             searchInput: e.detail.value
         })
-
     },
     toSearch: function () {
         this.setData({
@@ -254,14 +131,16 @@ Page({
         });
         this.getGoodsList(this.data.activeCategoryId, true)
     },
-    onPullDownRefresh: function () {
-        this.setData({
-            curPage: 1
-        });
-        this.getGoodsList(this.data.activeCategoryId)
-    },
     handleContact:function (e) {
         console.log(e.path);
         console.log(e.query)
+    },
+    makePhoneCall:function (e) {
+        wx.makePhoneCall({
+            phoneNumber:"18280377915",
+            success:function (res) {
+                console.log("成功拨打电话")
+            }
+        })
     }
-})
+});

@@ -1,8 +1,8 @@
-const api = require('./request.js')
+const api = require('./request.js');
 function wxpay(app, money, orderId, redirectUrl) {
   let remark = "在线充值";
   let nextAction = {};
-  if (orderId != 0) {
+  if (orderId !== 0) {
     remark = "支付订单 ：" + orderId;
     nextAction = { type: 0, id: orderId };
   }
@@ -25,7 +25,7 @@ function wxpay(app, money, orderId, redirectUrl) {
           wx.showToast({ title: '支付失败:' + aaa })
         },
         success: function () {
-          wx.showToast({ title: '支付成功' })
+          wx.showToast({ title: '支付成功' });
           wx.redirectTo({
             url: redirectUrl
           });

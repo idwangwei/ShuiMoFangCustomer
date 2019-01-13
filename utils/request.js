@@ -1,6 +1,6 @@
-const CONFIG = require('../config.js')
-const REQUEST_CACHE = []
-const API_BASE_URL = 'https://api.it120.cc'
+const CONFIG = require('../config.js');
+const REQUEST_CACHE = [];
+const API_BASE_URL = 'https://api.it120.cc';
 /**
  * 简单请求封装
  * url: 请求地址
