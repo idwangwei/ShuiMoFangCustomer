@@ -178,6 +178,7 @@
   width:100%;
   background-color: #dadada;
   z-index: 6;
+  top: 30%;
 }
 .pop-goods-info{
   display: flex;
@@ -224,32 +225,6 @@
   width: 100%;
   height: 100%;
 }
-.show-popup .user-info-box{
-  background-color: #fff;
-  margin: 16rpx 0;
-  font-size: 34rpx;
-}
-.show-popup .user-info-box view{
-  display: flex;
-  align-items:center;
-  margin-left: 30rpx;
-  border-bottom: 2rpx solid #dadada;
-  padding: 30rpx 0;
-}
-.show-popup .user-info-box label{
-  width: 170rpx;
-}
-.show-popup .user-info-box input{
-  padding-left: 10rpx;
-  flex: 1;
-}
-.show-popup .user-info-box button{
-  font-size: 26rpx;
-  margin-right:30rpx;
-  width: 200rpx;
-
-}
-
 
 
 .popup-join-btn{
@@ -260,4 +235,47 @@
   font-size:34rpx;
   color:#ffffff;
   background-color: #e64340;
+  position:absolute;
+  bottom:0;
+
+}
+.form-box{
+  width:100%;
+  background-color: #fff;
+  margin-top: 20rpx;
+}
+.row-wrap{
+  width: 720rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  margin-left: 30rpx;
+  border-bottom: 1rpx solid #eee;
+  display: flex;
+  font-size: 28rpx;
+  /*justify-content: space-between;*/
+}
+.row-wrap .label{
+  width: 160rpx;
+  color: #000
+}
+.row-wrap .label-right{
+  flex: 1;
+  height: 88rpx;
+  line-height: 88rpx;
+}
+.row-wrap .label-right input{
+  height: 100%;
+  font-size: 28rpx;
+  padding-right: 30rpx;
+}
+.row-wrap .right-box{
+  margin-right: 30rpx;
+}
+picker {
+  min-width: 20rpx;
+  height: 100%;
+  margin-right: 20rpx;
+}
+.form-box{
+  margin-bottom: 100rpx;
 }

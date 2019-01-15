@@ -71,12 +71,12 @@
 
     <view class="goods-container">
         <view class="goods-box" wx:for-items="{{goods}}" wx:key="{{index}}" bindtap="toDetailsTap"
-              data-id="{{item.id}}">
+              data-id="{{item.id}}" data-index="{{index}}">
             <view class="img-box">
-                <image src="{{item.pic}}_m" class="image" mode="aspectFill" lazy-load="true"/>
+                <image src="{{item.titleImage}}" class="image" mode="widthFix" lazy-load="true"/>
             </view>
             <view class="goods-title">{{item.name}}</view>
-            <view class="goods-price">¥ {{item.minPrice}}</view>
+            <view class="goods-price">¥ {{item.descPrice}}</view>
         </view>
     </view>
     <view class="no-more-goods">没有更多啦</view>

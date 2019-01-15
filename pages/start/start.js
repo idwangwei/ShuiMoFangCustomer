@@ -23,9 +23,14 @@ Page({
     },
     onLoad: function () {
         try {
-            const userInfo = wx.getStorageSync('userInfo');
+            let that = this;
+            let userInfo = app.globalData.userInfo;
             if (userInfo) {
-                this.goToIndex();
+                app.LoginSys(userInfo.openId).then(()=>{
+                    that.goToIndex();
+                }).catch(()=>{
+
+                });
             }
         } catch (e) {
             // Do something when catch error
@@ -55,13 +60,13 @@ Page({
         });
     },
     bindGetUserInfo: function (e) {
-        debugger;
         if (!e.detail.userInfo) {
             return;
         }
         if (app.globalData.isConnected) {
+            app.globalData.userInfo = e.detail.userInfo;
             wx.setStorageSync('userInfo', e.detail.userInfo);
-            this.login();
+            this.wxLogin();
         } else {
             wx.showToast({
                 title: '当前无网络',
@@ -69,35 +74,15 @@ Page({
             })
         }
     },
-    login: function () {
+    wxLogin: function () {
         let that = this;
-        let token = wx.getStorageSync('token');
-        if (token) {
-            api.fetchRequest('/user/check-token',{
-                token
-            }).then(function (res) {
-                if (res.data.code !== 0) { //token失效
-                    wx.removeStorageSync('token');
-                    that.login();
-                } else { //token有效
-
-                    //todo 后端登录状态是否需要刷新
-                    that.goToIndex(); //去首页
-                }
-            });
-            return;
-        }
         wx.login({
             success: function (res) {
-                api.fetchRequest('/user/wxapp/login', {
-                    code: res.code
+                api.fetchRequest('/api/wechat/auth', {
+                    code: res.code,
+                    role:'EMPLOYEE',
                 }).then(function (res) {
-                    // if (res.data.code == 10000) {
-                    //     // 去注册
-                    //     that.registerUser();
-                    //     return;
-                    // }
-                    if (res.data.code != 0) {
+                    if (res.data.status != 200) {
                         // 登录错误
                         wx.hideLoading();
                         wx.showModal({
@@ -107,40 +92,16 @@ Page({
                         });
                         return;
                     }
-                    wx.setStorageSync('token', res.data.data.token);
-                    wx.setStorageSync('uid', res.data.data.uid);
-                    that.goToIndex();
+                    app.globalData.userInfo.openId = res.data.data.wxOpenId;
+                    wx.setStorageSync('userInfo',app.globalData.userInfo);
+                    app.LoginSys(app.globalData.userInfo.openId).then(()=>{
+                        that.goToIndex();
+                    }).catch(()=>{
+
+                    });
                 })
             }
         })
     },
-    registerUser: function () {
-        let that = this;
-        wx.login({
-            success: function (res) {
-                let code = res.code; // 微信登录接口返回的 code 参数，下面注册接口需要用到
-                wx.getUserInfo({
-                    success: function (res) {
-                        let iv = res.iv;
-                        let encryptedData = res.encryptedData;
-                        let referrer = ''; // 推荐人
-                        let referrer_storge = wx.getStorageSync('referrer');
-                        if (referrer_storge) {
-                            referrer = referrer_storge;
-                        }
-                        // 下面开始调用注册接口
-                        api.fetchRequest('/user/wxapp/register/complex', {
-                            code: code,
-                            encryptedData: encryptedData,
-                            iv: iv,
-                            referrer: referrer
-                        }).then(function (res) {
-                            wx.hideLoading();
-                            that.login();
-                        })
-                    }
-                })
-            }
-        })
-    }
+
 });

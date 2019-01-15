@@ -6,6 +6,7 @@ App({
 
         //点击分享，绑定推广人
         const userInfo = wx.getStorageSync('userInfo');
+        this.globalData.userIfno = userInfo;
         if(shareParam.query.shareUserId && !userInfo){
             this.globalData.shareUserId = shareParam.query.shareUserId;
         }
@@ -56,6 +57,24 @@ App({
                 that.globalData.screenHeight = res.screenHeight;
             }
         })
+    },
+    LoginSys: function(userId){
+        return new Promise((resolve,reject)=>{
+            api.fetchRequest('/api/login/wechat', {
+                method: 'wechat',
+                userName:userId,
+            }).then(function (res) {
+                if (res.data.status != 200) {
+                    wx.removeStorageSync('token');
+                    return
+                }
+                wx.setStorageSync('token', res.data.data.token);
+                resolve();
+            }).catch((res)=>{
+                wx.removeStorageSync('token');
+                reject()
+            })
+        });
     },
     sendTempleMsg: function (orderId, trigger, template_id, form_id, page, postJsonString) {
         var that = this;
@@ -110,6 +129,7 @@ App({
     globalData: {
         isConnected: true,
         screenWidth:750,
-        screenHeight:667
+        screenHeight:667,
+        userInfo:null,
     }
 });

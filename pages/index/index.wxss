@@ -83,18 +83,17 @@ swiper-item image {
 }
 .goods-box{
   width: 360rpx;
-  height: 472rpx;
+  /*height: 472rpx;*/
   background-color: #fff;
   overflow: hidden;
   margin-bottom: 24rpx;
   display:flex;
   flex-direction:column;
   justify-content:space-between;
-
 }
 .goods-box .img-box{
   width: 360rpx;
-  height: 360rpx;
+  /*height: 360rpx;*/
   overflow: hidden;
 }
 .goods-box .img-box image{
@@ -116,6 +115,11 @@ swiper-item image {
   font-size: 24rpx;
   color:#e64340;
   margin-left: 24rpx;
+}
+.goods-box button{
+  position: absolute;
+  bottom: 10rpx;
+  right: 10rpx;
 }
 .no-more-goods{
   text-align: center;

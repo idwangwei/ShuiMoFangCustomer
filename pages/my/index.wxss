@@ -25,32 +25,84 @@
 }
 
 
-.version {
-  width:100%;
-  height: 40rpx;
-	line-height: 40rpx;
-	font-size: 24rpx;
-	text-align: center;  
-  padding: 40rpx;
-}
 
 .my-item{
     width: 100%;
-    background: url(https://cdn.it120.cc/images/weappshop/arrow-right.png) no-repeat 750rpx center;
-    background-size: 16rpx auto,750rpx auto;
-    margin: 20rpx 0; 
-    border-bottom: 1px solid #eee;
-    height: 100rpx;
     line-height: 100rpx;
-    padding-left: 100rpx;
+    font-size: 28rpx;
+    background-color:#fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.my-item .phone-str,.my-item .bind-phone-btn{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.my-item .phone-str{
+    padding-left: 30rpx;
+}
+.my-item .bind-phone-btn{
+    padding-right: 30rpx;
+}
+.my-item .phone-str image{
+    width: 100rpx;
+    height: 100rpx;
 }
 
-.about{
-    width: 100%;
-    background: url(https://cdn.it120.cc/images/weappshop/arrow-right.png) no-repeat 750rpx center;
-    background-size: 16rpx auto,750rpx auto;
-    margin: 20rpx 0; 
-    height: 80rpx;
-    line-height: 80rpx;
-    padding-left: 100rpx;
+.my-item .phone-str text{
+    color: #646464;
+}
+.my-score{
+    width:100%;
+    background-color:#fff;
+    margin:30rpx;
+}
+.my-share{
+    width:100%;
+    background-color:#fff;
+    margin-bottom:100rpx;
+
+}
+.arrow-right{
+    border-right: 1rpx solid #626262;
+    border-top: 1rpx solid #626262;
+    width:30rpx;
+    height:30rpx;
+    transform:rotate(45deg);
+
+}
+
+.my-score .score-title,.my-share .share-title{
+    display: flex;
+    justify-content: space-between;
+    height: 100rpx;
+    line-height: 100rpx;
+    align-items: center;
+    border-bottom: 1rpx solid #eee;
+    padding: 0 30rpx;
+}
+
+.share-item-box, .score-item-box{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 200rpx;
+    font-size: 24rpx;
+    padding: 0 30rpx;
+}
+.share-item-box image, .score-item-box image{
+    width: 100rpx;
+}
+.share-item,.score-item{
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+}
+
+page{
+    background-color: #eee;
 }

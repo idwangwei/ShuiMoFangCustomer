@@ -1,5 +1,8 @@
 //index.js
-const api = require('../../utils/request.js')
+const api = require('../../utils/request.js');
+const citys = require('../../utils/city.js');
+const creatOrder = require("../../utils/creatOrder.js");
+const pay = require("../../utils/pay.js");
 //获取应用实例
 const app = getApp();
 
@@ -15,30 +18,51 @@ Page({
             textImg:["/images/goods-default-details-pic.png"] //商品详情图片
         }, //商品详情
         hideShopPopup: true,
-
+        region:['四川省', '成都市', '高新区'],
         propertyChildIds: "",
         propertyChildNames: "",
         canSubmit: false, //是否可以下单
+        multiIndex: [0, 0, 0],
+        multiArray: [],
+        telNumber:'',
+        userName:'',
     },
 
     onLoad: function (e) {
         const that = this;
-        //通过商品ID获取商品详情
-        api.fetchRequest('/shop/goods/detail', {
-            id: e.id
-        }).then(function (res) {
-            let goodsDetail = Object.assign({},that.data.goodsDetail,{
-                id:res.data.data.basicInfo.id,
-                name : res.data.data.basicInfo.name,
-                price: res.data.data.basicInfo.originalPrice,
-                priceType:res.data.data.basicInfo.originalPrice == 100?"fixed":"float",
-                scoreToPay:res.data.data.basicInfo.originalPrice/10,
-                pic:res.data.data.basicInfo.pic
-            });
 
-            that.setData({
-                goodsDetail
-            });
+        //默认地址为四川成都区域待选择
+        let multiArray = [[],[],[]];
+        let multiIndex = [0,0,0];
+        for(let i = 0; i < citys.cityData.length;i++){
+            multiArray[0].push(citys.cityData[i].name);
+            if(citys.cityData[i].id === 510000){
+                multiIndex[0] = i;
+                for(let j = 0; j<citys.cityData[i].cityList.length;j++){
+                    multiArray[1].push(citys.cityData[i].cityList[j].name);
+                    if(citys.cityData[i].cityList[j].id === 510100){
+                        multiIndex[1] = j;
+                        multiArray[2].push(...citys.cityData[i].cityList[j].districtList.map((item)=>item.name))
+                    }
+                }
+            }
+        }
+        this.setData({
+            multiArray,
+            multiIndex
+        });
+
+        let info = getApp().globalData.selectGoodsInfo;
+        that.setData({
+            goodsDetail:{
+                id:info.id,
+                name : info.name,
+                price: info.descPrice,
+                priceType:info.priceType,
+                scoreToPay:Math.floor(+info.descPrice.match(/\d+/)/10),
+                textImg:info.descImage,
+                pic:info.titleImage
+            }
         });
     },
     /**
@@ -124,168 +148,51 @@ Page({
      * 立即购买
      */
     buyNow: function (e) {
-        let that = this
-        let shoptype = e.currentTarget.dataset.shoptype
-        console.log(shoptype)
-        if (this.data.goodsDetail.properties && !this.data.canSubmit) {
-            if (!this.data.canSubmit) {
-                wx.showModal({
-                    title: '提示',
-                    content: '请选择商品规格！',
-                    showCancel: false
-                })
-            }
-            this.bindGuiGeTap();
+        if(!this.data.telNumber||!this.data.telNumber.match(/^1[0-9]{10}$/)){
             wx.showModal({
-                title: '提示',
-                content: '请先选择规格尺寸哦~',
-                showCancel: false
-            })
-            return;
+                title:'提示',
+                content:'请填入正确的11位手机号，便于联系',
+                showCancel:false
+            });
+            return
         }
-        if (this.data.buyNumber < 1) {
+
+        if(!this.data.userName){
             wx.showModal({
-                title: '提示',
-                content: '购买数量不能为0！',
-                showCancel: false
-            })
-            return;
+                title:'提示',
+                content:'请填入联系人姓名，便于联系',
+                showCancel:false
+            });
+            return
         }
-        //组建立即购买信息
-        var buyNowInfo = this.buliduBuyNowInfo(shoptype);
-        // 写入本地存储
-        wx.setStorage({
-            key: "buyNowInfo",
-            data: buyNowInfo
-        })
+
+        //校验信息是否填写完整
+        if((citys.cityData[this.data.multiIndex[0]].cityList.length!==0 && this.data.multiIndex[1] == 0)
+            ||(citys.cityData[this.data.multiIndex[0]].cityList[this.data.multiIndex[1]].districtList.length!==0 && this.data.multiIndex[2] == 0)
+        ){
+            wx.showModal({
+                title:'提示',
+                content:'请选择正确的辖区',
+                showCancel:false
+            });
+            return
+        }
+
         this.closePopupTap();
-        if (shoptype == 'toPingtuan') {
-            if (this.data.pingtuanopenid) {
-                wx.navigateTo({
-                    url: "/pages/to-pay-order/index?orderType=buyNow&pingtuanOpenId=" + this.data.pingtuanopenid
-                })
-            } else {
-                api.fetchRequest('/shop/goods/pingtuan/open', {
-                    token: wx.getStorageSync('token'),
-                    goodsId: that.data.goodsDetail.basicInfo.id
-                }).then(function (res) {
-                    if (res.data.code != 0) {
-                        wx.showToast({
-                            title: res.data.msg,
-                            icon: 'none',
-                            duration: 2000
-                        })
-                        return
-                    }
-                    wx.navigateTo({
-                        url: "/pages/to-pay-order/index?orderType=buyNow&pingtuanOpenId=" + res.data.data.id
-                    })
-                })
-            }
-        } else {
-            wx.navigateTo({
-                url: "/pages/to-pay-order/index?orderType=buyNow"
-            })
-        }
 
+        creatOrder.createOrder({
+            goodsDetail:{},
+            telNumber: this.telNumber,
+
+        }).then(()=>{
+
+        })
+
+        // wx.navigateTo({
+        //     url: "/pages/to-pay-order/index?orderType=buyNow"
+        // })
     },
-    /**
-     * 组建购物车信息
-     */
-    bulidShopCarInfo: function () {
-        // 加入购物车
-        var shopCarMap = {};
-        shopCarMap.goodsId = this.data.goodsDetail.basicInfo.id;
-        shopCarMap.pic = this.data.goodsDetail.basicInfo.pic;
-        shopCarMap.name = this.data.goodsDetail.basicInfo.name;
-        // shopCarMap.label=this.data.goodsDetail.basicInfo.id; 规格尺寸
-        shopCarMap.propertyChildIds = this.data.propertyChildIds;
-        shopCarMap.label = this.data.propertyChildNames;
-        shopCarMap.price = this.data.selectSizePrice;
-        shopCarMap.score = this.data.totalScoreToPay;
-        shopCarMap.left = "";
-        shopCarMap.active = true;
-        shopCarMap.number = this.data.buyNumber;
-        shopCarMap.logisticsType = this.data.goodsDetail.basicInfo.logisticsId;
-        shopCarMap.logistics = this.data.goodsDetail.logistics;
-        shopCarMap.weight = this.data.goodsDetail.basicInfo.weight;
 
-        var shopCarInfo = this.data.shopCarInfo;
-        if (!shopCarInfo.shopNum) {
-            shopCarInfo.shopNum = 0;
-        }
-        if (!shopCarInfo.shopList) {
-            shopCarInfo.shopList = [];
-        }
-        var hasSameGoodsIndex = -1;
-        for (var i = 0; i < shopCarInfo.shopList.length; i++) {
-            var tmpShopCarMap = shopCarInfo.shopList[i];
-            if (tmpShopCarMap.goodsId == shopCarMap.goodsId && tmpShopCarMap.propertyChildIds == shopCarMap.propertyChildIds) {
-                hasSameGoodsIndex = i;
-                shopCarMap.number = shopCarMap.number + tmpShopCarMap.number;
-                break;
-            }
-        }
-
-        shopCarInfo.shopNum = shopCarInfo.shopNum + this.data.buyNumber;
-        if (hasSameGoodsIndex > -1) {
-            shopCarInfo.shopList.splice(hasSameGoodsIndex, 1, shopCarMap);
-        } else {
-            shopCarInfo.shopList.push(shopCarMap);
-        }
-        shopCarInfo.kjId = this.data.kjId;
-        return shopCarInfo;
-    },
-    /**
-     * 组建立即购买信息
-     */
-    buliduBuyNowInfo: function (shoptype) {
-        var shopCarMap = {};
-        shopCarMap.goodsId = this.data.goodsDetail.basicInfo.id;
-        shopCarMap.pic = this.data.goodsDetail.basicInfo.pic;
-        shopCarMap.name = this.data.goodsDetail.basicInfo.name;
-        // shopCarMap.label=this.data.goodsDetail.basicInfo.id; 规格尺寸
-        shopCarMap.propertyChildIds = this.data.propertyChildIds;
-        shopCarMap.label = this.data.propertyChildNames;
-        shopCarMap.price = this.data.selectSizePrice;
-        if (shoptype == 'toPingtuan') {
-            shopCarMap.price = this.data.goodsDetail.basicInfo.pingtuanPrice;
-        }
-        shopCarMap.score = this.data.totalScoreToPay;
-        shopCarMap.left = "";
-        shopCarMap.active = true;
-        shopCarMap.number = this.data.buyNumber;
-        shopCarMap.logisticsType = this.data.goodsDetail.basicInfo.logisticsId;
-        shopCarMap.logistics = this.data.goodsDetail.logistics;
-        shopCarMap.weight = this.data.goodsDetail.basicInfo.weight;
-
-        var buyNowInfo = {};
-        if (!buyNowInfo.shopNum) {
-            buyNowInfo.shopNum = 0;
-        }
-        if (!buyNowInfo.shopList) {
-            buyNowInfo.shopList = [];
-        }
-        /*    var hasSameGoodsIndex = -1;
-            for (var i = 0; i < toBuyInfo.shopList.length; i++) {
-              var tmpShopCarMap = toBuyInfo.shopList[i];
-              if (tmpShopCarMap.goodsId == shopCarMap.goodsId && tmpShopCarMap.propertyChildIds == shopCarMap.propertyChildIds) {
-                hasSameGoodsIndex = i;
-                shopCarMap.number = shopCarMap.number + tmpShopCarMap.number;
-                break;
-              }
-            }
-            toBuyInfo.shopNum = toBuyInfo.shopNum + this.data.buyNumber;
-            if (hasSameGoodsIndex > -1) {
-              toBuyInfo.shopList.splice(hasSameGoodsIndex, 1, shopCarMap);
-            } else {
-              toBuyInfo.shopList.push(shopCarMap);
-            }*/
-
-        buyNowInfo.shopList.push(shopCarMap);
-        buyNowInfo.kjId = this.data.kjId;
-        return buyNowInfo;
-    },
     onShareAppMessage: function () {
         return {
             title: this.data.goodsDetail.name,
@@ -298,4 +205,44 @@ Page({
             }
         }
     },
+    bindMultiPickerChange(e) {
+        console.log('picker发送选择改变，携带值为', e.detail.value);
+        this.setData({
+            multiIndex: e.detail.value
+        })
+    },
+    bindMultiPickerColumnChange(e) {
+        console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+        const data = {
+            multiArray: this.data.multiArray,
+            multiIndex: this.data.multiIndex
+        };
+        data.multiIndex[e.detail.column] = e.detail.value;
+        switch (e.detail.column) {
+            case 0:
+                data.multiIndex[1] = 0;
+                data.multiIndex[2] = 0;
+                data.multiArray[1] = [...citys.cityData[data.multiIndex[0]].cityList.map((item)=>item.name)];
+                data.multiArray[2] = [...citys.cityData[data.multiIndex[0]].cityList[0].districtList.map((item)=>item.name)];
+                break;
+            case 1:
+                data.multiIndex[2] = 0;
+                data.multiArray[2] = [...citys.cityData[data.multiIndex[0]].cityList[data.multiIndex[1]].districtList.map((item)=>item.name)];
+                break
+        }
+        console.log(data.multiIndex);
+        this.setData({
+            multiArray:data.multiArray
+        })
+    },
+    bindPhoneInput:function (e) {
+        this.setData({
+            telNumber: e.detail.value
+        })
+    },
+    bindNameInput:function (e) {
+        this.setData({
+            userName: e.detail.value
+        })
+    }
 });

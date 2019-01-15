@@ -21,6 +21,7 @@ Page({
     },
 
     toDetailsTap: function (e) {
+        getApp().globalData.selectGoodsInfo = this.data.goods[e.currentTarget.dataset.index];
         wx.navigateTo({
             url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
         })
@@ -58,42 +59,41 @@ Page({
             }
         }).catch(function (res) {
             wx.showToast({
-                title: res.data.msg,
+                title: res.data&&res.data.msg,
                 icon: 'none'
             })
-        })
+        });
         this.getGoodsList(0);
     },
 
-    getGoodsList: function (categoryId, append) {
-        if (categoryId == 0) {
-            categoryId = "";
-        }
-        var that = this;
+    getGoodsList: function () {
+        const that = this;
         wx.showLoading({
-            "mask": true
-        })
-        api.fetchRequest('/shop/goods/list', {
-            categoryId: 0,
-            nameLike: that.data.searchInput,
-            page: this.data.curPage,
-            pageSize: this.data.pageSize
-        }).then(function (res) {
-            wx.hideLoading()
-            if (res.data.code == 404 || res.data.code == 700) {
-                let newData = {}
-                if (!append) {
-                    newData.goods = []
-                }
+            title:'加载中',
+            mask: true
+        });
+        // api.fetchRequest('/shop/goods/list', {
+        api.fetchRequest('/api/products').then(function (res) {
+            wx.hideLoading();
+            if (res.data.status !== 200) {
+                let newData = {};
+                newData.goods = [];
                 that.setData(newData);
                 return
             }
             let goods = [];
-            if (append) {
-                goods = that.data.goods
-            }
-            for (var i = 0; i < res.data.data.length; i++) {
-                goods.push(res.data.data[i]);
+            for(let i = 0; i < res.data.data.length; i++){
+                let item = res.data.data[i];
+                goods.push({
+                    id:item.id,
+                    name: item.name,
+                    titleImage: item.titleImage ? item.titleImage:'/images/goods-default-summary-pic.png',
+                    descImage: item.descImage ? item.descImage:'/images/goods-default-details-pic.png',
+                    priceType: item.priceType,
+                    descPrice: item.descPrice,
+                    creditType: item.creditType,
+                    status: item.status,
+                })
             }
             that.setData({
                 goods: goods,
@@ -126,10 +126,10 @@ Page({
         this.getGoodsList(this.data.activeCategoryId);
     },
     onReachBottom: function () {
-        this.setData({
-            curPage: this.data.curPage + 1
-        });
-        this.getGoodsList(this.data.activeCategoryId, true)
+        // this.setData({
+        //     curPage: this.data.curPage + 1
+        // });
+        // this.getGoodsList(this.data.activeCategoryId, true)
     },
     handleContact:function (e) {
         console.log(e.path);

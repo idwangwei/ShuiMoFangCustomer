@@ -17,9 +17,7 @@
     <view class="goods-des-info">
         <view class="label-title">商品介绍</view>
         <view class="goods-text">
-            <block wx:for="{{goodsDetail.textImg}}" wx:key="*this">
-                <image src="{{item}}" mode="widthFix"></image>
-            </block>
+            <image src="{{goodsDetail.textImg}}" mode="widthFix"></image>
         </view>
     </view>
 
@@ -47,27 +45,35 @@
                     <image src="/images/popup-close.png" mode="scaleToFill"></image>
                 </view>
             </view>
+            <view class="form-box">
+                <view class="row-wrap">
+                    <view class="label">联系人</view>
+                    <view class="label-right">
+                        <input name="linkMan" class="input" type="text" bindinput="bindNameInput" placeholder="姓名" value="{{userName}}"/>
+                    </view>
+                </view>
+                <view class="row-wrap">
+                    <view class="label">手机号码</view>
+                    <view class="label-right">
+                        <input name="mobile" class="input" maxlength="11" bindinput="bindPhoneInput" type="number" placeholder="11位手机号码" value="{{telNumber}}"/>
+                    </view>
+                </view>
+                <view class="row-wrap">
+                    <view class="label">选择地区</view>
+                    <picker
+                            mode="multiSelector"
+                            bindchange="bindMultiPickerChange"
+                            bindcolumnchange="bindMultiPickerColumnChange"
+                            value="{{multiIndex}}"
+                            range="{{multiArray}}"
+                    >
+                        <view class="picker">
+                            {{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}}
+                        </view>
+                    </picker>
+                </view>
 
-            <view class="user-info-box">
-                <view>
-                    <label for="user-name">姓名</label>
-                    <input type="text" id="user-name" placeholder="填入姓名" cursor-spacing="10"/>
-                </view>
-                <view>
-                    <label for="user-name">联系电话</label>
-                    <input type="text" id="user-phone" placeholder="填入手机号" cursor-spacing="10"/>
-                </view>
-                <view>
-                    <label for="user-name">验证码</label>
-                    <input type="text" id="user-expr" placeholder="00000" cursor-spacing="10"/>
-                    <button>{{'获取验证码'}}</button>
-                </view>
-                <view>
-                    <label for="user-name">地址</label>
-                    <input type="text" id="user-address" placeholder="省 市 区" cursor-spacing="10"/>
-                </view>
             </view>
-
 
             <view class="popup-join-btn" bindtap="buyNow">
                 {{goodsDetail.priceType === 'fixed' ? '确认购买':'确认下单'}}
