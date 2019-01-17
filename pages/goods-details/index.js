@@ -65,10 +65,48 @@ Page({
             }
         });
     },
+
+    parseLocation: function (locationStr) {
+        let multiIndex = [0, 0, 0];
+        let multiArray = [[], [], []];
+        let locationArr = locationStr.split('-');
+
+        for (let i = 0; i < citys.cityData.length; i++) {
+            multiArray[0].push(citys.cityData[i].name);
+            if (citys.cityData[i].name === locationArr[0]) {
+                multiIndex[0] = i;
+            }
+        }
+        let cityList = citys.cityData[multiIndex[0]].cityList;
+        for (let j = 0; j < cityList.length; j++) {
+            multiArray[1].push(cityList[j].name);
+            if (cityList[j].name === locationArr[1]) {
+                multiIndex[1] = j;
+            }
+        }
+        let districtList = citys.cityData[multiIndex[0]].cityList[multiIndex[1]].districtList
+        for (let k = 0; k < districtList.length; k++) {
+            multiArray[2].push(districtList[k].name);
+            if (districtList[k].name === locationArr[2]) {
+                multiIndex[2] = k;
+            }
+        }
+
+        return {multiIndex, multiArray}
+    },
+
     /**
      * 弹出下单确认框
      */
     bindGuiGeTap: function () {
+        if(!app.globalData.userInfo.phone){
+            wx.redirectTo({
+                url: "/pages/address-add/index"
+            });
+            return
+        }
+
+
         this.setData({
             hideShopPopup: false
         })
@@ -83,110 +121,34 @@ Page({
     },
 
     /**
-     * 选择商品规格
-     * @param {Object} e
-     */
-    labelItemTap: function (e) {
-        var that = this;
-        /*
-        console.log(e)
-        console.log(e.currentTarget.dataset.propertyid)
-        console.log(e.currentTarget.dataset.propertyname)
-        console.log(e.currentTarget.dataset.propertychildid)
-        console.log(e.currentTarget.dataset.propertychildname)
-        */
-        // 取消该分类下的子栏目所有的选中状态
-        var childs = that.data.goodsDetail.properties[e.currentTarget.dataset.propertyindex].childsCurGoods;
-        for (var i = 0; i < childs.length; i++) {
-            that.data.goodsDetail.properties[e.currentTarget.dataset.propertyindex].childsCurGoods[i].active = false;
-        }
-        // 设置当前选中状态
-        that.data.goodsDetail.properties[e.currentTarget.dataset.propertyindex].childsCurGoods[e.currentTarget.dataset.propertychildindex].active = true;
-        // 获取所有的选中规格尺寸数据
-        var needSelectNum = that.data.goodsDetail.properties.length;
-        var curSelectNum = 0;
-        var propertyChildIds = "";
-        var propertyChildNames = "";
-        for (var i = 0; i < that.data.goodsDetail.properties.length; i++) {
-            childs = that.data.goodsDetail.properties[i].childsCurGoods;
-            for (var j = 0; j < childs.length; j++) {
-                if (childs[j].active) {
-                    curSelectNum++;
-                    propertyChildIds = propertyChildIds + that.data.goodsDetail.properties[i].id + ":" + childs[j].id + ",";
-                    propertyChildNames = propertyChildNames + that.data.goodsDetail.properties[i].name + ":" + childs[j].name + "  ";
-                }
-            }
-        }
-        var canSubmit = false;
-        if (needSelectNum == curSelectNum) {
-            canSubmit = true;
-        }
-        // 计算当前价格
-        if (canSubmit) {
-            api.fetchRequest('/shop/goods/price', {
-                goodsId: that.data.goodsDetail.basicInfo.id,
-                propertyChildIds: propertyChildIds
-            }).then(function (res) {
-                that.setData({
-                    selectSizePrice: res.data.data.price,
-                    totalScoreToPay: res.data.data.score,
-                    propertyChildIds: propertyChildIds,
-                    propertyChildNames: propertyChildNames,
-                    buyNumMax: res.data.data.stores,
-                    buyNumber: (res.data.data.stores > 0) ? 1 : 0
-                });
-            })
-        }
-
-
-        this.setData({
-            goodsDetail: that.data.goodsDetail,
-            canSubmit: canSubmit
-        })
-    },
-    /**
      * 立即购买
      */
     buyNow: function (e) {
-        if(!this.data.telNumber||!this.data.telNumber.match(/^1[0-9]{10}$/)){
-            wx.showModal({
-                title:'提示',
-                content:'请填入正确的11位手机号，便于联系',
-                showCancel:false
-            });
-            return
-        }
+        let location = "";
+        // debugger;
+        // //校验信息是否填写完整
+        // if((citys.cityData[this.data.multiIndex[0]].cityList.length!==0 && this.data.multiIndex[1] == 0)
+        //     ||(citys.cityData[this.data.multiIndex[0]].cityList[this.data.multiIndex[1]].districtList.length!==0 && this.data.multiIndex[2] == 0)
+        // ){
+        //     wx.showModal({
+        //         title:'提示',
+        //         content:'请选择正确的辖区',
+        //         showCancel:false
+        //     });
+        //     return
+        // }
 
-        if(!this.data.userName){
-            wx.showModal({
-                title:'提示',
-                content:'请填入联系人姓名，便于联系',
-                showCancel:false
-            });
-            return
-        }
+        api.fetchRequest('/api/order/custom',{
+            // location:location,
+            location:'四川省-成都市-武侯区',
+            prodId:this.data.goodsDetail.id,
+        },'POST',0,{'content-type':'application/x-www-form-urlencoded'})
+            .then((res)=>{
 
-        //校验信息是否填写完整
-        if((citys.cityData[this.data.multiIndex[0]].cityList.length!==0 && this.data.multiIndex[1] == 0)
-            ||(citys.cityData[this.data.multiIndex[0]].cityList[this.data.multiIndex[1]].districtList.length!==0 && this.data.multiIndex[2] == 0)
-        ){
-            wx.showModal({
-                title:'提示',
-                content:'请选择正确的辖区',
-                showCancel:false
             });
-            return
-        }
+
 
         this.closePopupTap();
-
-        creatOrder.createOrder({
-            goodsDetail:{},
-            telNumber: this.telNumber,
-
-        }).then(()=>{
-
-        })
 
         // wx.navigateTo({
         //     url: "/pages/to-pay-order/index?orderType=buyNow"
@@ -235,14 +197,14 @@ Page({
             multiArray:data.multiArray
         })
     },
-    bindPhoneInput:function (e) {
-        this.setData({
-            telNumber: e.detail.value
-        })
-    },
-    bindNameInput:function (e) {
-        this.setData({
-            userName: e.detail.value
-        })
-    }
+    // bindPhoneInput:function (e) {
+    //     this.setData({
+    //         telNumber: e.detail.value
+    //     })
+    // },
+    // bindNameInput:function (e) {
+    //     this.setData({
+    //         userName: e.detail.value
+    //     })
+    // }
 });

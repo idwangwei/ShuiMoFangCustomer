@@ -33,7 +33,7 @@
                 <swiper-item>
                     <image bindtap="tapBanner"
                            data-id="{{item.businessId}}"
-                           src="{{item.picUrl}}_m"
+                           src="{{item.picUrl}}"
                            class="slide-image"
                            mode="aspectFill"/>
                 </swiper-item>
@@ -71,12 +71,14 @@
 
     <view class="goods-container">
         <view class="goods-box" wx:for-items="{{goods}}" wx:key="{{index}}" bindtap="toDetailsTap"
-              data-id="{{item.id}}" data-index="{{index}}">
+              data-id="{{item.id}}" data-index="{{index}}" wx:if="{{item.isShow}}">
             <view class="img-box">
                 <image src="{{item.titleImage}}" class="image" mode="widthFix" lazy-load="true"/>
             </view>
             <view class="goods-title">{{item.name}}</view>
-            <view class="goods-price">¥ {{item.descPrice}}</view>
+            <view class="goods-price">
+                <text>¥ {{item.descPrice}}</text>
+            </view>
         </view>
     </view>
     <view class="no-more-goods">没有更多啦</view>

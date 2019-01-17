@@ -6,8 +6,8 @@ App({
 
         //点击分享，绑定推广人
         const userInfo = wx.getStorageSync('userInfo');
-        this.globalData.userIfno = userInfo;
-        if(shareParam.query.shareUserId && !userInfo){
+        this.globalData.userInfo = userInfo;
+        if (shareParam.query.shareUserId && !userInfo) {
             this.globalData.shareUserId = shareParam.query.shareUserId;
         }
 
@@ -18,9 +18,9 @@ App({
          */
         wx.getNetworkType({
             success(res) {
-                const networkType = res.networkType
+                const networkType = res.networkType;
                 if (networkType === 'none') {
-                    that.globalData.isConnected = false
+                    that.globalData.isConnected = false;
                     wx.showToast({
                         title: '当前无网络',
                         icon: 'loading',
@@ -58,20 +58,42 @@ App({
             }
         })
     },
-    LoginSys: function(userId){
-        return new Promise((resolve,reject)=>{
-            api.fetchRequest('/api/login/wechat', {
-                method: 'wechat',
-                userName:userId,
-            }).then(function (res) {
+    LoginSys: function (userId) {
+
+        let that = this;
+        return new Promise((resolve, reject) => {
+            api.fetchRequest(
+                '/api/login/wechat',
+                {username: userId},
+                'POST',
+                0,
+                {'content-type': 'application/x-www-form-urlencoded'}
+            ).then(function (res) {
                 if (res.data.status != 200) {
-                    wx.removeStorageSync('token');
+
+                    that.globalData.token = null;
+                    wx.removeStorage({key:'token'});
                     return
                 }
-                wx.setStorageSync('token', res.data.data.token);
+                that.globalData.token = res.data.data.token;
+                that.globalData.userInfo.id = res.data.data.id;
+                that.globalData.userInfo.name = res.data.data.name;
+                that.globalData.userInfo.phone = res.data.data.phone;
+                that.globalData.userInfo.status = res.data.data.status;
+                wx.setStorage({
+                    key:'token',
+                    data:that.globalData.token
+                });
+                wx.setStorage({
+                    key:'userInfo',
+                    data:that.globalData.userInfo
+                });
+
+
                 resolve();
-            }).catch((res)=>{
-                wx.removeStorageSync('token');
+            }).catch((res) => {
+                wx.removeStorage({key:'token'});
+                that.globalData.token = null;
                 reject()
             })
         });
@@ -112,7 +134,7 @@ App({
         if (this.navigateToLogin) {
             return
         }
-        this.navigateToLogin = true
+        this.navigateToLogin = true;
         setTimeout(function () {
             wx.navigateTo({
                 url: "/pages/authorize/index"
@@ -128,8 +150,9 @@ App({
     },
     globalData: {
         isConnected: true,
-        screenWidth:750,
-        screenHeight:667,
-        userInfo:null,
+        screenWidth: 750,
+        screenHeight: 667,
+        userInfo: null,
+        token:null,
     }
 });

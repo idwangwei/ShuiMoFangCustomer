@@ -110,16 +110,17 @@ swiper-item image {
   margin-left: 24rpx;
 }
 .goods-box .goods-price{
-  width: 280rpx;
+  width: 100%;
   overflow: hidden;
   font-size: 24rpx;
   color:#e64340;
+}
+.goods-price text{
   margin-left: 24rpx;
 }
-.goods-box button{
-  position: absolute;
-  bottom: 10rpx;
-  right: 10rpx;
+.goods-price button{
+  padding: 0 16rpx;
+  margin: 0;
 }
 .no-more-goods{
   text-align: center;

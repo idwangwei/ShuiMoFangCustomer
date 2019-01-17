@@ -1,118 +1,155 @@
-var commonCityData = require('../../utils/city.js')
-const api = require('../../utils/request.js')
+const commonCityData = require('../../utils/city.js');
+const api = require('../../utils/request.js');
 //获取应用实例
-var app = getApp()
+const app = getApp();
 Page({
-  data: {
+    data: {
+        userName: '',
+        userCode: '',
+        userPhone: '',
+        getCodeStr: '获取验证码',
+        getCodeBtnDisabled: false,
+    },
+    bindCancel: function () {
+        wx.navigateBack({})
+    },
+    bindSave: function (e) {
+        const that = this;
+        if (!this.data.userName) {
+            wx.showToast({
+                title: '请输入姓名',
+            });
+            return;
+        }
+        if (!this.data.userCode.match(/^\d{6}$/)) {
+            wx.showToast({
+                title: '请输入6位有效验证码',
+            });
+            return;
+        }
+        if (!this.data.userPhone.match(/^1\d{10}$/)) {
+            wx.showToast({
+                title: '请输入11位有电话号码',
+            });
+            return;
+        }
+        this.validateCode().then(()=>{
+            api.fetchRequest(`/api/account/phone?name=${encodeURIComponent(this.data.userName)}&phone=${this.data.userPhone}`, {}, 'PUT').then((res) => {
+                if (res.data.status == 200) {
+                    wx.showModal({
+                        title: '提示',
+                        content: '绑定成功',
+                        showCancel: false
+                    });
+                    app.globalData.userInfo.name = that.data.userName;
+                    app.globalData.userInfo.phone = that.data.userPhone;
+                    wx.setStorageSync('userInfo', app.globalData.userInfo);
 
-  },
-  bindCancel:function () {
-    wx.navigateBack({})
-  },
-  bindSave: function(e) {
-    var that = this;
-    var linkMan = e.detail.value.linkMan;
-    var mobile = e.detail.value.mobile;
-    var code = e.detail.value.code;
+                }
+            })
+        }).catch(()=>{});
+    },
+    onLoad: function (e) {
+    },
 
-    if (linkMan == ""){
-      wx.showModal({
-        title: '提示',
-        content: '请填写联系人姓名',
-        showCancel:false
-      });
-      return
-    }
-    if (mobile == ""){
-      wx.showModal({
-        title: '提示',
-        content: '请填写手机号码',
-        showCancel:false
-      });
-      return
-    }
-    var apiAddoRuPDATE = "add";
-    var apiAddid = that.data.id;
-    if (apiAddid) {
-      apiAddoRuPDATE = "update";
-    } else {
-      apiAddid = 0;
-    }
-    api.fetchRequest(`/user/shipping-address/${apiAddoRuPDATE}`, {
-      token: wx.getStorageSync('token'),
-      id: apiAddid,
-      provinceId: commonCityData.cityData[this.data.selProvinceIndex].id,
-      cityId: cityId,
-      districtId: districtId,
-      linkMan: linkMan,
-      address: address,
-      mobile: mobile,
-      code: code,
-      isDefault: 'true'
-    }).then(function (res) {
-      if (res.data.code != 0) {
-        // 登录错误 
-        wx.hideLoading();
-        wx.showModal({
-          title: '失败',
-          content: res.data.msg,
-          showCancel: false
+    validateCode: function (e) {
+        return new Promise((resolve, reject) => {
+            api.fetchRequest(`/api/sms?captcha=${this.data.userCode}&phone=${this.data.userPhone}`, {}, "DELETE")
+                .then((res) => {
+                    if (res.data.status == 200) {
+                        resolve();
+                        return
+                    }
+                    reject();
+                    wx.showToast({
+                        title: res.data.msg,
+                    });
+                })
+                .catch((res) => {
+                    reject();
+                    wx.showToast({
+                        title: res.data.msg,
+                    });
+
+                })
+        });
+
+    },
+    bindNameInput: function (e) {
+        this.setData({
+            userName: e.detail.value
         })
-        return;
-      }
-      // 跳转到结算页面
-      wx.navigateBack({})
-    })
-  },
-  onLoad: function (e) {
-    var that = this;
-    this.initCityData(1);
-    var id = e.id;
-    if (id) {
-      // 初始化原数据
-      wx.showLoading();
-      api.fetchRequest('/user/shipping-address/detail', {
-        token: wx.getStorageSync('token'),
-        id: id
-      }).then(function (res) {
-        if (res.data.code == 0) {
-          that.setData({
-            id: id,
-            addressData: res.data.data,
-            selProvince: res.data.data.provinceStr,
-            selCity: res.data.data.cityStr,
-            selDistrict: res.data.data.areaStr
-          });
-          that.setDBSaveAddressId(res.data.data);
-          return;
-        } else {
-          wx.showModal({
-            title: '提示',
-            content: '无法获取快递地址数据',
-            showCancel: false
-          })
+    },
+    bindPhoneInput: function (e) {
+        this.setData({
+            userPhone: e.detail.value,
+            userCode: ''
+        })
+    },
+    getPhoneCode: function (e) {
+        const that = this;
+        if (!this.data.userPhone.match(/1[0-9]{10}$/)) {
+            wx.showModal({
+                title: '提示',
+                content: '请输入正确的手机号码',
+                showCancel: false
+            });
+            return
         }
-      }).finally(function() {
-        wx.hideLoading();
-      })
-    }
-  },
-  setDBSaveAddressId: function(data) {
-    var retSelIdx = 0;
-    for (var i = 0; i < commonCityData.cityData.length; i++) {
-      if (data.provinceId == commonCityData.cityData[i].id) {
-        this.data.selProvinceIndex = i;
-        for (var j = 0; j < commonCityData.cityData[i].cityList.length; j++) {
-          if (data.cityId == commonCityData.cityData[i].cityList[j].id) {
-            this.data.selCityIndex = j;
-            for (var k = 0; k < commonCityData.cityData[i].cityList[j].districtList.length; k++) {
-              if (data.districtId == commonCityData.cityData[i].cityList[j].districtList[k].id) {
-                this.data.selDistrictIndex = k;
-              }
+        if (this.data.getCodeBtnDisabled) {
+            return
+        }
+        this.setData({
+            getCodeBtnDisabled: true,
+        });
+        api.fetchRequest('/api/sms', {
+            phone: this.data.userPhone
+        }).then(function (res) {
+            if (res.data.status == 200) {
+                wx.showToast({
+                    title: '短信验证码已下发，请查收',
+                    icon: 'success',
+                    duration: 2000
+                });
+                let timeLimit = 30;
+                let intervalId = setInterval(() => {
+                    if (timeLimit <= 0) {
+                        clearInterval(intervalId);
+                        that.setData({
+                            getCodeStr: '获取验证码',
+                            getCodeBtnDisabled: false
+                        });
+                        return
+                    }
+                    that.setData({
+                        getCodeStr: `${timeLimit}s`,
+                    });
+                    timeLimit--;
+                }, 1000);
+                return
             }
-          }
-        }
-      }
+            wx.showToast({
+                title: res.data.msg,
+                icon: 'fail',
+                duration: 2000
+            });
+            that.setData({
+                getCodeBtnDisabled: false,
+            });
+        }).catch((res) => {
+            wx.showToast({
+                title: res.errMsg,
+                duration: 2000
+            });
+            this.setData({
+                getCodeBtnDisabled: false,
+            });
+        })
+
+    },
+    bindCodeInput: function (e) {
+        this.setData({
+            userCode: e.detail.value
+        })
     }
-   },
-})
+});

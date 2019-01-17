@@ -26,17 +26,25 @@ Page({
             let that = this;
             let userInfo = app.globalData.userInfo;
             if (userInfo) {
-                app.LoginSys(userInfo.openId).then(()=>{
+                wx.showLoading({title: '登录中', mask: true});
+                app.LoginSys(userInfo.openId).then(() => {
+                    wx.hideLoading();
                     that.goToIndex();
-                }).catch(()=>{
-
+                }).catch(() => {
+                    wx.hideLoading();
+                    wx.showModal({
+                        title: '提示',
+                        content: '无法登录，请点击进入再次登录',
+                        showCancel: false
+                    });
                 });
             }
         } catch (e) {
             // Do something when catch error
         }
     },
-    onShow: function () {},
+    onShow: function () {
+    },
     onReady: function () {
         const that = this;
         setTimeout(function () {
@@ -48,8 +56,7 @@ Page({
             let angle = -(res.x * 30).toFixed(1);
             if (angle > 14) {
                 angle = 14;
-            }
-            else if (angle < -14) {
+            } else if (angle < -14) {
                 angle = -14;
             }
             if (that.data.angle !== angle) {
@@ -66,6 +73,7 @@ Page({
         if (app.globalData.isConnected) {
             app.globalData.userInfo = e.detail.userInfo;
             wx.setStorageSync('userInfo', e.detail.userInfo);
+            wx.showLoading({title: '登录中', mask: true});
             this.wxLogin();
         } else {
             wx.showToast({
@@ -80,11 +88,10 @@ Page({
             success: function (res) {
                 api.fetchRequest('/api/wechat/auth', {
                     code: res.code,
-                    role:'EMPLOYEE',
+                    role: 'CONSUMER',
                 }).then(function (res) {
+                    wx.hideLoading();
                     if (res.data.status != 200) {
-                        // 登录错误
-                        wx.hideLoading();
                         wx.showModal({
                             title: '提示',
                             content: '无法登录，请重试',
@@ -92,13 +99,27 @@ Page({
                         });
                         return;
                     }
-                    app.globalData.userInfo.openId = res.data.data.wxOpenId;
-                    wx.setStorageSync('userInfo',app.globalData.userInfo);
-                    app.LoginSys(app.globalData.userInfo.openId).then(()=>{
+                    app.globalData.userInfo.openId = res.data.data.openid;
+                    wx.setStorageSync('userInfo', app.globalData.userInfo);
+                    app.LoginSys(app.globalData.userInfo.openId).then(() => {
                         that.goToIndex();
-                    }).catch(()=>{
-
-                    });
+                    }).catch(() => {
+                        wx.hideLoading();
+                        wx.showModal({
+                            title: '提示',
+                            content: '无法登录，请重试',
+                            showCancel: false
+                        });
+                    })
+                }).catch(() => {
+                    wx.hideLoading();
+                })
+            },
+            fail: function (res) {
+                wx.hideLoading();
+                wx.showToast({
+                    title: '登录失败，重新进入',
+                    icon: 'none',
                 })
             }
         })

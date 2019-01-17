@@ -54,10 +54,14 @@ function FetchRequest(url, data, method = 'GET', cache = 0, header = {}, noSubDo
       return;
     }
     SaveRequest(request_key);
-    let _url = API_BASE_URL + '/' + CONFIG.subDomain + url
+    let _url = API_BASE_URL + '/' + CONFIG.subDomain + url;
     if (noSubDomain) {
       _url = API_BASE_URL + url
     }
+    if(url != '/api/wechat/auth' && url != '/api/login/wechat'){
+      header.Token = getApp().globalData.token;
+    }
+    
     wx.request({
       url: _url,
       method: method.toUpperCase(),
@@ -66,7 +70,7 @@ function FetchRequest(url, data, method = 'GET', cache = 0, header = {}, noSubDo
       success: FetchSuccess,
       fail: FetchError,
       complete: RequestOver
-    })
+    });
 
     /**
      * 成功回调
@@ -184,5 +188,6 @@ Promise.prototype.finally = function (callback) {
 module.exports = {
   fetchRequest: FetchRequest,
   cacheTime: 1800,
-  fetchRequestAll: FetchRequestAll
-}
+  fetchRequestAll: FetchRequestAll,
+  API_BASE_URL:API_BASE_URL
+};
