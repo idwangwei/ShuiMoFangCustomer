@@ -63,7 +63,7 @@ Page({
             sliderOffset: e.currentTarget.offsetLeft,
             activeIndex: e.currentTarget.id
         });
-
+        //点击不同状态获取该状态的信息
 
 
     }
