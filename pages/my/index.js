@@ -5,9 +5,14 @@ Page({
     data: {
         userInfo:{},
         scoreNumber:0,
+        userPhone:''
     },
     onLoad() {
-
+        if(app.globalData.userInfo.phone){
+            this.setData({
+                userPhone:app.globalData.userInfo.phone
+            })
+        }
     },
     onShow() {
         let that = this;

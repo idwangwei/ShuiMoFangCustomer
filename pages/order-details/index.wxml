@@ -18,7 +18,7 @@
                     <view id="{{index}}"
                           class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}"
                           bindtap="tabClick">
-                        <view class="weui-navbar__title">{{item}}</view>
+                        <view class="weui-navbar__title">{{item.desc}}</view>
                     </view>
                 </block>
                 <view class="weui-navbar__slider"
@@ -26,9 +26,18 @@
             </view>
 
             <view class="weui-tab__panel">
-                <view wx:for="{{tabs}}" wx:key="index"
+                <view wx:for="{{tabs}}" wx:key="*this"
                       class="weui-tab__content"
-                      hidden="{{activeIndex != activeIndex}}">{{选项一的内容}}</view>
+                      hidden="{{activeIndex != index}}">
+
+                    <view wx:if="{{!item.info}}">{{item.desc}}</view>
+                    <block wx:else>
+                        <view wx:for="{{item.info}}" wx:for-item="record" wx:for-index="idx" wx:key="*this">
+                            {{record.type}}-{{record.value}}
+                        </view>
+                    </block>
+
+                </view>
             </view>
         </view>
     </view>

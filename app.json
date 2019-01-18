@@ -15,7 +15,8 @@
     "pages/recharge/index",
     "pages/withdraw/index",
     "pages/kanjia/index",
-    "pages/score-excharge/index"
+    "pages/score-excharge/index",
+    "pages/note_to_buy/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

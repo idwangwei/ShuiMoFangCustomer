@@ -25,8 +25,10 @@
     text-align: center
 }
 .order-list-item{
-    width: 100%;
+    width: 94%;
     margin:15rpx 0;
+    border-radius: 30rpx;
+    position:initial;
 
 }
 .order-item-bottom{
@@ -40,4 +42,21 @@
 }
 .item-color-name{
     color: #404040;
+    display:flex;
+    align-items:center;
+    padding-right:10rpx;
+    text-align-last:left;
+
+}
+.display-between{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.arrow-right{
+    border-right: 1rpx solid #626262;
+    border-top: 1rpx solid #626262;
+    width:20rpx;
+    height:20rpx;
+    transform:rotate(45deg);
 }

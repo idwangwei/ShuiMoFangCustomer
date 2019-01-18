@@ -6,13 +6,12 @@
     </view>
 
 
-    <view class="my-item">
+    <view class="my-item" bindtap="bindPhoneNumber">
         <view class="phone-str">
             <image src="/images/phone-icon.png" mode="aspectFit"></image>
-            <text>{{userMobile?userMobile:'为了你的账号安全，请绑定手机号'}}</text>
+            <text>{{userPhone?userPhone:'为了你的账号安全，请绑定手机号'}}</text>
         </view>
-        <view class="bind-phone-btn" bindtap="bindPhoneNumber">
-            <text>立即绑定</text>
+        <view class="bind-phone-btn">
             <text class="arrow-right"></text>
         </view>
     </view>

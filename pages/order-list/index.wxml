@@ -9,9 +9,12 @@
           data-index="{{index}}">
 
         <view class="weui-form-preview__bd">
-            <view class="weui-form-preview__item">
+            <view class="weui-form-preview__item display-between">
                 <view class="weui-form-preview__label item-color-name">{{item.prodName}}</view>
-                <view class="weui-form-preview__value item-color-name">{{item.price}}</view>
+                <view class="item-color-name">
+                    <text>￥{{item.price}}</text>
+                    <view class="arrow-right"></view>
+                </view>
             </view>
             <view class="weui-form-preview__item">
                 <view class="weui-form-preview__label">订单号：</view>

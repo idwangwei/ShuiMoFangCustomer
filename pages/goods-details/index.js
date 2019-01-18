@@ -11,7 +11,7 @@ Page({
         goodsDetail: {
             id:'',
             name:'',
-            priceType:"fixed", //商品价格类型 fixed-固定100， float-浮动100起
+            priceType:"FIXED", //商品价格类型 FIXED-固定100， FLOAT-浮动100起
             price: 100, //商品价格数字
             scoreToPay: 1, //推广获得积分
             pic:"/images/goods-default-summary-pic.png", //商品介绍图片
@@ -26,6 +26,7 @@ Page({
         multiArray: [],
         telNumber:'',
         userName:'',
+        isAgree:false,
     },
 
     onLoad: function (e) {
@@ -34,19 +35,34 @@ Page({
         //默认地址为四川成都区域待选择
         let multiArray = [[],[],[]];
         let multiIndex = [0,0,0];
+
+        //省
         for(let i = 0; i < citys.cityData.length;i++){
             multiArray[0].push(citys.cityData[i].name);
             if(citys.cityData[i].id === 510000){
                 multiIndex[0] = i;
-                for(let j = 0; j<citys.cityData[i].cityList.length;j++){
-                    multiArray[1].push(citys.cityData[i].cityList[j].name);
-                    if(citys.cityData[i].cityList[j].id === 510100){
-                        multiIndex[1] = j;
-                        multiArray[2].push(...citys.cityData[i].cityList[j].districtList.map((item)=>item.name))
-                    }
-                }
             }
         }
+        //市
+        let cityList = citys.cityData[multiIndex[0]].cityList;
+        if(cityList.length == 0){
+            multiIndex[1] = 0;
+            multiIndex[2] = 0;
+            multiArray[1] = [];
+            multiArray[2] = [];
+        }else {
+            for(let j = 0; j<cityList.length;j++){
+                multiArray[1].push(cityList[j].name);
+                if(cityList[j].id === 510100){
+                    multiIndex[1] = j;
+                }
+            }
+            //区
+            let districtList = cityList[multiIndex[1]].districtList;
+            multiArray[2].push(...districtList.map((item)=>item.name));
+        }
+
+
         this.setData({
             multiArray,
             multiIndex
@@ -99,10 +115,21 @@ Page({
      * 弹出下单确认框
      */
     bindGuiGeTap: function () {
-        if(!app.globalData.userInfo.phone){
-            wx.redirectTo({
-                url: "/pages/address-add/index"
+        let needBindPhone = !app.globalData.userInfo.phone;
+        // let needBindPhone = true;
+        if(needBindPhone){
+            wx.showModal({
+                title:'请填写你的联系方式，确保客服能及时与你沟通',
+                mask:true,
+                success(res) {
+                    if(res.confirm){
+                        wx.navigateTo({
+                            url: "/pages/address-add/index"
+                        });
+                    }
+                }
             });
+
             return
         }
 
@@ -124,35 +151,63 @@ Page({
      * 立即购买
      */
     buyNow: function (e) {
-        let location = "";
-        // debugger;
-        // //校验信息是否填写完整
-        // if((citys.cityData[this.data.multiIndex[0]].cityList.length!==0 && this.data.multiIndex[1] == 0)
-        //     ||(citys.cityData[this.data.multiIndex[0]].cityList[this.data.multiIndex[1]].districtList.length!==0 && this.data.multiIndex[2] == 0)
-        // ){
-        //     wx.showModal({
-        //         title:'提示',
-        //         content:'请选择正确的辖区',
-        //         showCancel:false
-        //     });
-        //     return
-        // }
+        if(!this.data.isAgree){
+            wx.showModal({
+                title:'提示',
+                content:'请阅读并勾选《购买须知》',
+                showCancel:false
+            });
+            return
+        }
 
+        //校验信息是否填写完整
+        let cityList = citys.cityData[this.data.multiIndex[0]].cityList;
+        let districtList = cityList.length == 0? []:cityList[this.data.multiIndex[1]].districtList;
+
+        if(this.data.multiIndex[2] == 0 && districtList.length!=0){
+            wx.showModal({
+                title:'提示',
+                content:'请选择正确的辖区',
+                showCancel:false
+            });
+            return
+        }
+        let provence = this.data.multiArray[0][this.data.multiIndex[0]];
+        let city = this.data.multiArray[1].length ==0 ?'':this.data.multiArray[1][this.data.multiIndex[1]];
+        let district = this.data.multiArray[2].length ==0 ?'':this.data.multiArray[2][this.data.multiIndex[2]];
+        let that = this;
+        let location = `${provence}-${city}-${district}`;
         api.fetchRequest('/api/order/custom',{
-            // location:location,
-            location:'四川省-成都市-武侯区',
+            location:location,
             prodId:this.data.goodsDetail.id,
         },'POST',0,{'content-type':'application/x-www-form-urlencoded'})
             .then((res)=>{
+                if(res.data.status!=200){
+                    wx.showToast({
+                        title:'下单失败，请重试',
+                        icon:'none'
+                    });
+                    return
+                }
 
+                //    固定价格的商品直接跳支付
+
+                //    带报价的产品，弹出“下单成功，需要按实际情况报价，客服会及时与你沟通”
+                if(that.data.goodsDetail.priceType == 'FLOAT'){
+                    wx.showModal({
+                        title:`${that.data.goodsDetail.name}下单成功，需要按实际情况报价，客服会及时与你沟通`,
+                        mask:true,
+                        showCancel:false,
+                        success(res) {
+                            wx.switchTab({
+                                url: '/pages/order-list/index'
+                            })
+                        }
+                    })
+                }
             });
 
-
         this.closePopupTap();
-
-        // wx.navigateTo({
-        //     url: "/pages/to-pay-order/index?orderType=buyNow"
-        // })
     },
 
     onShareAppMessage: function () {
@@ -180,16 +235,20 @@ Page({
             multiIndex: this.data.multiIndex
         };
         data.multiIndex[e.detail.column] = e.detail.value;
+        let cityList = citys.cityData[data.multiIndex[0]].cityList;
+        let districtList = cityList.length==0?[]:cityList[0].districtList;
+
         switch (e.detail.column) {
             case 0:
                 data.multiIndex[1] = 0;
                 data.multiIndex[2] = 0;
-                data.multiArray[1] = [...citys.cityData[data.multiIndex[0]].cityList.map((item)=>item.name)];
-                data.multiArray[2] = [...citys.cityData[data.multiIndex[0]].cityList[0].districtList.map((item)=>item.name)];
+                data.multiArray[1] = [...cityList.map((item)=>item.name)];
+                data.multiArray[2] = [...districtList.map((item)=>item.name)];
                 break;
             case 1:
                 data.multiIndex[2] = 0;
-                data.multiArray[2] = [...citys.cityData[data.multiIndex[0]].cityList[data.multiIndex[1]].districtList.map((item)=>item.name)];
+                districtList = cityList[data.multiIndex[1]].districtList;
+                data.multiArray[2] = [...districtList.map((item)=>item.name)];
                 break
         }
         console.log(data.multiIndex);
@@ -197,6 +256,17 @@ Page({
             multiArray:data.multiArray
         })
     },
+
+    bindAgreeChange: function (e) {
+        this.setData({
+            isAgree: !!e.detail.value.length
+        });
+    },
+
+    catchTap:function (e) {
+
+    }
+
     // bindPhoneInput:function (e) {
     //     this.setData({
     //         telNumber: e.detail.value

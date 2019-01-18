@@ -89,7 +89,10 @@ Page({
             }
         ).then((res) => {
             if (res.data.status !== 200) {
-                wx.showToast({title: res.data.msg});
+                wx.showToast({
+                    title: res.data.msg,
+                    icon:'none'
+                });
                 return;
             }
             that.setData({

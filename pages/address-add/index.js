@@ -18,23 +18,30 @@ Page({
         if (!this.data.userName) {
             wx.showToast({
                 title: '请输入姓名',
-            });
-            return;
-        }
-        if (!this.data.userCode.match(/^\d{6}$/)) {
-            wx.showToast({
-                title: '请输入6位有效验证码',
+                icon:'none'
             });
             return;
         }
         if (!this.data.userPhone.match(/^1\d{10}$/)) {
             wx.showToast({
                 title: '请输入11位有电话号码',
+                icon:'none'
             });
             return;
         }
+        if (!this.data.userCode.match(/^\d{6}$/)) {
+            wx.showToast({
+                title: '请输入6位有效验证码',
+                icon:'none'
+            });
+            return;
+        }
+
         this.validateCode().then(()=>{
-            api.fetchRequest(`/api/account/phone?name=${encodeURIComponent(this.data.userName)}&phone=${this.data.userPhone}`, {}, 'PUT').then((res) => {
+            api.fetchRequest(`/api/account/phone?name=${encodeURIComponent(this.data.userName)}&phone=${this.data.userPhone}`
+                , {}
+                , 'PUT'
+            ).then((res) => {
                 if (res.data.status == 200) {
                     wx.showModal({
                         title: '提示',
@@ -44,7 +51,9 @@ Page({
                     app.globalData.userInfo.name = that.data.userName;
                     app.globalData.userInfo.phone = that.data.userPhone;
                     wx.setStorageSync('userInfo', app.globalData.userInfo);
-
+                    wx.navigateBack({
+                        delta: 1
+                    })
                 }
             })
         }).catch(()=>{});
@@ -63,12 +72,14 @@ Page({
                     reject();
                     wx.showToast({
                         title: res.data.msg,
+                        icon:'none'
                     });
                 })
                 .catch((res) => {
                     reject();
                     wx.showToast({
                         title: res.data.msg,
+                        icon:'none'
                     });
 
                 })
@@ -108,7 +119,7 @@ Page({
             if (res.data.status == 200) {
                 wx.showToast({
                     title: '短信验证码已下发，请查收',
-                    icon: 'success',
+                    icon: 'none',
                     duration: 2000
                 });
                 let timeLimit = 30;
@@ -133,17 +144,26 @@ Page({
                 icon: 'fail',
                 duration: 2000
             });
-            that.setData({
-                getCodeBtnDisabled: false,
-            });
+            let timeId = setTimeout(()=>{
+                clearTimeout(timeId);
+                that.setData({
+                    getCodeBtnDisabled: false,
+                });
+
+            },2000);
         }).catch((res) => {
             wx.showToast({
-                title: res.errMsg,
+                title: res.data.msg,
+                icon:'fail',
                 duration: 2000
             });
-            this.setData({
-                getCodeBtnDisabled: false,
-            });
+            let timeId = setTimeout(()=>{
+                clearTimeout(timeId);
+                that.setData({
+                    getCodeBtnDisabled: false,
+                });
+
+            },2000);
         })
 
     },
