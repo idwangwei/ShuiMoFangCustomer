@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/order-details/index",
     "pages/start/start",
     "pages/index/index",
     "pages/goods-details/index",
@@ -8,7 +9,6 @@
     "pages/select-address/index",
     "pages/address-add/index",
     "pages/order-list/index",
-    "pages/order-details/index",
     "pages/mycoupons/index",
     "pages/my/index",
     "pages/notice/show",
@@ -21,7 +21,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#e85654",
-    "navigationBarTextStyle": "#fff",
+    "navigationBarTextStyle": "white",
     "onReachBottomDistance": 50,
     "navigationBarTitleText": "税魔方"
 
@@ -31,7 +31,6 @@
     "selectedColor": "#e64340",
     "borderStyle": "white",
     "backgroundColor": "#fff",
-    "box-shadow": "0 0 6px 0",
     "list": [
       {
         "pagePath": "pages/index/index",

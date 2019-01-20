@@ -10,3 +10,27 @@ page,
     padding-top: 60px;
     text-align: center;
 }
+.status-pass-color{
+    color: #1aad19;
+}
+
+.weui-tab__panel{
+    padding-top: 300rpx;
+}
+.weui-tab__content{
+    padding-top: 0;
+    padding-bottom: 200rpx;
+}
+
+.goods-summery-box{
+    position: absolute;
+    background-color: #fff;
+    height: 180rpx;
+    z-index: 500;
+    width: 100%;
+
+}
+.weui-navbar{
+    top:180rpx;
+    background-color: #fff;
+}

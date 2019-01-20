@@ -1,6 +1,7 @@
 const CONFIG = require('../config.js');
 const REQUEST_CACHE = [];
-const API_BASE_URL = 'http://192.168.1.253';
+const API_BASE_URL = 'http://47.96.11.208';
+// const API_BASE_URL = 'http://192.168.1.253';
 // const API_BASE_URL = 'https://api.it120.cc';
 /**
  * 简单请求封装

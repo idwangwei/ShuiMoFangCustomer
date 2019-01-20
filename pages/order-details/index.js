@@ -42,16 +42,20 @@ Page({
     },
     onLoad: function () {
         let tabs = [...orderTypeMap],
-            sliderWidth = 75, // 需要设置slider的宽度，用于计算中间位置
             activeIndex = orderTypeMap.findIndex((v) => v.code == app.globalData.selectOrderInfo.status);
-        //todo 产品价格类型判断tabs是否包含‘待报价’
-        if (app.globalData.selectOrderInfo.prodId == 1) {
-            sliderWidth = app.globalData.screenWidth / tabs.length;
-        } else {
+        //订单处于待报价状态就显示待报价tab，否则去掉带报价tab
+        if (app.globalData.selectOrderInfo.status != orderTypeMap[0].code) {
             tabs.shift();
-            sliderWidth = app.globalData.screenWidth / tabs.length;
             activeIndex--;
         }
+        //修改已完成的状态文字
+        for(let i = 0; i<activeIndex;i++){
+            if(i<2){
+                tabs[i].desc = tabs[i].desc.replace(tabs[i].desc.charAt(0),'已')
+            }
+        }
+
+        let sliderWidth = app.globalData.screenWidth / tabs.length;// 需要设置slider的宽度，用于计算中间位置
         this.setData({
             orderDetail: {
                 id: app.globalData.selectOrderInfo.id,
@@ -106,7 +110,7 @@ Page({
                 });
             }).catch((res) => {
                 wx.showToast({
-                    title: res.data.msg,
+                    title: res.msg,
                     icon:'none'
                 });
             })

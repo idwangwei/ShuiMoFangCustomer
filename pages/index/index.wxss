@@ -85,6 +85,8 @@ swiper-item image {
   width: 360rpx;
   /*height: 472rpx;*/
   background-color: #fff;
+  /*background-color: #6e6d6b;*/
+  /*background-color: #e64340;*/
   overflow: hidden;
   margin-bottom: 24rpx;
   display:flex;
@@ -93,7 +95,7 @@ swiper-item image {
 }
 .goods-box .img-box{
   width: 360rpx;
-  /*height: 360rpx;*/
+  height: 200rpx;
   overflow: hidden;
 }
 .goods-box .img-box image{
