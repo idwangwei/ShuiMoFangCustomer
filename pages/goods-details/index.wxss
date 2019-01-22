@@ -190,13 +190,13 @@
   position: relative;
 }
 .pop-img-box{
-  width: 120rpx;
+  width: 216rpx;
   height: 120rpx;
   overflow: hidden;
   margin-right: 26rpx;
 }
 .pop-img-box .goods-thumbnail{
-  width: 120rpx;
+  width: 216rpx;
   height: 120rpx;
 }
 .pop-goods-des{

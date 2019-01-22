@@ -82,7 +82,7 @@ swiper-item image {
   padding: 24rpx 0;
 }
 .goods-box{
-  width: 360rpx;
+  width: 370rpx;
   /*height: 472rpx;*/
   background-color: #fff;
   /*background-color: #6e6d6b;*/
@@ -94,8 +94,8 @@ swiper-item image {
   justify-content:space-between;
 }
 .goods-box .img-box{
-  width: 360rpx;
-  height: 200rpx;
+  width: 370rpx;
+  height: 206rpx;
   overflow: hidden;
 }
 .goods-box .img-box image{
@@ -103,19 +103,20 @@ swiper-item image {
    height: 100%;
 }
 .goods-box .goods-title{
-  width: 280rpx;
+  width: 330rpx;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size: 24rpx;
+  font-size: 26rpx;
   color:#000;
   margin-left: 24rpx;
 }
 .goods-box .goods-price{
   width: 100%;
   overflow: hidden;
-  font-size: 24rpx;
+  font-size: 28rpx;
   color:#e64340;
+  margin: 10rpx 0;
 }
 .goods-price text{
   margin-left: 24rpx;
@@ -309,6 +310,6 @@ swiper-item image {
 }
 .contact-phone-text-desc,.contact-address-text-desc{
   font-size: 22rpx;
-  color: rgb(255, 102, 100);
+  color: rgb(7, 20, 255);
   padding-top: 8rpx;
 }

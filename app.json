@@ -1,30 +1,21 @@
 {
   "pages": [
-    "pages/order-details/index",
     "pages/start/start",
     "pages/index/index",
     "pages/goods-details/index",
-    "pages/shop-cart/index",
-    "pages/to-pay-order/index",
-    "pages/select-address/index",
-    "pages/address-add/index",
+    "pages/bind-info/index",
     "pages/order-list/index",
-    "pages/mycoupons/index",
-    "pages/my/index",
-    "pages/notice/show",
-    "pages/recharge/index",
-    "pages/withdraw/index",
-    "pages/kanjia/index",
-    "pages/score-excharge/index",
-    "pages/note_to_buy/index"
+    "pages/order-details/index",
+    "pages/pay-page/index",
+    "pages/pay-success/index",
+    "pages/my/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#e85654",
+    "navigationBarBackgroundColor": "#d3b1ff",
     "navigationBarTextStyle": "white",
     "onReachBottomDistance": 50,
     "navigationBarTitleText": "税魔方"
-
   },
   "tabBar": {
     "color": "#6e6d6b",
@@ -52,7 +43,5 @@
       }
     ]
   },
-  "navigateToMiniProgramAppIdList": [
-
-  ]
+  "navigateToMiniProgramAppIdList": []
 }

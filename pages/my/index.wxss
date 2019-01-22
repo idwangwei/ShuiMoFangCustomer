@@ -8,7 +8,7 @@
 	flex-direction: column;
 	padding: 50rpx 0;
 	align-items: center;
-	background: #e85654;
+	background: #d3b1ff;
   width: 750rpx;
 }
 
@@ -41,14 +41,14 @@
     justify-content: flex-start;
 }
 .my-item .phone-str{
-    padding-left: 30rpx;
+    padding-left: 10rpx;
 }
 .my-item .bind-phone-btn{
     padding-right: 30rpx;
 }
 .my-item .phone-str image{
-    width: 100rpx;
-    height: 100rpx;
+    width: 80rpx;
+    height: 80rpx;
 }
 
 .my-item .phone-str text{
@@ -93,12 +93,12 @@
     padding: 0 30rpx;
 }
 .share-item-box image, .score-item-box image{
-    width: 100rpx;
+    width: 80rpx;
 }
 .share-item,.score-item{
     flex: 1;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     flex-direction: column;
     justify-content: center;
 }

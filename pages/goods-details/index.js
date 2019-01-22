@@ -124,7 +124,7 @@ Page({
                 success(res) {
                     if(res.confirm){
                         wx.navigateTo({
-                            url: "/pages/address-add/index"
+                            url: "/pages/bind-info/index"
                         });
                     }
                 }
@@ -190,7 +190,6 @@ Page({
                     return
                 }
 
-                //    固定价格的商品直接跳支付
 
                 //    带报价的产品，弹出“下单成功，需要按实际情况报价，客服会及时与你沟通”
                 if(that.data.goodsDetail.priceType == 'FLOAT'){
@@ -203,6 +202,15 @@ Page({
                                 url: '/pages/order-list/index'
                             })
                         }
+                    })
+                }else{
+                    app.globalData.payInfo = {
+                        orderId: res.data.data,
+                        prodName: that.data.goodsDetail.name,
+                        price: that.data.goodsDetail.price
+                    };
+                    wx.navigateTo({
+                        url:'/pages/pay-page/index'
                     })
                 }
             });

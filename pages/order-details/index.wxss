@@ -11,7 +11,8 @@ page,
     text-align: center;
 }
 .status-pass-color{
-    color: #1aad19;
+    color: #fff;
+    background-color: #66CC99!important;
 }
 
 .weui-tab__panel{
@@ -21,16 +22,31 @@ page,
     padding-top: 0;
     padding-bottom: 200rpx;
 }
-
+.button-sp-area{
+    margin: 0 auto;
+    padding-top: 30rpx;
+    width: 60%;
+}
+.mini-btn{
+    margin-right: 10rpx;
+}
 .goods-summery-box{
     position: absolute;
     background-color: #fff;
     height: 180rpx;
     z-index: 500;
     width: 100%;
-
+    padding:0 30rpx;
 }
 .weui-navbar{
     top:180rpx;
     background-color: #fff;
+}
+.weui-navbar__item{
+    background-color: #999999;
+    border:4rpx solid #fff;
+
+}
+.weui-bar__item_on{
+    color: #1a5d19;
 }

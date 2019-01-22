@@ -9,9 +9,10 @@ Page({
     },
     orderDetail: function (e) {
         let index = e.currentTarget.dataset.index;
-        app.globalData.selectOrderInfo = this.data.orderList[index];
+        let orderInfo = this.data.orderList[index];
+        app.globalData.selectOrderInfo = orderInfo;
         wx.navigateTo({
-            url: "/pages/order-details/index"
+            url: `/pages/order-details/index?orderId=${orderInfo.id}`
         })
     },
     cancelOrderTap: function (e) {
@@ -81,7 +82,7 @@ Page({
     onLoad: function (options) {
         let that = this;
         api.fetchRequest(
-            `/api/order/custom/${app.globalData.userInfo.id}/orders`,
+            `/api/order/custom/orders`,
             {
                 limit: this.data.queryLimit,
                 pageNum: this.data.queryPageNum,

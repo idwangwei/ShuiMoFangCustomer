@@ -4,7 +4,8 @@
     <view class="page__bd">
         <view class="weui-tab">
             <view class="weui-media-box weui-media-box_appmsg goods-summery-box">
-                <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                <view class="weui-media-box__hd weui-media-box__hd_in-appmsg"
+                style="width: 108px">
                     <image class="weui-media-box__thumb" src="{{orderDetail.prodImageUri}}" />
                 </view>
                 <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
@@ -28,17 +29,34 @@
             </view>
 
             <view class="weui-tab__panel">
-                <view wx:for="{{tabs}}" wx:key="*this"
-                      class="weui-tab__content"
-                      hidden="{{activeIndex != index}}">
-
-                    <view wx:if="{{!item.info}}">{{item.desc}}</view>
-                    <block wx:else>
-                        <view wx:for="{{item.info}}" wx:for-item="record" wx:for-index="idx" wx:key="*this">
-                            {{record.type}}-{{record.value}}
+                <view wx:if="{{tabs[activeIndex].code == 'QUOTATION'}}">
+                    等待客户与你沟通具体代办事项后，报准确的价格
+                </view>
+                <view wx:elif="{{tabs[activeIndex].code == 'NOTPAY'}}">
+                    <view wx:if="{{orderCurrentStatusIndex>activeIndex}}">
+                        支付信息
+                    </view>
+                    <view wx:else >
+                        <view class="button-sp-area" bindtap="gotoPay">
+                            <button class="weui-btn" type="primary" plain="true">去支付</button>
                         </view>
-                    </block>
-
+                    </view>
+                </view>
+                <view wx:elif="{{tabs[activeIndex].code == 'NOTDISTRIBUTE'}}">
+                    <view wx:if="{{orderCurrentStatusIndex>activeIndex}}">
+                        分配信息
+                    </view>
+                    <view wx:else>
+                        等待分配业务员
+                    </view>
+                </view>
+                <view wx:elif="{{tabs[activeIndex].code == 'SERVING'}}">
+                    <view>
+                        每项服务进度信息
+                    </view>
+                </view>
+                <view wx:else>
+                    <view>服务已完成</view>
                 </view>
             </view>
         </view>

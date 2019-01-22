@@ -19,12 +19,12 @@
 
     <view class="my-score">
         <view class="score-title">
-            <text>我的积分：{{scoreNumber}}</text>
+            <text>我的积分</text>
             <text class="arrow-right"></text>
         </view>
         <view class="score-item-box">
             <view class="score-item">
-                <image src="/images/icon-cart.png" mode="widthFix"></image>
+                <image src="/images/score-rule.png" mode="widthFix"></image>
                 <view>积分规则</view>
             </view>
         </view>
@@ -38,11 +38,11 @@
         </view>
         <view class="share-item-box">
             <view class="share-item">
-                <image src="/images/icon-cart.png" mode="widthFix"></image>
+                <image src="/images/share-rule.png" mode="widthFix"></image>
                 <view>推广政策</view>
             </view>
             <view class="share-item">
-                <image src="/images/icon-cart.png" mode="widthFix"></image>
+                <image src="/images/haibao.png" mode="widthFix"></image>
                 <view>我的海报</view>
             </view>
         </view>

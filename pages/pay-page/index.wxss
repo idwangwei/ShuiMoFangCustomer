@@ -1,0 +1,5 @@
+/* pages/pay-page/index.wxss */
+
+.page{
+    padding: 30rpx;
+}

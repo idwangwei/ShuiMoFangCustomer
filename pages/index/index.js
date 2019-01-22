@@ -78,7 +78,7 @@ Page({
                     descPrice: item.descPrice,
                     creditType: item.creditType,
                     status: item.status,
-                    isShow:true,
+                    isShow:item.status == 'ONLINE',
                 })
             }
             that.setData({

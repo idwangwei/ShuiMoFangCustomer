@@ -10,7 +10,7 @@ Page({
     onLoad() {
         if(app.globalData.userInfo.phone){
             this.setData({
-                userPhone:app.globalData.userInfo.phone
+                userPhone:app.globalData.userInfo.phone.replace(/(\d{3}).+(\d{4})$/,'$1****$2')
             })
         }
     },
@@ -30,24 +30,7 @@ Page({
     },
 
     bindPhoneNumber: function (e) {
-
-        wx.navigateTo({url:"/pages/address-add/index"})
-        // api.fetchRequest('/user/wxapp/bindMobile', {
-        // }).then(function (res) {
-        //     if (res.data.code == 0) {
-        //         wx.showToast({
-        //             title: '绑定成功',
-        //             icon: 'success',
-        //             duration: 2000
-        //         });
-        //     } else {
-        //         wx.showModal({
-        //             title: '提示',
-        //             content: '绑定失败',
-        //             showCancel: false
-        //         })
-        //     }
-        // })
+        wx.navigateTo({url:"/pages/bind-info/index"})
     },
 
 

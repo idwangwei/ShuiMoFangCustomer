@@ -25,7 +25,7 @@ Page({
         try {
             let that = this;
             let userInfo = app.globalData.userInfo;
-            if (userInfo) {
+            if (userInfo && userInfo.openId) {
                 wx.showLoading({title: '登录中', mask: true});
                 app.LoginSys(userInfo.openId).then(() => {
                     wx.hideLoading();

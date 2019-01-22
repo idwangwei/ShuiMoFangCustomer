@@ -154,5 +154,8 @@ App({
         screenHeight: 667,
         userInfo: null,
         token:null,
+        payInfo:null,
+        selectGoodsInfo:null,
+        selectOrderInfo:null
     }
 });

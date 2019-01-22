@@ -1,0 +1,5 @@
+<!--pages/pay-success/index.wxml-->
+<view class="page">
+    <icon type="success" size="93"></icon>
+
+</view>
