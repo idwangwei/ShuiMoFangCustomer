@@ -90,7 +90,7 @@ Page({
     onShareAppMessage: function () {
         return {
             title: CONFIG.shareProfile,
-            path: '/pages/index/index',
+            path: '/pages/index/index?userId=123',
             imageUrl: '/images/share_img.png',
             success: function (res) {
                 // 转发成功
@@ -127,7 +127,7 @@ Page({
     },
     makePhoneCall: function (e) {
         wx.makePhoneCall({
-            phoneNumber: "18280377915",
+            phoneNumber: "02886198523",
             success: function (res) {
                 console.log("成功拨打电话")
             }

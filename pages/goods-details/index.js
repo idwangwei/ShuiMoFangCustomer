@@ -177,24 +177,30 @@ Page({
         let district = this.data.multiArray[2].length ==0 ?'':this.data.multiArray[2][this.data.multiIndex[2]];
         let that = this;
         let location = `${provence}-${city}-${district}`;
+        wx.showLoading({
+            title:'下单中',
+            icon:'none',
+        });
         api.fetchRequest('/api/order/custom',{
             location:location,
             prodId:this.data.goodsDetail.id,
         },'POST',0,{'content-type':'application/x-www-form-urlencoded'})
             .then((res)=>{
+                wx.hideLoading();
                 if(res.data.status!=200){
-                    wx.showToast({
-                        title:'下单失败，请重试',
-                        icon:'none'
+                    wx.showModal({
+                        title:'下单失败',
+                        content:'下单失败，请重试',
+                        mask:true
                     });
                     return
                 }
 
-
                 //    带报价的产品，弹出“下单成功，需要按实际情况报价，客服会及时与你沟通”
                 if(that.data.goodsDetail.priceType == 'FLOAT'){
                     wx.showModal({
-                        title:`${that.data.goodsDetail.name}下单成功，需要按实际情况报价，客服会及时与你沟通`,
+                        title:"下单成功",
+                        content:"需要按实际情况报价，客服会24小时内与你沟通",
                         mask:true,
                         showCancel:false,
                         success(res) {
@@ -213,6 +219,13 @@ Page({
                         url:'/pages/pay-page/index'
                     })
                 }
+            })
+            .catch((res)=>{
+                wx.showModal({
+                    title:'下单失败',
+                    content:'下单失败，请重试',
+                    mask:true
+                });
             });
 
         this.closePopupTap();
@@ -273,7 +286,16 @@ Page({
 
     catchTap:function (e) {
 
-    }
+    },
+
+    makePhoneCall: function (e) {
+        wx.makePhoneCall({
+            phoneNumber: "02886198523",
+            success: function (res) {
+                console.log("成功拨打电话")
+            }
+        })
+    },
 
     // bindPhoneInput:function (e) {
     //     this.setData({

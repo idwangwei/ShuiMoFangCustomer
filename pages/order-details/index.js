@@ -11,6 +11,9 @@ Page({
         orderDetail: null,
         sliderWidth: 75,
         orderCurrentStatusIndex: 0,
+        payInfo:{},
+        distributeInfo:{},
+        serviceInfo:{}
     },
 
     onLoad: function () {
@@ -19,24 +22,20 @@ Page({
                 code: 'QUOTATION',
                 desc: '待报价',
                 queryUrl: '/api/order/quotation/{orderId}',
-                info: []
             }, {
-                code: 'NOTPAY',
+                code: 'PAY',
                 desc: '未支付',
                 queryUrl: '/api/order/pay/{orderId}',
-                info: []
 
             }, {
-                code: 'NOTDISTRIBUTE',
+                code: 'DISTRIBUTE',
                 desc: '待分配',
                 queryUrl: '/api/order/distribute/{orderId}',
-                info: []
 
             }, {
                 code: 'SERVING',
                 desc: '服务中',
                 queryUrl: '/api/order/trace/{orderId}',
-                info: []
 
             }, {
                 code: 'DONE',
@@ -44,12 +43,24 @@ Page({
             }
         ];
 
-        let activeIndex = tabs.findIndex((v) => v.code == app.globalData.selectOrderInfo.status);
-        //订单处于待报价状态就显示待报价tab，否则去掉带报价tab
-        if (app.globalData.selectOrderInfo.status != tabs[0].code) {
-            tabs.shift();
-            activeIndex--;
+
+        let activeIndex = 0;
+        if(app.globalData.selectOrderInfo.payStatus == 'PAYED' && app.globalData.selectOrderInfo.distributeStatus != 'DONE'){
+            activeIndex = 1
         }
+        else if(app.globalData.selectOrderInfo.distributeStatus == 'DONE' && app.globalData.selectOrderInfo.serveStatus!='DONE'){
+            activeIndex = 2
+        }else if(app.globalData.selectOrderInfo.serveStatus=='DONE'){
+            activeIndex = 3
+        }else{
+            activeIndex = 0
+        }
+
+        //订单处于待报价状态就显示待报价tab，否则去掉带报价tab
+        if (app.globalData.selectOrderInfo.statusDesc != tabs[0].desc) {
+            tabs.shift();
+        }
+
         //修改已完成的状态文字
         for (let i = 0; i < activeIndex; i++) {
             if (i < 2) {
@@ -104,6 +115,10 @@ Page({
         let tabs = this.data.tabs;
         let tabInfo = tabs[tabIndex];
         let that = this;
+        //当前状态还是未支付，未分配，点击后不获取支付，分配信息
+        if(tabIndex == this.data.orderCurrentStatusIndex && tabInfo.code !== 'SERVING'){
+            return
+        }
         api.fetchRequest(
             tabInfo.queryUrl.replace(/{orderId}/, this.data.orderDetail.id)
         ).then((res) => {
@@ -114,12 +129,15 @@ Page({
                 });
                 return
             }
-            tabInfo.info = [...res.data.data];
-            tabInfo.infoTimestamp = Date.now();
 
-            that.setData({
-                tabs
-            });
+            if(tabInfo.code == 'PAY'){
+                that.parsePayInfo(res.data);
+            }else if(tabInfo.code == 'DISTRIBUTE'){
+                that.parseDistributeInfo(res.data);
+            }else if(tabInfo.code == 'SERVING'){
+                that.parseServingInfo(res.data);
+            }
+
         }).catch((res) => {
             wx.showToast({
                 title: res.msg,
@@ -127,6 +145,44 @@ Page({
             });
         })
     },
+
+    parsePayInfo:function(data){
+        let onLine = null,
+            credit = null;
+        for(let i = 0, len = data.data.length; i < len; i++){
+            let info = data.data[i];
+            if(data.data[i].type === 'MONEY'){
+                onLine = {
+                    desc:info.method === 'ONLINE' ? '线上支付':'线下支付',
+                    value: info.value
+                }
+            }else {
+                credit = {
+                    desc:'使用积分',
+                    value: info.value
+                }
+            }
+        }
+
+        let payInfo = {
+            infoTimestamp : Date.now(),
+            onLine,
+            credit
+        };
+
+        this.setData({
+            payInfo
+        });
+    },
+    parseDistributeInfo:function(data){
+
+
+    },
+    parseServingInfo:function(data){
+
+
+    },
+
 
     gotoPay: function (e) {
         app.globalData.payInfo = {

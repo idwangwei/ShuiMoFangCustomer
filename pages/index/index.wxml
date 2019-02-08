@@ -17,7 +17,6 @@
             <image src="/images/kefu.png" mode="scaleToFill" class="custom-service-img"/>
         </view>
 
-
     </view>
     <view class="swiper-container">
         <swiper class="swiper_box"
@@ -48,7 +47,7 @@
             </view>
             <view class="contact-phone-text" bindtap="makePhoneCall">
                 <view class="contact-phone-text-title">联系电话</view>
-                <view class="contact-phone-text-desc">13123456789</view>
+                <view class="contact-phone-text-desc">028-86198523</view>
             </view>
         </view>
         <view class="contact-address">

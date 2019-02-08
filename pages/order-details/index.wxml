@@ -32,9 +32,17 @@
                 <view wx:if="{{tabs[activeIndex].code == 'QUOTATION'}}">
                     等待客户与你沟通具体代办事项后，报准确的价格
                 </view>
-                <view wx:elif="{{tabs[activeIndex].code == 'NOTPAY'}}">
-                    <view wx:if="{{orderCurrentStatusIndex>activeIndex}}">
+                <view wx:elif="{{tabs[activeIndex].code == 'PAY'}}">
+                    <view wx:if="{{orderCurrentStatusIndex>activeIndex}}" style="padding: 30rpx">
                         支付信息
+                        <view style="padding-left: 30rpx">
+                            现金支付：
+                            <view style="padding-left: 30rpx">支付方式：{{payInfo.onLine.desc}}</view>
+                            <view style="padding-left: 30rpx">支付金额：{{payInfo.onLine.value}}</view>
+                        </view>
+                        <view style="padding-left: 30rpx">
+                            积分使用：{{payInfo.offLine?payInfo.offLine.value:0}}
+                        </view>
                     </view>
                     <view wx:else >
                         <view class="button-sp-area" bindtap="gotoPay">
@@ -42,9 +50,18 @@
                         </view>
                     </view>
                 </view>
-                <view wx:elif="{{tabs[activeIndex].code == 'NOTDISTRIBUTE'}}">
-                    <view wx:if="{{orderCurrentStatusIndex>activeIndex}}">
+                <view wx:elif="{{tabs[activeIndex].code == 'DISTRIBUTE'}}">
+                    <view wx:if="{{orderCurrentStatusIndex>activeIndex}}" style="padding: 30rpx">
                         分配信息
+                        <view style="padding-left: 30rpx">
+                            记得专属财务秘书：
+                            <view style="padding-left: 30rpx">
+                                姓名：王二小
+                            </view>
+                            <view style="padding-left: 30rpx">
+                                联系电话：13123456789
+                            </view>
+                        </view>
                     </view>
                     <view wx:else>
                         等待分配业务员
@@ -52,7 +69,18 @@
                 </view>
                 <view wx:elif="{{tabs[activeIndex].code == 'SERVING'}}">
                     <view>
-                        每项服务进度信息
+                        服务项进度
+                        <view>
+                            <view class="weui-cells weui-cells_after-title">
+                                <view class="weui-cell">
+                                    <view class="weui-cell__bd">1.三个月记账</view>
+                                </view>
+                                <view class="weui-cell">
+                                    {{'1.第一个记账完成\n2.第二个月记账完成'}}
+                                </view>
+                            </view>
+
+                        </view>
                     </view>
                 </view>
                 <view wx:else>
