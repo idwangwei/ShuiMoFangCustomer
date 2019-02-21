@@ -8,7 +8,14 @@
     "pages/order-details/index",
     "pages/pay-page/index",
     "pages/pay-success/index",
-    "pages/my/index"
+    "pages/company/index",
+    "pages/score-record/index",
+    "pages/score-rule/index",
+    "pages/share-poster/index",
+    "pages/share-record/index",
+    "pages/my/index",
+    "pages/share-rule/index",
+    "pages/note_to_buy/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -28,12 +35,6 @@
         "iconPath": "images/tab-bar/home-off.png",
         "selectedIconPath": "images/tab-bar/home-on.png",
         "text": "首页"
-      },
-      {
-        "pagePath": "pages/order-list/index",
-        "iconPath": "images/tab-bar/order-off.png",
-        "selectedIconPath": "images/tab-bar/order-on.png",
-        "text": "订单"
       },
       {
         "pagePath": "pages/my/index",

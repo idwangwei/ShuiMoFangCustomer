@@ -73,7 +73,8 @@ Page({
             goodsDetail:{
                 id:info.id,
                 name : info.name,
-                price: info.descPrice,
+                price: info.price,
+                descPrice: info.descPrice,
                 priceType:info.priceType,
                 scoreToPay:Math.floor(+info.descPrice.match(/\d+/)/10),
                 textImg:info.descImage,
@@ -213,7 +214,8 @@ Page({
                     app.globalData.payInfo = {
                         orderId: res.data.data,
                         prodName: that.data.goodsDetail.name,
-                        price: that.data.goodsDetail.price
+                        pricePay: that.data.goodsDetail.price ||that.data.goodsDetail.descPrice,
+                        district:location
                     };
                     wx.navigateTo({
                         url:'/pages/pay-page/index'
@@ -234,7 +236,7 @@ Page({
     onShareAppMessage: function () {
         return {
             title: this.data.goodsDetail.name,
-            path: '/pages/goods-details/index?id=' + this.data.goodsDetail.id + '&inviter_id=' + wx.getStorageSync('uid'),
+            path: '/pages/start/start?id=' + this.data.goodsDetail.id + '&inviter_id=' + wx.getStorageSync('uid'),
             success: function (res) {
                 // 转发成功
             },

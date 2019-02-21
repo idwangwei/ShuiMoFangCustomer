@@ -13,8 +13,8 @@
             </input>
         </view>
         <view class="custom-service-box">
-            <button open-type="contact" bindcontact="handleContact" class="custom-service-btn"></button>
             <image src="/images/kefu.png" mode="scaleToFill" class="custom-service-img"/>
+            <button open-type="contact" bindcontact="handleContact" class="custom-service-btn"></button>
         </view>
 
     </view>
@@ -40,26 +40,32 @@
         </swiper>
     </view>
 
+
     <view class="contact-info-box">
         <view class="contact-phone">
             <view class="contact-phone-icon">
-                <image src="/images/phone-icon.png" mode="scaleToFill"></image>
+                <image src="/images/dianhua.png" mode="scaleToFill"></image>
             </view>
             <view class="contact-phone-text" bindtap="makePhoneCall">
-                <view class="contact-phone-text-title">联系电话</view>
+                <view class="contact-phone-text-title">服务热线</view>
                 <view class="contact-phone-text-desc">028-86198523</view>
             </view>
         </view>
         <view class="contact-address">
             <view class="contact-address-icon">
-                <image src="/images/address-icon.png" mode="scaleToFill"></image>
+                <image src="/images/gongsi.png" mode="scaleToFill"></image>
             </view>
-            <view class="contact-address-text">
-                <view class="contact-address-text-title">联系地址</view>
-                <view class="contact-address-text-desc">四川省成都市高新区天府四街银泰城9号楼3楼</view>
+            <view class="contact-address-text" bindtap="showCompanyInfo">
+                <view class="contact-address-text-title display-flex-between">
+                    <view>公司简介</view>
+                    <view class="arrow-right"></view>
+                </view>
+                <view class="contact-address-text-desc">资深业务经理一对一服务</view>
             </view>
         </view>
     </view>
+
+
 
     <view class="goods-dividing-line-box">
         <view class="dividing-line dividing-line-left"></view>

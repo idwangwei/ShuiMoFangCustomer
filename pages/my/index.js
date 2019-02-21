@@ -8,23 +8,14 @@ Page({
         userPhone:''
     },
     onLoad() {
+        this.setData({
+            userInfo:app.globalData.userInfo
+        })
+    },
+    onShow() {
         if(app.globalData.userInfo.phone){
             this.setData({
                 userPhone:app.globalData.userInfo.phone.replace(/(\d{3}).+(\d{4})$/,'$1****$2')
-            })
-        }
-    },
-    onShow() {
-        let that = this;
-        let userInfo = wx.getStorageSync('userInfo');
-        if (!userInfo) {
-            wx.navigateTo({
-                url: "/pages/start/start"
-            })
-        } else {
-            that.setData({
-                userInfo: userInfo,
-                version: CONFIG.version
             })
         }
     },
@@ -34,6 +25,37 @@ Page({
     },
 
 
+    toGoldExchangeRule:function (e) {
+        wx.navigateTo({url: "/pages/score-rule/index"})
 
+    },
+    toGoldExchangeDetail:function (e) {
+        wx.navigateTo({url: "/pages/score-record/index"})
 
+    },
+    gotoOrderList:function (e) {
+        let type = e.currentTarget.dataset.type;
+        wx.navigateTo({
+            url:`/pages/order-list/index?type=${type}`
+        })
+    },
+    toShareRecord:function (e) {
+        wx.navigateTo({url: "/pages/share-record/index"})
+
+    },
+    toShareRule:function (e) {
+        wx.navigateTo({url: "/pages/share-rule/index"})
+
+    },
+    toSharePoster:function (e) {
+        wx.navigateTo({url: "/pages/share-poster/index"})
+
+    },
+
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function () {
+
+    }
 })

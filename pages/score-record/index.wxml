@@ -1,0 +1,26 @@
+<view class="container">
+    <form bindsubmit="bindSave">
+        <view class="form-box">
+            <view class="exchange-title">
+                <view style="font-size: 40rpx;">记录</view>
+                <view style="font-size: 28rpx;color: #4b4b4b">
+                    <text>现有积分：</text>
+                    <text>{{summery.credit}}</text>
+                </view>
+            </view>
+
+            <view wx:if="{{summery.creditItems.length}}" style="padding: 0 30rpx">
+                <view wx:for="{{summery.creditItems}}" style="margin-top: 30rpx">
+                    <view class="credit-title">{{item.msg||'积分变动描述'}}</view>
+                    <view class="credit-content">
+                        <view>{{item.date}}</view>
+                        <view>{{item.credit}}</view>
+                    </view>
+                </view>
+            </view>
+            <view class="weui-loadmore weui-loadmore_line" wx:else>
+                <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+            </view>
+        </view>
+    </form>
+</view>

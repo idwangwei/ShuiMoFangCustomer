@@ -78,6 +78,7 @@ Page({
                     descPrice: item.descPrice,
                     creditType: item.creditType,
                     status: item.status,
+                    price:item.price,
                     isShow:item.status == 'ONLINE',
                 })
             }
@@ -90,7 +91,7 @@ Page({
     onShareAppMessage: function () {
         return {
             title: CONFIG.shareProfile,
-            path: '/pages/index/index?userId=123',
+            path: '/pages/start/start?userId=123',
             imageUrl: '/images/share_img.png',
             success: function (res) {
                 // 转发成功
@@ -132,5 +133,11 @@ Page({
                 console.log("成功拨打电话")
             }
         })
+    },
+    showCompanyInfo: function (e) {
+        wx.navigateTo({
+            url: "/pages/company/index"
+        })
+
     }
 });

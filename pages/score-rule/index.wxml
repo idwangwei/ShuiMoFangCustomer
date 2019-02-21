@@ -1,0 +1,70 @@
+<!--pages/company/index.wxml-->
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-article">
+            <view class="weui-article__h1">税魔方客户积分使用规则</view>
+            <view class="weui-article__section">
+                <view class="weui-article__section">
+                    <view class="weui-article__h3">
+                        什么是税魔方积分？
+                    </view>
+                    <view class="weui-article__p">
+                        税魔方积分是指税魔方用户在消费或者完成某一指定任务后获得的一种奖励。
+                    </view>
+
+                </view>
+                <view class="weui-article__section">
+                    <view class="weui-article__h3">税魔方积分有什么用？</view>
+                    <view class="weui-article__p">
+                        税魔方积分可以用于直接抵扣税魔方商品购买时的支付金额，1积分等于1元人民币，积分抵扣金额不得超过商品待支付金额的30%（含30%）。税魔方积分只能以整数使用，不设找零。比如单笔订单的商品金额为399元，可用于积分抵扣的商品支付额上限为：119.7元（399*30%=119.70元），如果用户拥有的积分数119，则实际支付280元。
+                    </view>
+                </view>
+                <view class="weui-article__section">
+                    <view class="weui-article__h3">税魔方积分怎么获取？</view>
+                    <view class="weui-article__p">
+                        基于税魔方小程序中，您的每笔订单完成支付（特惠产品除外）、推荐客户成功下单等行为都将成为您获取积分的通道。积分获得后的有效期为即从获得积分之日起2年，过期积分将自动作废。若订单在积分有效期后发生退款，该部分积分不予退还。
+                    </view>
+                </view>
+                <view class="weui-article__section">
+                    <view class="weui-article__h3">税魔方积分使用范围？</view>
+                    <view class="weui-article__p">
+                        可用于税魔方小程序所有业务订单的现金抵扣，特惠商品除外。
+                    </view>
+                </view>
+                <view class="weui-article__section">
+                    <view class="weui-article__h3">税魔方积分获取规则表？</view>
+                    <view class="weui-article__p">
+                        <view class="weui-flex">
+                            <view class="weui-flex__item"><view class="placeholder">订单支付金额</view></view>
+                            <view class="weui-flex__item"><view class="placeholder">获取积分数量</view></view>
+                        </view>
+                        <view class="weui-flex">
+                            <view class="weui-flex__item"><view class="placeholder">500以下</view></view>
+                            <view class="weui-flex__item"><view class="placeholder">5个积分</view></view>
+                        </view>
+                        <view class="weui-flex">
+                            <view class="weui-flex__item"><view class="placeholder">500以上-1000以下	</view></view>
+                            <view class="weui-flex__item"><view class="placeholder">10个积分</view></view>
+                        </view>
+                        <view class="weui-flex">
+                            <view class="weui-flex__item"><view class="placeholder">1000以上</view></view>
+                            <view class="weui-flex__item"><view class="placeholder">15个积分</view></view>
+                        </view>
+                        <view class="weui-flex">
+                            <view class="weui-flex__item"><view class="placeholder">推荐客户成功下单一次</view></view>
+                            <view class="weui-flex__item"><view class="placeholder">10个积分</view></view>
+                        </view>
+
+
+                    </view>
+                </view>
+                <view class="weui-article__section">
+                    <view class="weui-article__h3">其他注意事项？</view>
+                    <view class="weui-article__p">
+                        其他未尽事宜，最终解释权归税魔方公司所有。
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

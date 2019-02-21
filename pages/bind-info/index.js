@@ -51,9 +51,14 @@ Page({
                     app.globalData.userInfo.name = that.data.userName;
                     app.globalData.userInfo.phone = that.data.userPhone;
                     wx.setStorageSync('userInfo', app.globalData.userInfo);
-                    wx.navigateBack({
-                        delta: 1
-                    })
+
+                    let timeId = setTimeout(()=>{
+                        clearTimeout(timeId);
+                        wx.navigateBack({
+                            delta: 1
+                        })
+                    },2000);
+
                 }
             })
         }).catch(()=>{});
@@ -155,7 +160,7 @@ Page({
             },2000);
         }).catch((res) => {
             wx.showToast({
-                title: res.data.msg,
+                title: res.msg,
                 icon:'fail',
                 duration: 2000
             });
@@ -173,5 +178,11 @@ Page({
         this.setData({
             userCode: e.detail.value
         })
+    },
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function () {
+
     }
 });

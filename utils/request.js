@@ -1,8 +1,7 @@
 const CONFIG = require('../config.js');
 const REQUEST_CACHE = [];
-const API_BASE_URL = 'http://47.96.11.208';
-// const API_BASE_URL = 'http://192.168.1.253';
-// const API_BASE_URL = 'https://api.it120.cc';
+const API_BASE_URL = 'https://api.shuimof.cn'; //阿里云
+// const API_BASE_URL = 'http://10.0.1.201:80'; //本地
 /**
  * 简单请求封装
  * url: 请求地址
@@ -184,7 +183,7 @@ Promise.prototype.finally = function (callback) {
       );
     }
   );
-}
+};
 
 module.exports = {
   fetchRequest: FetchRequest,

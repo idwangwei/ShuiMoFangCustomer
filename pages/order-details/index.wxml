@@ -5,8 +5,8 @@
         <view class="weui-tab">
             <view class="weui-media-box weui-media-box_appmsg goods-summery-box">
                 <view class="weui-media-box__hd weui-media-box__hd_in-appmsg"
-                style="width: 108px">
-                    <image class="weui-media-box__thumb" src="{{orderDetail.prodImageUri}}" />
+                      style="width: 108px">
+                    <image class="weui-media-box__thumb" src="{{orderDetail.prodImageUri}}"/>
                 </view>
                 <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                     <view class="weui-media-box__title">{{orderDetail.prodName}}</view>
@@ -38,13 +38,14 @@
                         <view style="padding-left: 30rpx">
                             现金支付：
                             <view style="padding-left: 30rpx">支付方式：{{payInfo.onLine.desc}}</view>
-                            <view style="padding-left: 30rpx">支付金额：{{payInfo.onLine.value}}</view>
+                            <view style="padding-left: 30rpx">支付金额：￥{{payInfo.onLine.value}}</view>
+                            <view style="padding-left: 30rpx">支付时间：{{payInfo.onLine.time}}</view>
                         </view>
                         <view style="padding-left: 30rpx">
-                            积分使用：{{payInfo.offLine?payInfo.offLine.value:0}}
+                            积分使用：{{payInfo.offLine ? payInfo.offLine.value : 0}}
                         </view>
                     </view>
-                    <view wx:else >
+                    <view wx:else>
                         <view class="button-sp-area" bindtap="gotoPay">
                             <button class="weui-btn" type="primary" plain="true">去支付</button>
                         </view>
@@ -54,12 +55,12 @@
                     <view wx:if="{{orderCurrentStatusIndex>activeIndex}}" style="padding: 30rpx">
                         分配信息
                         <view style="padding-left: 30rpx">
-                            记得专属财务秘书：
+                            您的专属财务秘书：
                             <view style="padding-left: 30rpx">
-                                姓名：王二小
+                                姓名：{{distributeInfo.empName}}
                             </view>
                             <view style="padding-left: 30rpx">
-                                联系电话：13123456789
+                                联系电话：{{distributeInfo.phone}}
                             </view>
                         </view>
                     </view>
@@ -68,20 +69,22 @@
                     </view>
                 </view>
                 <view wx:elif="{{tabs[activeIndex].code == 'SERVING'}}">
-                    <view>
-                        服务项进度
-                        <view>
-                            <view class="weui-cells weui-cells_after-title">
-                                <view class="weui-cell">
-                                    <view class="weui-cell__bd">1.三个月记账</view>
+                    <view class="weui-panel">
+                        <!--<view class="weui-panel__hd">服务项进度</view>-->
+                        <view class="weui-panel__bd">
+                            <view class="weui-media-box weui-media-box_text" wx:for="{{serviceInfo}}">
+                                <view class="weui-media-box__title weui-media-box__title_in-text">{{index+1+'. '+item.name}}</view>
+                                <view class="weui-media-box__desc" wx:if="{{item.remark}}">
+                                    {{item.remark}}
                                 </view>
-                                <view class="weui-cell">
-                                    {{'1.第一个记账完成\n2.第二个月记账完成'}}
+                                <view class="weui-media-box__info" wx:if="{{item.refreshTime}}">
+                                    <view class="weui-media-box__info__meta">更新时间：{{item.refreshTime}}</view>
                                 </view>
                             </view>
-
                         </view>
                     </view>
+
+
                 </view>
                 <view wx:else>
                     <view>服务已完成</view>

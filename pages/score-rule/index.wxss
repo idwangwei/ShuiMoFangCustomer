@@ -1,0 +1,12 @@
+
+page{
+    background-color: #FFFFFF;
+}
+.weui-flex__item{
+    border:1px solid #eee;
+    padding:8rpx;
+
+}
+image{
+    margin: 4px 0;
+}

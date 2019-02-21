@@ -6,7 +6,7 @@
     <view class="goods-info">
         <view class="goods-title">{{goodsDetail.name}}</view>
         <view class="goods-share">分享有赏，好友下单后可得 {{goodsDetail.scoreToPay}} 积分奖励</view>
-        <view class="goods-price" style="padding-left:35rpx;">¥ {{goodsDetail.price}}</view>
+        <view class="goods-price" style="padding-left:35rpx;">¥ {{goodsDetail.descPrice}}</view>
         <view class="goods-info-fx">
             <image src='../../images/qd.png' mode="widthFix"/>
             <button open-type="share">分享</button>
@@ -30,14 +30,16 @@
         </view>
 
         <view class="" style="flex: 1;height: 100%;display: flex;flex-direction: column;align-items: center;position: relative">
-            <button open-type="contact" bindcontact="handleContact" class="custom-service-btn"></button>
             <image src="/images/weixin.png" mode="aspectFit" class="" style="flex: 1;width: 100%;"/>
             <text style="font-size:24rpx;">在线咨询</text>
+            <button open-type="contact" bindcontact="handleContact" class="custom-service-btn"></button>
         </view>
 
         <view class="now-buy" bindtap="bindGuiGeTap" style="flex: 2">立即下单</view>
 
     </view>
+
+
     <view class="show-popup" hidden="{{hideShopPopup}}" catchtouchmove="true">
         <view class="popup-mask" bindtap="closePopupTap"></view>
         <view class="popup-contents">
@@ -47,7 +49,7 @@
                 </view>
                 <view class="pop-goods-des">
                     <view class="pop-goods-title">{{goodsDetail.name}}</view>
-                    <view class="pop-goods-price">¥ {{goodsDetail.price}}</view>
+                    <view class="pop-goods-price">¥ {{goodsDetail.descPrice}}</view>
                 </view>
                 <view class="pop-goods-close" bindtap="closePopupTap">
                     <image src="/images/popup-close.png" mode="scaleToFill"></image>
@@ -56,7 +58,7 @@
             <view class="form-box">
 
                 <view class="row-wrap">
-                    <view class="label">服务地区</view>
+                    <view class="label">业务地区</view>
                     <picker
                             mode="multiSelector"
                             bindchange="bindMultiPickerChange"

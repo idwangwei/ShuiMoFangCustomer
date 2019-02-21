@@ -3,13 +3,18 @@ const api = require('../../utils/request.js');
 const app = getApp();
 Page({
     data: {
-        orderList: [],
+        tabs:['待报价','待支付','待分配','服务中','已完成'],
+        activeIndex: 0,
+        sliderOffset: 0,
+        sliderLeft: 0,
+
+        orderList: [[],[],[],[],[]],
         queryLimit:10,
         queryPageNum:1,
     },
     orderDetail: function (e) {
         let index = e.currentTarget.dataset.index;
-        let orderInfo = this.data.orderList[index];
+        let orderInfo = this.data.orderList[0][index];
         app.globalData.selectOrderInfo = orderInfo;
         wx.navigateTo({
             url: `/pages/order-details/index?orderId=${orderInfo.id}`
@@ -54,7 +59,7 @@ Page({
                         title: '错误',
                         content: '您的积分不足，无法支付',
                         showCancel: false
-                    })
+                    });
                     return;
                 }
                 if (money <= 0) {
@@ -79,7 +84,24 @@ Page({
             }
         })
     },
-    onLoad: function (options) {
+    onLoad:function(options){
+        let sliderWidth = app.globalData.screenWidth / this.data.tabs.length; // 需要设置slider的宽度，用于计算中间位置
+
+        let activeIndex = options && options.type ? options.type : this.data.activeIndex;
+        let that = this;
+        that.setData({
+            sliderLeft: (app.globalData.screenWidth / this.data.tabs.length - sliderWidth) / 2,
+            sliderOffset: app.globalData.screenWidth / this.data.tabs.length * activeIndex,
+            sliderWidth,
+            activeIndex
+        });
+
+    },
+    onShow: function (options) {
+        this.fetchOrderList();
+    },
+
+    fetchOrderList:function(){
         let that = this;
         api.fetchRequest(
             `/api/order/custom/orders`,
@@ -96,13 +118,15 @@ Page({
                 });
                 return;
             }
+
             that.setData({
-                orderList: res.data.data.results
+                orderList: [res.data.data.results,[],[],[],[]]
             })
         }).catch(() => {
 
         })
     },
+
     onReady: function () {
         // 生命周期函数--监听页面初次渲染完成
 
@@ -118,10 +142,22 @@ Page({
     },
     onPullDownRefresh: function () {
         // 页面相关事件处理函数--监听用户下拉动作
-
+        this.fetchOrderList();
     },
     onReachBottom: function () {
         // 页面上拉触底事件的处理函数
+
+    },
+    tabClick: function (e) {
+        this.setData({
+            sliderOffset: e.currentTarget.offsetLeft,
+            activeIndex: e.currentTarget.id
+        });
+    },
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function () {
 
     }
 });
