@@ -84,7 +84,7 @@ Page({
                     .then((res) => {
                         if (res.data.status === 200) {
                             wx.navigateTo({
-                                url: 'pages/pay-success/index'
+                                url: '/pages/pay-success/index'
                             });
                         }
                     });

@@ -44,21 +44,19 @@ Page({
         // quotationStatus:报价 => 'INPROGRESS':未设置, 'DONE':已报价
         // payStatus:支付 => 'PAYED':已支付, 'NOTSET':未到该状态 ,'NOTPAY':未支付
         // distributeStatus:分配 => 'DISTRIBUTED':已分配, 'NOTDISTRIBUTE':未分配
-        // serveStatus:服务 => 'NOTSET':未到该状态 'SERVING':服务中, 'DONE':完成
+        // serveStatus:服务 => 'NOTSET':未到该状态 ，'WAIT':分配确认,'SERVING':服务中, 'DONE':完成
 
         let tabs = this.data.tabs;
         let activeIndex = 0;
 
         if (app.globalData.selectOrderInfo.payStatus !== 'PAYED') {
             activeIndex = 0
-        }
-        else if (app.globalData.selectOrderInfo.distributeStatus === 'NOTDISTRIBUTE') {
+        } else if (app.globalData.selectOrderInfo.distributeStatus === 'NOTDISTRIBUTE'
+            || app.globalData.selectOrderInfo.serveStatus === 'WAIT') {
             activeIndex = 1
-        }
-        else if (app.globalData.selectOrderInfo.serveStatus !== 'DONE') {
+        } else if (app.globalData.selectOrderInfo.serveStatus !== 'DONE') {
             activeIndex = 2
-        }
-        else {
+        } else {
             activeIndex = 3
         }
 
@@ -125,7 +123,7 @@ Page({
      * @param tabIndex
      */
     fetchTabData: function () {
-        api.fetchRequest(`/api/order/custom/detail/${this.data.orderDetail.id}`,{})
+        api.fetchRequest(`/api/order/custom/detail/${this.data.orderDetail.id}`, {})
             .then((res) => {
                 if (res.data.status !== 200) {
                     wx.showModal({
@@ -196,7 +194,7 @@ Page({
                 onLine = {
                     desc: info.payMethod === 'ONLINE' ? '线上支付' : '线下支付',
                     value: info.price,
-                    time:info.payTime
+                    time: info.payTime
                 }
             } else {
                 credit = {
@@ -223,7 +221,7 @@ Page({
      */
     parseDistributeInfo: function (data) {
         let distributeInfo = {};
-        if(data.length > 0){
+        if (data.length > 0) {
             let emp = data.slice(-1)[0];
             distributeInfo.empName = emp.empName || '王小二';
             distributeInfo.phone = emp.phone || '13*********';
@@ -239,7 +237,7 @@ Page({
         let serviceInfo = [];
 
         let taskItems = data || [];
-        taskItems.forEach((item)=>{
+        taskItems.forEach((item) => {
             serviceInfo.push(item)
         });
 
