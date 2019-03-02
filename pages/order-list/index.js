@@ -75,6 +75,8 @@ Page({
             })
         }).catch(() => {
 
+        }).finally(()=>{
+            wx.stopPullDownRefresh();
         })
     },
 

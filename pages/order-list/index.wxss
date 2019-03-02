@@ -59,6 +59,7 @@ page,
 .page,
 .page__bd{
     height: 100%;
+    background-color:#F2f2f2;
 }
 .page__bd{
     padding-bottom: 0;
@@ -67,7 +68,7 @@ page,
     background-color: #ffffff;
 }
 .weui-tab__panel{
-    background-color:#F2f2f2
+    background-color:#F2f2f2;
 }
 .weui-tab__panel::-webkit-scrollbar{
     display: none;

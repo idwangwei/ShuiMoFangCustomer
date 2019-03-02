@@ -62,5 +62,14 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  backOrderList:function(){
+    wx.navigateTo({
+      url:`/pages/order-list/index?type=2`
+    })
+  },
+
+  backPayPage:function () {
+   wx.navigateBack();
   }
-})
+});

@@ -203,11 +203,14 @@ Page({
                         title:"下单成功",
                         content:"需要按实际情况报价，客服会24小时内与你沟通",
                         mask:true,
-                        showCancel:false,
+                        cancelText:'确认',
+                        confirmText:'查看订单',
                         success(res) {
-                            wx.switchTab({
-                                url: '/pages/order-list/index'
-                            })
+                            if(res.confirm){
+                                wx.navigateTo({
+                                    url: '/pages/order-list/index'
+                                })
+                            }
                         }
                     })
                 }else{

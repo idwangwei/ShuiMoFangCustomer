@@ -71,7 +71,7 @@ Page({
 
     bindPay: function () {
         let that = this;
-
+        api.fetchRequest(`/api/order/pay/${that.data.payOrderId}/freshstatus`, {}, 'PUT');
         wx.requestPayment({
             timeStamp: this.data.timeStamp,
             nonceStr: this.data.nonceStr,
@@ -79,7 +79,6 @@ Page({
             signType: this.data.signType,
             paySign: this.data.paySign,
             success: function (res) {
-                wx.showToast({title: '支付成功'});
                 api.fetchRequest(`/api/order/pay/${that.data.payOrderId}/freshstatus`, {}, 'PUT')
                     .then((res) => {
                         if (res.data.status === 200) {
@@ -90,8 +89,10 @@ Page({
                     });
             },
             fail: function (res) {
-                wx.showToast({
-                    title: '支付失败:' + res.msg
+                wx.showModal({
+                    title: '支付失败' ,
+                    content:res.errMsg,
+                    showCancel:false,
                 });
 
                 // wx.redirectTo({

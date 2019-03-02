@@ -13,11 +13,22 @@ Page({
         })
     },
     onShow() {
-        if(app.globalData.userInfo.phone){
-            this.setData({
-                userPhone:app.globalData.userInfo.phone.replace(/(\d{3}).+(\d{4})$/,'$1****$2')
+        api.fetchRequest('/api/my/customer',{},'GET')
+            .then((res)=>{
+                if(res.data.status == 200){
+                    this.setData({
+                        userPhone:res.data.data.username.replace(/(\d{3}).+(\d{4})$/,'$1****$2'),
+                    });
+                }
             })
-        }
+            .catch(()=>{
+                if(app.globalData.userInfo.phone){
+                    this.setData({
+                        userPhone:app.globalData.userInfo.phone.replace(/(\d{3}).+(\d{4})$/,'$1****$2')
+                    })
+                }
+            })
+
     },
 
     bindPhoneNumber: function (e) {
