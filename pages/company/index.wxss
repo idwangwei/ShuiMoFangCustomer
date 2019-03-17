@@ -1,7 +1,14 @@
-                                  /* pages/company/index.wxss */
-page{
+/* pages/company/index.wxss */
+page {
     background-color: #FFFFFF;
 }
-image{
-    margin: 4px 0;
+
+image {
+    width: 100%;
 }
+
+.image-warp {
+    width: 100%;
+    height: 100%;
+}
+

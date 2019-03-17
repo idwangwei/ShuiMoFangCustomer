@@ -22,6 +22,9 @@ page{
 }
 .my-avatar-warp .weui-media-box__title{
     text-align: center;
+    color: #fff;
 }
-
+.border-left{
+    border-left: 2rpx solid #ededed;
+}
 image{display: block}

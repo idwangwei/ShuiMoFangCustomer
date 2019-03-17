@@ -17,54 +17,31 @@
 
     </view>
 
-
-    <view class="weui-panel">
-        <view class="weui-panel__bd">
-            <view class="weui-media-box weui-media-box_small-appmsg">
-                <view class="weui-cells weui-cells_in-small-appmsg" bindtap="gotoOrderList" data-type="0">
-                    <view url="" class="weui-cell weui-cell_access">
-                        <view class="weui-cell__hd">
-                            <image src="/images/dingdan.png" style="width: 20px;height: 20px;margin-right: 5px"/>
-                        </view>
-
-                        <view class="weui-cell__bd weui-cell_primary"
-                              style="display: flex;justify-content: space-between">
-                            <view>我的订单</view>
-                            <view></view>
-                        </view>
-                        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                    </view>
-
-                </view>
-                <view style="display: flex;justify-content: space-around;padding: 16rpx;font-size: 24rpx">
-                    <view bindtap="gotoOrderList" data-type="0"
-                          style="display: flex;flex-direction: column;justify-content: center;align-items: center">
-                        <image src="/images/jinhangzhong.png" style="width: 20px;height: 20px"></image>
-                        <text>待报价</text>
-                    </view>
-                    <view bindtap="gotoOrderList" data-type="1"
-                          style="display: flex;flex-direction: column;justify-content: center;align-items: center">
-                        <image src="/images/yiwancheng.png" style="width: 20px;height: 20px"></image>
-                        <text>待支付</text>
-                    </view>
-                    <view bindtap="gotoOrderList" data-type="2"
-                          style="display: flex;flex-direction: column;justify-content: center;align-items: center">
-                        <image src="/images/yiwancheng.png" style="width: 20px;height: 20px"></image>
-                        <text >待分配</text>
-                    </view>
-                    <view bindtap="gotoOrderList" data-type="3"
-                          style="display: flex;flex-direction: column;justify-content: center;align-items: center">
-                        <image src="/images/yiwancheng.png" style="width: 20px;height: 20px"></image>
-                        <text>服务中</text>
-                    </view>
-                    <view bindtap="gotoOrderList" data-type="4"
-                          style="display: flex;flex-direction: column;justify-content: center;align-items: center">
-                        <image src="/images/yiwancheng.png" style="width: 20px;height: 20px"></image>
-                        <text>已完成</text>
-                    </view>
+    <view class="weui-panel margin-0">
+        <view class="weui-panel__bd display-flex">
+            <view url="" class="weui-cell weui-cell_access flex-1" hover-class="weui-cell_active" bindtap="toGoldExchangeRule">
+                <view class="weui-cell__hd">
+                    <image src="/images/jifenguizeguankong2.png"
+                           class="icon-image"/>
                 </view>
 
+                <view class="weui-cell__bd weui-cell_primary">
+                    <view>积分规则</view>
+                </view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </view>
+
+            <view url="" class="weui-cell weui-cell_access flex-1 border-left" hover-class="weui-cell_active" bindtap="toGoldExchangeDetail">
+                <view class="weui-cell__hd">
+                    <image src="/images/jifen.png" class="icon-image"/>
+                </view>
+
+                <view class="weui-cell__bd weui-cell_primary">
+                    <view>积分记录</view>
+                </view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </view>
+
         </view>
     </view>
 
@@ -75,7 +52,7 @@
                 <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active"
                       bindtap="bindPhoneNumber">
                     <view class="weui-cell__hd">
-                        <image src="/images/phone-icon.png" style="width: 20px;height: 20px;margin-right: 5px"/>
+                        <image src="/images/phone-icon.png" class="icon-image"/>
                     </view>
 
                     <view class="weui-cell__bd weui-cell_primary">
@@ -91,36 +68,53 @@
     <view class="weui-panel">
         <view class="weui-panel__bd">
             <view class="weui-media-box weui-media-box_small-appmsg">
-                <view class="weui-cells weui-cells_in-small-appmsg" bindtap="toGoldExchangeRule">
-                    <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <view class="weui-cells weui-cells_in-small-appmsg" bindtap="gotoOrderList" data-type="0">
+                    <view url="" class="weui-cell weui-cell_access">
                         <view class="weui-cell__hd">
-                            <image src="/images/jifenguizeguankong2.png"
-                                   style="width: 20px;height: 20px;margin-right: 5px"/>
+                            <image src="/images/dingdan.png" class="icon-image"/>
                         </view>
 
-                        <view class="weui-cell__bd weui-cell_primary">
-                            <view>积分规则</view>
+                        <view class="weui-cell__bd weui-cell_primary"
+                              style="display: flex;justify-content: space-between">
+                            <view>我的订单</view>
+                            <view></view>
                         </view>
                         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                     </view>
 
                 </view>
-                <view class="weui-cells weui-cells_in-small-appmsg" bindtap="toGoldExchangeDetail">
-                    <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                        <view class="weui-cell__hd">
-                            <image src="/images/jifen.png" style="width: 20px;height: 20px;margin-right: 5px"/>
-                        </view>
-
-                        <view class="weui-cell__bd weui-cell_primary">
-                            <view>积分记录</view>
-                        </view>
-                        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                <view style="display: flex;justify-content: space-around;padding:40rpx 16rpx;font-size: 24rpx">
+                    <view bindtap="gotoOrderList" data-type="0"
+                          style="display: flex;flex-direction: column;justify-content: center;align-items: center">
+                        <image src="/images/jinhangzhong.png" class="icon-image"></image>
+                        <text>待报价</text>
                     </view>
-
+                    <view bindtap="gotoOrderList" data-type="1"
+                          style="display: flex;flex-direction: column;justify-content: center;align-items: center">
+                        <image src="/images/yiwancheng.png" class="icon-image"></image>
+                        <text>待支付</text>
+                    </view>
+                    <view bindtap="gotoOrderList" data-type="2"
+                          style="display: flex;flex-direction: column;justify-content: center;align-items: center">
+                        <image src="/images/yiwancheng.png" class="icon-image"></image>
+                        <text>待分配</text>
+                    </view>
+                    <view bindtap="gotoOrderList" data-type="3"
+                          style="display: flex;flex-direction: column;justify-content: center;align-items: center">
+                        <image src="/images/yiwancheng.png" class="icon-image"></image>
+                        <text>服务中</text>
+                    </view>
+                    <view bindtap="gotoOrderList" data-type="4"
+                          style="display: flex;flex-direction: column;justify-content: center;align-items: center">
+                        <image src="/images/yiwancheng.png" class="icon-image"></image>
+                        <text>已完成</text>
+                    </view>
                 </view>
+
             </view>
         </view>
     </view>
+
 
     <view class="weui-panel">
         <view class="weui-panel__bd">
@@ -129,38 +123,11 @@
                     <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                         <view class="weui-cell__hd">
                             <image src="/images/daohang-tuiguanglianjie.png"
-                                   style="width: 20px;height: 20px;margin-right: 5px"/>
+                                   class="icon-image"/>
                         </view>
 
                         <view class="weui-cell__bd weui-cell_primary">
                             <view>我的推广</view>
-                        </view>
-                        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                    </view>
-
-                </view>
-                <view class="weui-cells weui-cells_in-small-appmsg" bindtap="toShareRule">
-                    <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                        <view class="weui-cell__hd">
-                            <image src="/images/yemiantuiguang.png" style="width: 20px;height: 20px;margin-right: 5px"/>
-                        </view>
-
-                        <view class="weui-cell__bd weui-cell_primary">
-                            <view>推广规则</view>
-                        </view>
-                        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                    </view>
-
-                </view>
-                <view class="weui-cells weui-cells_in-small-appmsg" bindtap="toSharePoster">
-                    <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                        <view class="weui-cell__hd">
-                            <image src="/images/xuanchuantuiguang.png"
-                                   style="width: 20px;height: 20px;margin-right: 5px"/>
-                        </view>
-
-                        <view class="weui-cell__bd weui-cell_primary">
-                            <view>推广海报</view>
                         </view>
                         <view class="weui-cell__ft weui-cell__ft_in-access"></view>
                     </view>
