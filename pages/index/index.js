@@ -11,10 +11,10 @@ Page({
         circular: false, //是否采用衔接滑动
         loadingHidden: false, // loading
         banners: [{
-            picUrl: '/images/banner01.jpg',
+            picUrl: '/images/ad/banner01.png',
             businessId: '1'
         }, {
-            picUrl: '/images/banner03.jpg',
+            picUrl: '/images/ad/banner02.png',
             businessId: '2'
         },
         ],

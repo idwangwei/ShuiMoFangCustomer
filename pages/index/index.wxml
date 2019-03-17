@@ -3,8 +3,8 @@
 <view class="container">
     <view class="search-view">
         <view class="search-content">
-            <image src="/images/search-pic.png" class="search-icon"/>
-            <input placeholder="请输入搜索内容"
+            <image src="/images/icon/search-pic.png" class="search-icon"/>
+            <input placeholder=""
                    class="search-input"
                    maxlength="30"
                    confirm-type="search"
@@ -13,7 +13,7 @@
             </input>
         </view>
         <view class="custom-service-box">
-            <image src="/images/kefu.png" mode="scaleToFill" class="custom-service-img"/>
+            <image src="/images/icon/kefu.png" mode="scaleToFill" class="custom-service-img"/>
             <button open-type="contact" bindcontact="handleContact" class="custom-service-btn"></button>
         </view>
 
@@ -44,7 +44,7 @@
     <view class="contact-info-box">
         <view class="contact-phone">
             <view class="contact-phone-icon">
-                <image src="/images/dianhua.png" mode="scaleToFill"></image>
+                <image src="/images/icon/dianhua.png" mode="scaleToFill"></image>
             </view>
             <view class="contact-phone-text" bindtap="makePhoneCall">
                 <view class="contact-phone-text-title">服务热线</view>
@@ -53,7 +53,7 @@
         </view>
         <view class="contact-address">
             <view class="contact-address-icon">
-                <image src="/images/gongsi.png" mode="scaleToFill"></image>
+                <image src="/images/icon/gongsi.png" mode="scaleToFill"></image>
             </view>
             <view class="contact-address-text" bindtap="showCompanyInfo">
                 <view class="contact-address-text-title display-flex-between">

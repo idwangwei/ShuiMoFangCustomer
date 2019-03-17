@@ -10,6 +10,8 @@
   width: 100%;
   position: relative;
   color: rgb(195, 62, 58);
+  padding-bottom:1.5rem;
+  background-color:#1f1b98
 }
 .swiper_box {
   width: 100%;
@@ -23,29 +25,6 @@ swiper-item image {
   overflow: hidden;
   /*height:562.5rpx;*/
 }
-/*
-.swiper-container .dots{
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 20rpx;
-  display: flex;
-  justify-content: center;
-}
-.swiper-container .dots .dot{
-  margin: 0 8rpx;
-  width: 14rpx;
-  height: 14rpx;
-  background: #fff;
-  border-radius: 50%;
-  transition: all .6s;
-  opacity: .5;
-}
-.swiper-container .dots .dot.active{
-  width: 14rpx;
-  opacity: 1;
-}
-*/
 
 .type-navbar{
   white-space: nowrap;
@@ -212,23 +191,23 @@ swiper-item image {
   top:0;
   z-index:500;
   height: 100rpx;
-  background: #fff;
   display: flex;
   flex-direction: row;
-  padding:0rpx 20rpx;
+  padding:0rpx 60rpx;
   align-items:center;
-
+  background-color: #1f1b98;
 }
 .search-content{
-   background: #eee;
+   background: #6360b7;
+
    flex: 1;
    display: flex;
    flex-direction: row;
    align-items: center;
-   padding: auto 20rpx;
+   padding: auto 60rpx;
    margin: auto;
    height: 70rpx;
-   border-radius:5px 5px;
+   border-radius:35rpx;
 }
 .search-icon{
   width: 40rpx;
@@ -239,12 +218,13 @@ swiper-item image {
 .search-input{
   flex: 1;
   font-size: 34rpx;
+  color: #fff;
 }
 
 .custom-service-box{
     width: 80rpx;
     height: 80rpx;
-    margin-left: 20rpx;
+    margin-left: 60rpx;
     position: relative;
 }
 .custom-service-btn{
@@ -268,19 +248,26 @@ swiper-item image {
 }
 .goods-dividing-line-box .dividing-line{
   height: 2rpx;
-  background-color: #cbcbcb;
+  background-color: #1f1b98;
   flex: 1;
 }
 .goods-dividing-line-box text{
   font-size: 28rpx;
-  padding: 16rpx 112rpx;
+  padding: 16rpx 12rpx;
 }
 
 .contact-info-box{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top:4px;
+  z-index:10;
+  background-color:#fff;
+  position:relative;
+  margin:-1.3rem 1rem 0.8rem 1rem;
+  border-radius:0.8rem;
+  padding:0.8rem 0;
+  box-shadow:0 4rpx 4rpx #ababab;
+
 
 }
 .contact-phone,.contact-address{
@@ -294,12 +281,25 @@ swiper-item image {
   border-left: 2rpx solid #bababa;
 }
 .contact-phone-icon,.contact-address-icon{
-  width: 56rpx;
-  height: 56rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+  display: flex;
+  display: -webkit-flex;
+  justify-content: center;
+  -webkit-justify-content: center;
+  align-items: center;
+  -webkit-align-items: center;
+}
+.contact-phone-icon{
+  background:linear-gradient(#1079db,#073866);
+}
+.contact-address-icon{
+  background:linear-gradient(#86b671,#455d3a);
 }
 .contact-phone-icon image,.contact-address-icon image{
-  width: 100%;
-  height: 100%
+  width: 60%;
+  height: 60%
 }
 .contact-phone-text,.contact-address-text{
   flex: 1;
@@ -307,10 +307,16 @@ swiper-item image {
 }
 .contact-phone-text-title,.contact-address-text-title{
   font-size: 28rpx;
-  color: #000;
+  color: #1f1b98;
+  font-weight:bold;
+
 }
 .contact-phone-text-desc,.contact-address-text-desc{
   font-size: 22rpx;
-  color: rgb(7, 20, 255);
+  color: #121212;
   padding-top: 8rpx;
+
+}
+.contact-address-text-desc{
+  line-height:24rpx;
 }

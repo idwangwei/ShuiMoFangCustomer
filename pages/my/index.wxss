@@ -5,4 +5,23 @@ page{
 .weui-cells{
     font-size: 34rpx;
 }
+.my-avatar-warp{
+    height:45vw;
+    flex-direction:column;
+    justify-content:center;
+    background: linear-gradient(#1f1b98,#5652c3);
+
+}
+.my-avatar-warp .avatar-box{
+    width:160rpx;
+    height:160rpx;
+    border-radius:50%;
+    overflow:hidden;
+    margin-right: 0;
+
+}
+.my-avatar-warp .weui-media-box__title{
+    text-align: center;
+}
+
 image{display: block}

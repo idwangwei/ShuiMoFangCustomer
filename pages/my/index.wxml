@@ -3,9 +3,9 @@
     <view class="page__bd">
         <view class="weui-panel weui-panel_access">
             <view class="weui-panel__bd">
-                <view class="weui-media-box weui-media-box_appmsg">
-                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                        <image class="weui-media-box__thumb" src="{{userInfo.avatarUrl}}"/>
+                <view class="weui-media-box weui-media-box_appmsg my-avatar-warp">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg avatar-box">
+                        <image class="weui-media-box__thumb" mode="aspectFit" src="{{userInfo.avatarUrl}}"/>
                     </view>
                     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                         <view class="weui-media-box__title">{{userInfo.nickName}}</view>

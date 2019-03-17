@@ -1,3 +1,4 @@
 {
-  "enablePullDownRefresh": false
+  "enablePullDownRefresh": false,
+  "navigationBarBackgroundColor": "#1f1b98"
 }

@@ -1,4 +1,5 @@
 {
   "enablePullDownRefresh": false,
-  "disableScroll": true
+  "disableScroll": true,
+  "navigationBarBackgroundColor": "#10133f"
 }
