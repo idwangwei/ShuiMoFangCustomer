@@ -37,7 +37,8 @@ Page({
             return;
         }
 
-        this.validateCode().then(()=>{
+        this.validateCode()
+            .then(()=>{
             api.fetchRequest(`/api/account/phone?name=${encodeURIComponent(this.data.userName)}&phone=${this.data.userPhone}`
                 , {}
                 , 'PUT'
@@ -61,11 +62,16 @@ Page({
 
                 }
             })
-        }).catch(()=>{});
+        })
+            .catch(()=>{});
     },
 
 
     onLoad: function (e) {
+        this.setData({
+            userPhone:app.globalData.userInfo.phone,
+            userName:app.globalData.userInfo.name
+        })
     },
 
     validateCode: function (e) {

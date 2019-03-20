@@ -24,13 +24,13 @@
     <view class="footer-box">
 
         <view class="" style="flex: 1;height: 100%;display: flex;flex-direction: column;align-items: center" bindtap="makePhoneCall">
-            <image src="/images/dianhua.png" mode="aspectFit" bindtap=""
+            <image src="/images/icon/phone.png" mode="aspectFit" bindtap=""
                    class="" style="flex: 1;width: 100%;"/>
             <text style="font-size:24rpx;">服务热线</text>
         </view>
 
         <view class="" style="flex: 1;height: 100%;display: flex;flex-direction: column;align-items: center;position: relative">
-            <image src="/images/weixin.png" mode="aspectFit" class="" style="flex: 1;width: 100%;"/>
+            <image src="/images/icon/kefu2.png" mode="aspectFit" class="" style="flex: 1;width: 100%;"/>
             <text style="font-size:24rpx;">在线咨询</text>
             <button open-type="contact" bindcontact="handleContact" class="custom-service-btn"></button>
         </view>

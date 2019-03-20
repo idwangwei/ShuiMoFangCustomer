@@ -112,7 +112,8 @@ App({
             postJsonString: postJsonString
         }, 'POST', 0, {
             'content-type': 'application/x-www-form-urlencoded'
-        }).then(function (res) {
+        })
+            .then(function (res) {
         })
     },
     sendTempleMsgImmediately: function (template_id, form_id, page, postJsonString) {
@@ -127,7 +128,8 @@ App({
             postJsonString: postJsonString
         }, 'POST', 0, {
             'content-type': 'application/x-www-form-urlencoded'
-        }).then(function (res) {
+        })
+            .then(function (res) {
         })
     },
     goLoginPageTimeOut: function () {

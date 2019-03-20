@@ -21,7 +21,7 @@
         <view class="weui-panel__bd display-flex">
             <view url="" class="weui-cell weui-cell_access flex-1" hover-class="weui-cell_active" bindtap="toGoldExchangeRule">
                 <view class="weui-cell__hd">
-                    <image src="/images/jifenguizeguankong2.png"
+                    <image src="/images/my/jifenguize.png"
                            class="icon-image"/>
                 </view>
 
@@ -33,7 +33,7 @@
 
             <view url="" class="weui-cell weui-cell_access flex-1 border-left" hover-class="weui-cell_active" bindtap="toGoldExchangeDetail">
                 <view class="weui-cell__hd">
-                    <image src="/images/jifen.png" class="icon-image"/>
+                    <image src="/images/my/jilu.png" class="icon-image"/>
                 </view>
 
                 <view class="weui-cell__bd weui-cell_primary">
@@ -52,7 +52,7 @@
                 <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active"
                       bindtap="bindPhoneNumber">
                     <view class="weui-cell__hd">
-                        <image src="/images/phone-icon.png" class="icon-image"/>
+                        <image src="/images/my/shouji.png" class="icon-image"/>
                     </view>
 
                     <view class="weui-cell__bd weui-cell_primary">
@@ -71,7 +71,7 @@
                 <view class="weui-cells weui-cells_in-small-appmsg" bindtap="gotoOrderList" data-type="0">
                     <view url="" class="weui-cell weui-cell_access">
                         <view class="weui-cell__hd">
-                            <image src="/images/dingdan.png" class="icon-image"/>
+                            <image src="/images/my/jilu.png" class="icon-image"/>
                         </view>
 
                         <view class="weui-cell__bd weui-cell_primary"
@@ -86,27 +86,27 @@
                 <view style="display: flex;justify-content: space-around;padding:40rpx 16rpx;font-size: 24rpx">
                     <view bindtap="gotoOrderList" data-type="0"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
-                        <image src="/images/jinhangzhong.png" class="icon-image"></image>
+                        <image src="/images/my/daibaojia.png" class="icon-image"></image>
                         <text>待报价</text>
                     </view>
                     <view bindtap="gotoOrderList" data-type="1"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
-                        <image src="/images/yiwancheng.png" class="icon-image"></image>
+                        <image src="/images/my/daizhifu.png" class="icon-image"></image>
                         <text>待支付</text>
                     </view>
                     <view bindtap="gotoOrderList" data-type="2"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
-                        <image src="/images/yiwancheng.png" class="icon-image"></image>
+                        <image src="/images/my/daifenpei.png" class="icon-image"></image>
                         <text>待分配</text>
                     </view>
                     <view bindtap="gotoOrderList" data-type="3"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
-                        <image src="/images/yiwancheng.png" class="icon-image"></image>
+                        <image src="/images/my/fuwuzhong.png" class="icon-image"></image>
                         <text>服务中</text>
                     </view>
                     <view bindtap="gotoOrderList" data-type="4"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
-                        <image src="/images/yiwancheng.png" class="icon-image"></image>
+                        <image src="/images/my/yiwancheng.png" class="icon-image"></image>
                         <text>已完成</text>
                     </view>
                 </view>
@@ -122,7 +122,7 @@
                 <view class="weui-cells weui-cells_in-small-appmsg" bindtap="toShareRecord">
                     <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                         <view class="weui-cell__hd">
-                            <image src="/images/daohang-tuiguanglianjie.png"
+                            <image src="/images/my/tuiguang.png"
                                    class="icon-image"/>
                         </view>
 
