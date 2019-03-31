@@ -1,6 +1,5 @@
 <!--pages/pay-page/index.wxml-->
 <view class="page">
-
     <view style="margin-top:100rpx;">
         <view style="text-align: center;">{{prodName}}</view>
         <view style="font-size:80rpx;text-align:center;">￥{{price}}</view>

@@ -9,7 +9,7 @@
                     </view>
                     <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                         <view class="weui-media-box__title">{{userInfo.nickName}}</view>
-                        <view class="weui-media-box__title">积分：{{userInfo.score||100}}</view>
+                        <view class="weui-media-box__title">积分：{{scoreNumber}}</view>
                     </view>
                 </view>
             </view>
@@ -87,27 +87,27 @@
                     <view bindtap="gotoOrderList" data-type="0"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
                         <image src="/images/my/daibaojia.png" class="icon-image"></image>
-                        <text>待报价</text>
+                        <text>待报价({{orderQuantity.quotation}})</text>
                     </view>
                     <view bindtap="gotoOrderList" data-type="1"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
                         <image src="/images/my/daizhifu.png" class="icon-image"></image>
-                        <text>待支付</text>
+                        <text>待支付({{orderQuantity.pay}})</text>
                     </view>
                     <view bindtap="gotoOrderList" data-type="2"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
                         <image src="/images/my/daifenpei.png" class="icon-image"></image>
-                        <text>待分配</text>
+                        <text>待分配({{orderQuantity.distribute}})</text>
                     </view>
                     <view bindtap="gotoOrderList" data-type="3"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
                         <image src="/images/my/fuwuzhong.png" class="icon-image"></image>
-                        <text>服务中</text>
+                        <text>服务中({{orderQuantity.serving}})</text>
                     </view>
                     <view bindtap="gotoOrderList" data-type="4"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
                         <image src="/images/my/yiwancheng.png" class="icon-image"></image>
-                        <text>已完成</text>
+                        <text>已完成({{orderQuantity.done}})</text>
                     </view>
                 </view>
 

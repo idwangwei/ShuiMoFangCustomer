@@ -5,7 +5,14 @@ Page({
     data: {
         userInfo: {},
         scoreNumber: 0,
-        userPhone: ''
+        userPhone: '',
+        orderQuantity:{
+            quotation:0,
+            pay:0,
+            distribute:0,
+            serving:0,
+            done:0
+        }
     },
     onLoad() {
         this.setData({
@@ -21,6 +28,7 @@ Page({
                         app.globalData.userInfo.name = res.data.data.name;
                         this.setData({
                             userPhone: res.data.data.username.replace(/(\d{3}).+(\d{4})$/, '$1****$2'),
+                            scoreNumber: res.data.data.ecSummary.creditRemain
                         });
                     }
                 }

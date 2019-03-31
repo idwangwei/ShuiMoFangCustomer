@@ -38,30 +38,20 @@ Page({
     /**
      * 页面加载，解析当前订单包含哪些状态并定位到当前状态
      */
-    onLoad: function () {
-
+    onLoad: function (options) {
         // 订单状态：
-        // quotationStatus:报价 => 'INPROGRESS':未设置, 'DONE':已报价
-        // payStatus:支付 => 'PAYED':已支付, 'NOTSET':未到该状态 ,'NOTPAY':未支付
-        // distributeStatus:分配 => 'DISTRIBUTED':已分配, 'NOTDISTRIBUTE':未分配
-        // serveStatus:服务 => 'NOTSET':未到该状态 ，'WAIT':分配确认,'SERVING':服务中, 'DONE':完成
+        // options.status == 0:报价
+        // options.status == 1:支付
+        // options.status == 2:分配
+        // options.status == 3:服务
+        // options.status == 4:完成
 
         let tabs = this.data.tabs;
-        let activeIndex = 0;
-
-        if (app.globalData.selectOrderInfo.payStatus !== 'PAYED') {
-            activeIndex = 0
-        } else if (app.globalData.selectOrderInfo.distributeStatus === 'NOTDISTRIBUTE'
-            || app.globalData.selectOrderInfo.serveStatus === 'WAIT') {
-            activeIndex = 1
-        } else if (app.globalData.selectOrderInfo.serveStatus !== 'DONE') {
-            activeIndex = 2
-        } else {
-            activeIndex = 3
-        }
+        let activeIndex = +options.status;
 
         //订单处于待报价状态就显示待报价tab，否则去掉带报价tab
-        if (app.globalData.selectOrderInfo.quotationStatus === 'DONE') {
+        if (activeIndex > 0) {
+            activeIndex--;
             tabs.shift();
         }
 
@@ -76,9 +66,9 @@ Page({
         this.setData({
             orderDetail: {
                 id: app.globalData.selectOrderInfo.id,
-                prodName: app.globalData.selectOrderInfo.prodName,
+                prodName: app.globalData.selectOrderInfo.prodName||'公司注册',
                 location: app.globalData.selectOrderInfo.location,
-                prodImageUri: app.globalData.selectOrderInfo.prodImageUri,
+                prodImageUri: app.globalData.selectOrderInfo.prodImageUri||'https://api.shuimof.cn/upload/img/product/82db483c-dd1a-443d-83f9-7088fe0b1e16.png',
                 pricePay: app.globalData.selectOrderInfo.pricePay,
                 priceQuotation: app.globalData.selectOrderInfo.priceQuotation
             },

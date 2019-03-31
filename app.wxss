@@ -15,9 +15,6 @@
 page{
   min-height: 100%;
 }
-.display-flex{
-  display: flex;
-}
 .flex-1{
   flex:1;
 }
@@ -31,4 +28,33 @@ page{
   width: 60rpx;
   height: 60rpx;
   margin-right: 5px;
+}
+.display-flex-between{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.display-flex{
+  display:-webkit-box;
+  display:-webkit-flex;
+  display:flex
+}
+.align-items-center{
+  align-items: center;
+  -webkit-align-items: center;
+}
+.justify-content-center{
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+
+.arrow-right{
+  display: inline-block;
+  border-right: 1rpx solid #626262;
+  border-top: 1rpx solid #626262;
+  width:20rpx;
+  height:20rpx;
+  transform:rotate(45deg);
+
 }

@@ -41,7 +41,7 @@ Page({
         that.setData({
             isLoading:true
         });
-        api.fetchRequest('/api/credit/summary')
+        api.fetchRequest('/api/credit/summary',{status :'DONE'})
             .then(function (res) {
                 if (res.data.status != 200) {
                     wx.showToast({

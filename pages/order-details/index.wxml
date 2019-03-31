@@ -30,7 +30,21 @@
 
             <view class="weui-tab__panel">
                 <view wx:if="{{tabs[activeIndex].code == 'QUOTATION'}}">
-                    等待客户与你沟通具体代办事项后，报准确的价格
+                    <!--<view wx:if="{{orderCurrentStatusIndex>activeIndex}}" style="padding: 30rpx">
+                        报价信息
+                        <view style="padding-left: 30rpx;padding-top: 30rpx" wx:for="quotationInfo">
+                            第{{index+1}}次报价：
+                            <view style="padding-left: 30rpx">
+                                报价金额：{{item.price}}
+                            </view>
+                            <view style="padding-left: 30rpx">
+                                报价时间：{{item.quotationTime}}
+                            </view>
+                        </view>
+                    </view>
+                    <view wx:else>-->
+                        等待客服与你沟通具体代办事项后，报准确的价格
+                    <!--</view>-->
                 </view>
                 <view wx:elif="{{tabs[activeIndex].code == 'PAY'}}">
                     <view wx:if="{{orderCurrentStatusIndex>activeIndex}}" style="padding: 30rpx">

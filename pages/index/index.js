@@ -1,6 +1,8 @@
 //index.js
 const api = require('../../utils/request.js');
 const CONFIG = require('../../config.js');
+const ONLINE = 'ONLINE'; //商品上线
+
 //获取应用实例
 Page({
     data: {
@@ -61,29 +63,15 @@ Page({
         api.fetchRequest('/api/products').then(function (res) {
             wx.hideLoading();
             if (res.data.status !== 200) {
-                let newData = {};
-                newData.goods = [];
-                that.setData(newData);
                 return
             }
-            let goods = [];
-            for (let i = 0; i < res.data.data.length; i++) {
-                let item = res.data.data[i];
-                goods.push({
-                    id: item.id,
-                    name: item.name,
-                    titleImage: item.titleImage ? item.titleImage : '/images/goods-default-summary-pic.png',
-                    descImage: item.descImage ? item.descImage : '/images/goods-default-details-pic.png',
-                    priceType: item.priceType,
-                    descPrice: item.descPrice,
-                    creditType: item.creditType,
-                    status: item.status,
-                    price:item.price,
-                    isShow:item.status == 'ONLINE',
-                })
-            }
+            res.data.data.forEach((v)=>{
+                v.isShow = v.status === ONLINE;
+                v.titleImage= v.titleImage ? v.titleImage : '/images/goods-default-summary-pic.png';
+                v.descImage= v.descImage ? v.descImage : '/images/goods-default-details-pic.png';
+            });
             that.setData({
-                goods: goods,
+                goods: [...res.data.data],
             });
         })
     },
@@ -110,7 +98,7 @@ Page({
         let nameLike = e.detail.value;
         let goods = this.data.goods;
         for(let item of goods){
-            item.isShow = item.name.indexOf(nameLike) != -1
+            item.isShow = item.status === ONLINE && item.name.indexOf(nameLike) !== -1
         }
         this.setData({
             goods

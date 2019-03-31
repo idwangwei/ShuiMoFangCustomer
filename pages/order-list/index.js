@@ -3,22 +3,21 @@ const api = require('../../utils/request.js');
 const app = getApp();
 Page({
     data: {
-        tabs: ['待报价', '待支付', '待分配', '服务中', '已完成'],
+        tabs: [
+            {text: '待报价', code: 'QUOTING'}
+            , {text: '待支付', code: 'NOT_PAY'}
+            , {text: '待分配', code: 'NOT_DISTRIBUTE'}
+            , {text: '服务中', code: 'SERVING'}
+            , {text: '已完成', code: 'DONE'}
+        ],
         activeIndex: 0,
         sliderOffset: 0,
         sliderLeft: 0,
 
         orderList: [[], [], [], [], []],
         queryLimit: 10,
-        queryPageNum: 1,
-    },
-    orderDetail: function (e) {
-        let index = e.currentTarget.dataset.index;
-        let orderInfo = this.data.orderList[this.data.activeIndex][index];
-        app.globalData.selectOrderInfo = orderInfo;
-        wx.navigateTo({
-            url: `/pages/order-details/index?orderId=${orderInfo.id}`
-        })
+        queryPageNum: [1, 1, 1, 1, 1],
+        canLoadMore: [true, true, true, true, true],
     },
 
     onLoad: function (options) {
@@ -38,15 +37,40 @@ Page({
     onShow: function (options) {
         this.fetchOrderList();
     },
+    onReady: function () {
+        // 生命周期函数--监听页面初次渲染完成
+    },
 
+    onHide: function () {
+        // 生命周期函数--监听页面隐藏
+    },
+    onUnload: function () {
+        // 生命周期函数--监听页面卸载
+    },
+    onPullDownRefresh: function () {
+        // 页面相关事件处理函数--监听用户下拉动作
+        this.fetchOrderList();
+    },
+    onReachBottom: function () {
+        // 页面上拉触底事件的处理函数
+    },
+    /**
+     * 用户点击右上角分享
+     */
+    onShareAppMessage: function () {
+
+    },
+    /**
+     * 分页获取当前tab状态的订单列表
+     */
     fetchOrderList: function () {
         let that = this;
         api.fetchRequest(
             `/api/order/custom/orders`,
             {
                 limit: this.data.queryLimit,
-                pageNum: this.data.queryPageNum,
-                status: 'ALL'
+                pageNum: this.data.queryPageNum[this.data.activeIndex],
+                status: this.data.tabs[this.data.activeIndex].code
             }
         ).then((res) => {
             if (res.data.status !== 200) {
@@ -56,62 +80,40 @@ Page({
                 });
                 return;
             }
-            // quotationStatus:报价 => 'INPROGRESS':未设置, 'DONE':已报价
-            // payStatus:支付 => 'PAYED':已支付, 'NOTSET':未到该状态 ,'NOTPAY':未支付
-            // distributeStatus:分配 => 'DISTRIBUTED':已分配, 'NOTDISTRIBUTE':未分配
-            // serveStatus:服务 => 'NOTSET':未到该状态 ,'WAIT':分配确认,'SERVING':服务中, 'DONE':完成
-
-            let needQuotation = res.data.data.results.filter(item => item.quotationStatus === 'INPROGRESS');
-            let needPay = res.data.data.results.filter(item => item.quotationStatus === 'DONE' && item.payStatus === 'NOTPAY');
-            let needDistribute = res.data.data.results.filter(
-                item => (item.distributeStatus === 'NOTDISTRIBUTE' && item.payStatus === 'PAYED')
-                    || (item.distributeStatus === 'DISTRIBUTED' && item.serveStatus === 'WAIT')
-            );
-            let serving = res.data.data.results.filter(item=>item.serveStatus === 'SERVING');
-            let done = res.data.data.results.filter(item=>item.serveStatus === 'DONE');
-
+            // if(this.data.data.lastPage){
+            //
+            // }
+            let orderList = this.data.orderList;
+            orderList[this.data.activeIndex] = res.data.data.results;
             that.setData({
-                orderList: [needQuotation, needPay, needDistribute, serving, done]
+                orderList
             })
-        }).catch(() => {
-
-        }).finally(()=>{
+        }).finally(() => {
             wx.stopPullDownRefresh();
         })
     },
-
-    onReady: function () {
-        // 生命周期函数--监听页面初次渲染完成
-
+    /**
+     * 查看订单详情
+     * @param e
+     */
+    orderDetail: function (e) {
+        let index = e.currentTarget.dataset.index;
+        app.globalData.selectOrderInfo = this.data.orderList[this.data.activeIndex][index];
+        wx.navigateTo({
+            url: `/pages/order-details/index?status=${this.data.activeIndex}`
+        })
     },
-
-    onHide: function () {
-        // 生命周期函数--监听页面隐藏
-
-    },
-    onUnload: function () {
-        // 生命周期函数--监听页面卸载
-
-    },
-    onPullDownRefresh: function () {
-        // 页面相关事件处理函数--监听用户下拉动作
-        this.fetchOrderList();
-    },
-    onReachBottom: function () {
-        // 页面上拉触底事件的处理函数
-
-    },
-
+    /**
+     * 状态tabs切换
+     * @param e
+     */
     tabClick: function (e) {
         this.setData({
             sliderOffset: e.currentTarget.offsetLeft,
             activeIndex: e.currentTarget.id
         });
+        if(this.data.orderList[this.data.activeIndex].length === 0){
+            wx.startPullDownRefresh();
+        }
     },
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
-
-    }
 });

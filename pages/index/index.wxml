@@ -47,7 +47,10 @@
                 <image src="/images/icon/dianhua.png" mode="scaleToFill"></image>
             </view>
             <view class="contact-phone-text" bindtap="makePhoneCall">
-                <view class="contact-phone-text-title">服务热线</view>
+                <view class="contact-phone-text-title display-flex-between">
+                    <text>服务热线</text>
+                    <view class="arrow-right"></view>
+                </view>
                 <view class="contact-phone-text-desc">028-86198523</view>
             </view>
         </view>

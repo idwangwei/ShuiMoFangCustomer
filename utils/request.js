@@ -95,7 +95,7 @@ function FetchRequest(url, data, method = 'GET', cache = 0, header = {}, noSubDo
     function FetchError(err) {
       if (err) {
         wx.showToast({
-          title: err.errMsg || err.message,
+          title: err.errMsg || err.msg,
           icon: 'none',
           duration: 3000
         })
