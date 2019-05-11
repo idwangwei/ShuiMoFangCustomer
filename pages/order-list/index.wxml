@@ -1,49 +1,66 @@
 <view class="page">
-            <view class="weui-navbar">
-                <block wx:for="{{tabs}}" wx:key="*this">
-                    <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" bindtap="tabClick">
-                        <view class="weui-navbar__title">{{item.text}}</view>
+    <view class="weui-navbar">
+        <block wx:for="{{tabs}}" wx:key="*this">
+            <view id="{{index}}" class="weui-navbar__item {{tabs.length ==1 || activeIndex == index ? 'weui-bar__item_on' : ''}}"
+                  bindtap="tabClick">
+                <view class="weui-navbar__title">
+                    <view class="img-box">
+                        <image src="{{item.img}}" mode="widthFix" style="width: 50%"></image>
                     </view>
-                </block>
-                <view class="weui-navbar__slider" style="width:{{sliderWidth}}px;left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+                </view>
+                <view class="weui-navbar__title">{{item.text}}</view>
             </view>
-            <view class="weui-tab__panel">
-                    <view class="no-order" hidden="{{orderList[activeIndex].length ? true : false}}">
-                        <image src="/images/no-order.png" class="no-order-img"></image>
-                        <view class="text">暂无订单</view>
-                    </view>
-                    <view class="weui-form-preview order-list-item"
-                          wx:for="{{orderList[activeIndex]}}"
-                          wx:key="*this"
-                          bindtap="orderDetail"
-                          data-index="{{index}}">
+        </block>
+        <view class="weui-navbar__slider"
+              style="width:{{sliderWidth}}px;left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+    </view>
+    <view class="weui-tab__panel">
 
-                        <view class="weui-form-preview__bd">
-                            <view class="weui-form-preview__item display-between">
-                                <view class="weui-form-preview__label item-color-name">{{item.prodName}}</view>
-                                <view class="item-color-name">
-                                    <text>{{item.priceQuotation === 0 ? '':'￥'+item.priceQuotation}}</text>
-                                    <view class="arrow-right"></view>
-                                </view>
-                            </view>
-                            <view class="weui-form-preview__item">
-                                <view class="weui-form-preview__label">订单号：</view>
-                                <view class="weui-form-preview__value">{{item.id}}</view>
-                            </view>
-                            <view class="weui-form-preview__item">
-                                <view class="weui-form-preview__label">服务区域：</view>
-                                <view class="weui-form-preview__value">{{item.location}}</view>
-                            </view>
+        <view class="no-order" hidden="{{orderList[activeIndex].length ? true : false}}">
+            <image src="/images/no-order.png" class="no-order-img"></image>
+            <view class="text">暂无订单</view>
+        </view>
+        <view class="weui-form-preview order-list-item"
+              wx:for="{{orderList[activeIndex]}}"
+              wx:key="*this"
+              bindtap="orderDetail"
+              data-index="{{index}}">
 
-                        </view>
-                        <view class="weui-form-preview__ft ">
-                            <view class="weui-form-preview__item order-item-bottom">
-                                <view class="weui-form-preview__label">{{item.createTime}}</view>
-                                <view class="weui-form-preview__label">{{item.statusDesc}}</view>
-                            </view>
-
-                        </view>
-                    </view>
+            <view class="item-left">
+                <image src="{{item.prodImageUri}}" mode="widthFill"></image>
             </view>
+            <view class="item-middle">
+                <view class="item-middle-title">
+                    <text style="flex: 1;overflow: hidden;white-space: nowrap;text-overflow: ellipsis">
+                        {{item.prodName}}
+                    </text>
+                    <text>CNY:{{item.pricePay||item.priceQuotation||0}}</text>
+                </view>
+                <view class="item-middle-content">
+                    <view>订单号：{{item.id}}</view>
+                    <view>服务区域：{{item.location}}</view>
+                </view>
+                <view class="item-middle-footer">
+                    <view>{{item.createTime}}</view>
+
+                    <view class="footer-btn" data-index="{{index}}" catchtap="gotoPay"
+                          wx:if="{{item.payStatus === 'NOT_PAY'}}">
+                        <text>立即支付</text>
+                    </view>
+                    <view class="footer-btn" data-index="{{index}}" catchtap="getCredit"
+                          wx:elif="{{item.canGetCredit}}">
+                        <text>领取积分</text>
+                    </view>
+
+                    <view class="footer-btn {{!item.canGetCredit&&item.orderStatus==='DONE'?'order-done':''}}" data-index="{{index}}" wx:else>
+                        <text>{{item.statusDesc}}</text>
+                    </view>
+
+                </view>
+            </view>
+            <view class="item-right ">
+                <text class="arrow-right"></text>
+            </view>
+        </view>
+    </view>
 </view>
-

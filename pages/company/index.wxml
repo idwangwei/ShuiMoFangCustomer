@@ -1,6 +1,6 @@
 <!--pages/company/index.wxml-->
 <view class="page">
     <div class="image-warp">
-        <image bindload="imageLoadHandler" src="/images/company.png" mode="widthFix"></image>
+        <image bindload="imageLoadHandler" src="https://api.shuimof.cn/upload/img/certificate/c3085479-7cce-459f-9142-8394830acc87.png" mode="widthFix"></image>
     </div>
 </view>

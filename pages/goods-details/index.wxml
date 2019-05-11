@@ -1,82 +1,68 @@
 <view class="container">
     <view class="summery-pic-container">
-        <image src="{{goodsDetail[selectIdx].titleImage}}" class="slide-image" lazy-load="true" mode="widthFix"/>
+        <image src="{{goodsDetail[selectIdx].titleImage}}" class="slide-image" lazy-load="true" mode="widthFix" />
     </view>
-
     <view class="goods-info">
         <view class="goods-title">{{goodsInfo.name}}</view>
-        <view class="goods-share">分享有赏，好友下单后可得 {{goodsInfo.cusCreditDesc}} 积分奖励</view>
-        <view class="goods-price" style="padding-left:35rpx;" wx:if="{{goodsDetail[selectIdx].priceType === 'FIXED'}}">¥ {{goodsDetail[selectIdx].price}}</view>
-        <view class="goods-price" style="padding-left:35rpx;" wx:else>¥ {{goodsDetail[selectIdx].descPrice}}</view>
+        <view class="goods-share" wx:if="{{goodsDetail[selectIdx].descPrice}}">
+            {{goodsDetail[selectIdx].descPrice}}
+        </view>
+        <view class="goods-price" style="padding-left:35rpx;">
+            ¥ {{goodsDetail[selectIdx].price}}
+        </view>
+        <view class="goods-price" wx:if="{{goodsDetail[selectIdx].priceType !== 'FIXED'}}">起</view>
         <view class="goods-info-fx">
-            <image src='../../images/qd.png' mode="widthFix"/>
+            <image src='../../images/qd.png' mode="widthFix" />
             <button open-type="share">分享</button>
             <text>分享得积分</text>
         </view>
     </view>
     <view class="row-wrap display-flex-between">
         <view class="label">业务地区</view>
-        <picker
-                mode="multiSelector"
-                bindchange="bindMultiPickerChange"
-                bindcolumnchange="bindMultiPickerColumnChange"
-                value="{{multiIndex}}"
-                range="{{multiArray}}"
-                style="flex:1"
-        >
-            <view class="picker">
+        <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}" style="flex:1">
+            <view class="picker" wx:if="{{multiArray[0]!==undefined}}">
                 {{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}，{{multiArray[2][multiIndex[2]]}}
             </view>
         </picker>
         <view class="arrow-right" style="margin-right: 35rpx"></view>
     </view>
-
     <view class="service-array-box">
         <view class="service-title">
             <text>服务</text>
         </view>
         <view bindtap="selectService" class="service-body">
-            <text wx:for="{{goodsDetail}}" data-index="{{index}}"
-                  class="service-item {{selectIdx === index?'select-item':''}}">{{item.name}}</text>
+            <text wx:for="{{goodsDetail}}" data-index="{{index}}" class="service-item {{selectIdx === index?'select-item':''}}">{{item.name}}</text>
         </view>
     </view>
-
     <view class="goods-des-info">
         <view class="label-title">商品介绍</view>
         <view class="goods-text">
             <image src="{{goodsDetail[selectIdx].descImage}}" mode="widthFix"></image>
         </view>
     </view>
-
     <view class="footer-box">
-
         <view class="" style="flex: 1;height: 100%;display: flex;flex-direction: column;align-items: center" bindtap="makePhoneCall">
-            <image src="/images/icon/phone.png" mode="aspectFit" bindtap=""
-                   class="" style="flex: 1;width: 100%;"/>
+            <image src="/images/icon/phone.png" mode="aspectFit" class="" style="flex: 1;width: 100%;" />
             <text style="font-size:24rpx;">服务热线</text>
         </view>
-
         <view class="" style="flex: 1;height: 100%;display: flex;flex-direction: column;align-items: center;position: relative">
-            <image src="/images/icon/kefu2.png" mode="aspectFit" class="" style="flex: 1;width: 100%;"/>
+            <image src="/images/icon/kefu2.png" mode="aspectFit" class="" style="flex: 1;width: 100%;" />
             <text style="font-size:24rpx;">在线咨询</text>
             <button open-type="contact" bindcontact="handleContact" class="custom-service-btn"></button>
         </view>
-
         <view class="now-buy" bindtap="bindGuiGeTap" style="flex: 2">立即下单</view>
-
     </view>
-
-
     <view class="show-popup" hidden="{{hideShopPopup}}" catchtouchmove="true">
         <view class="popup-mask" bindtap="closePopupTap"></view>
         <view class="popup-contents">
             <view class="pop-goods-info">
                 <view class="pop-img-box">
-                    <image src="{{goodsDetail[selectIdx].titleImage}}" class="goods-thumbnail"/>
+                    <image src="{{goodsDetail[selectIdx].titleImage}}" class="goods-thumbnail" />
                 </view>
                 <view class="pop-goods-des">
                     <view class="pop-goods-title">{{goodsDetail[selectIdx].name}}</view>
                     <view class="pop-goods-price">¥ {{goodsDetail[selectIdx].price}}</view>
+                    <view class="pop-goods-price" wx:if="{{goodsDetail[selectIdx].priceType !== 'FIXED'}}">起</view>
                 </view>
                 <view class="pop-goods-close" bindtap="closePopupTap">
                     <image src="/images/popup-close.png" mode="scaleToFill"></image>
@@ -99,13 +85,13 @@
                                 <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9" wx:if="{{isAgree}}"></icon>
                             </view>
                             阅读并同意
-                            <navigator url="/pages/note_to_buy/index" class="weui-agree__link" catch:tap="catchTap">《购买须知》</navigator>
+                            <navigator url="/pages/note_to_buy/index" class="weui-agree__link" catch:tap="catchTap">
+                                《购买须知》
+                            </navigator>
                         </view>
                     </label>
                 </checkbox-group>
-
             </view>
-
             <view class="popup-join-btn" bindtap="buyNow">
                 {{goodsDetail.priceType === 'fixed' ? '确认购买':'确认下单'}}
             </view>

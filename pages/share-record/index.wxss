@@ -8,6 +8,8 @@ image {
 }
 
 .share-data-box {
+    padding-top:32rpx;
+    font-size: 26rpx;
 }
 
 .share-data-box .box-title {
@@ -27,7 +29,89 @@ image {
 }
 .list-item{
     flex: 1;
+}
+
+.title-bg-box{
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    background-color: #1f1b98;
+    overflow: hidden;
+}
+.qr-code-image{
+    width: 50vw;
+}
+
+.weui-navbar__slider{
+    width: 50px;
+    background-color: #1f1b98;
+}
+.weui-bar__item_on{
+    color: #1f1b98!important;
+}
+.weui-navbar {
+    border-bottom:12rpx solid #dfdfdf
+}
+.weui-tab__panel{
+    padding-top: 60px;
+}
+.share-form-title-box{
+    display: flex;
+    margin-bottom:16rpx;
+}
+.share-form-title{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex:1;
+}
+.title-img-box{
+    border-radius:50%;
+    border:1px solid #ccc;
+    width:70px;
+    height:70px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.title-img-box image{
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+}
+.share-form-row{
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    color: #7e7e7e;
+}
+.flex-1{
+    flex: 1;
     text-align: center;
-    font-size: 24rpx;
-    padding:16rpx 0;
+}
+.share-poster-box{
+    margin: auto;
+    /*position: relative;*/
+}
+.share-poster-box .bottom-bar{
+    /*position: absolute;*/
+    width: 100vw;
+    height: 160rpx;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+}
+.canvas-share-box{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background:#7e7e7e;
+    z-index:1000;
+
+}
+.share-canvas{
+    margin: auto;
 }

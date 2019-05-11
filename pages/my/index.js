@@ -6,12 +6,14 @@ Page({
         userInfo: {},
         scoreNumber: 0,
         userPhone: '',
-        orderQuantity:{
-            quotation:0,
-            pay:0,
-            distribute:0,
-            serving:0,
-            done:0
+        empSummary: {},
+        orderQuantity: {
+            orderQuantityQuoting: 0,
+            orderQuantityNotpay: 0,
+            orderQuantityNotdistribute: 0,
+            orderQuantityServing: 0,
+            orderQuantityServewait: 0,
+            orderQuantityDone: 0
         }
     },
     onLoad() {
@@ -20,6 +22,10 @@ Page({
         })
     },
     onShow() {
+        this.fetchCustomerInfo()
+    },
+
+    fetchCustomerInfo: function () {
         api.fetchRequest('/api/my/customer', {}, 'GET')
             .then((res) => {
                 if (res.data.status === 200) {
@@ -28,7 +34,9 @@ Page({
                         app.globalData.userInfo.name = res.data.data.name;
                         this.setData({
                             userPhone: res.data.data.username.replace(/(\d{3}).+(\d{4})$/, '$1****$2'),
-                            scoreNumber: res.data.data.ecSummary.creditRemain
+                            scoreNumber: res.data.data.ecSummary.creditRemain,
+                            orderQuantity: res.data.data.orderSummary,
+                            empSummary: res.data.data.ecSummary
                         });
                     }
                 }
@@ -40,7 +48,9 @@ Page({
                     })
                 }
             })
-
+            .finally(() => {
+                wx.stopPullDownRefresh();
+            })
     },
 
     bindPhoneNumber: function (e) {
@@ -53,7 +63,7 @@ Page({
 
     },
     toGoldExchangeDetail: function (e) {
-        wx.navigateTo({url: "/pages/score-record/index"})
+        wx.navigateTo({url: `/pages/score-record/index?creditRemain=${this.data.scoreNumber}`})
 
     },
     gotoOrderList: function (e) {
@@ -63,15 +73,7 @@ Page({
         })
     },
     toShareRecord: function (e) {
-        wx.navigateTo({url: "/pages/share-record/index"})
-
-    },
-    toShareRule: function (e) {
-        wx.navigateTo({url: "/pages/share-rule/index"})
-
-    },
-    toSharePoster: function (e) {
-        wx.navigateTo({url: "/pages/share-poster/index"})
+        wx.navigateTo({url: `/pages/share-record/index`})
 
     },
 
@@ -79,6 +81,10 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function () {
+        return getApp().shareMessage();
 
+    },
+    onPullDownRefresh: function (e) {
+        this.fetchCustomerInfo();
     }
-})
+});

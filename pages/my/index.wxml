@@ -1,6 +1,6 @@
 <view class="page">
 
-    <view class="page__bd">
+    <!-- <view class="page__bd">
         <view class="weui-panel weui-panel_access">
             <view class="weui-panel__bd">
                 <view class="weui-media-box weui-media-box_appmsg my-avatar-warp">
@@ -15,35 +15,44 @@
             </view>
         </view>
 
-    </view>
+    </view> -->
 
-    <view class="weui-panel margin-0">
-        <view class="weui-panel__bd display-flex">
-            <view url="" class="weui-cell weui-cell_access flex-1" hover-class="weui-cell_active" bindtap="toGoldExchangeRule">
-                <view class="weui-cell__hd">
-                    <image src="/images/my/jifenguize.png"
-                           class="icon-image"/>
-                </view>
 
-                <view class="weui-cell__bd weui-cell_primary">
-                    <view>积分规则</view>
+    <view class="page__bd">
+        <view class="weui-panel weui-panel_access">
+            <view class="weui-panel__bd my-avatar-warp">
+                <view class="weui-media-box weui-media-box_appmsg my-avatar">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg avatar-box">
+                        <image class="weui-media-box__thumb" mode="aspectFit" src="{{userInfo.avatarUrl}}"/>
+                    </view>
+                    <view class="nick-name-warp">
+                        <view class="weui-media-box__title">{{userInfo.nickName}}</view>
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg score-record-box"  bindtap="toGoldExchangeDetail">
+                        积分记录
+                        <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                    </view>
                 </view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                <view class="score-desc-warp">
+                    <view class="score-desc-remain">
+                        <view class="score-remain-count">{{empSummary.creditRemain||0}}</view>
+                        <view class="score-remain-text">积分余额</view>
+                    </view>
+                    <view class="score-desc-total">
+                        <view class="score-total-count">{{empSummary.creditTotal||0}}</view>
+                        <view class="score-total-text">积分总额</view>
+                    </view>
+                    <view class="score-desc-wait">
+                        <view class="score-wait-count">{{empSummary.creditWait||0}}</view>
+                        <view class="score-wait-text">积分待入账</view>
+                    </view>
+                </view>
             </view>
-
-            <view url="" class="weui-cell weui-cell_access flex-1 border-left" hover-class="weui-cell_active" bindtap="toGoldExchangeDetail">
-                <view class="weui-cell__hd">
-                    <image src="/images/my/jilu.png" class="icon-image"/>
-                </view>
-
-                <view class="weui-cell__bd weui-cell_primary">
-                    <view>积分记录</view>
-                </view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-            </view>
-
         </view>
+
     </view>
+
+
 
 
     <view class="weui-panel">
@@ -68,7 +77,7 @@
     <view class="weui-panel">
         <view class="weui-panel__bd">
             <view class="weui-media-box weui-media-box_small-appmsg">
-                <view class="weui-cells weui-cells_in-small-appmsg" bindtap="gotoOrderList" data-type="0">
+                <view class="weui-cells weui-cells_in-small-appmsg" bindtap="gotoOrderList" data-type="">
                     <view url="" class="weui-cell weui-cell_access">
                         <view class="weui-cell__hd">
                             <image src="/images/my/jilu.png" class="icon-image"/>
@@ -87,27 +96,27 @@
                     <view bindtap="gotoOrderList" data-type="0"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
                         <image src="/images/my/daibaojia.png" class="icon-image"></image>
-                        <text>待报价({{orderQuantity.quotation}})</text>
+                        <text>待报价({{orderQuantity.orderQuantityQuoting}})</text>
                     </view>
                     <view bindtap="gotoOrderList" data-type="1"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
                         <image src="/images/my/daizhifu.png" class="icon-image"></image>
-                        <text>待支付({{orderQuantity.pay}})</text>
+                        <text>待支付({{orderQuantity.orderQuantityNotpay}})</text>
                     </view>
                     <view bindtap="gotoOrderList" data-type="2"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
                         <image src="/images/my/daifenpei.png" class="icon-image"></image>
-                        <text>待分配({{orderQuantity.distribute}})</text>
+                        <text>待分配({{orderQuantity.orderQuantityNotdistribute}})</text>
                     </view>
                     <view bindtap="gotoOrderList" data-type="3"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
                         <image src="/images/my/fuwuzhong.png" class="icon-image"></image>
-                        <text>服务中({{orderQuantity.serving}})</text>
+                        <text>服务中({{orderQuantity.orderQuantityServing}})</text>
                     </view>
                     <view bindtap="gotoOrderList" data-type="4"
                           style="display: flex;flex-direction: column;justify-content: center;align-items: center">
                         <image src="/images/my/yiwancheng.png" class="icon-image"></image>
-                        <text>已完成({{orderQuantity.done}})</text>
+                        <text>已完成({{orderQuantity.orderQuantityDone}})</text>
                     </view>
                 </view>
 
@@ -116,6 +125,33 @@
     </view>
 
 
+    <view class="weui-panel margin-0">
+        <view class="weui-panel__bd display-flex">
+            <view url="" class="weui-cell weui-cell_access flex-1" hover-class="weui-cell_active" bindtap="toGoldExchangeRule">
+                <view class="weui-cell__hd">
+                    <image src="/images/my/jifenguize.png"
+                           class="icon-image"/>
+                </view>
+
+                <view class="weui-cell__bd weui-cell_primary">
+                    <view>积分规则</view>
+                </view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </view>
+
+            <!-- <view url="" class="weui-cell weui-cell_access flex-1 border-left" hover-class="weui-cell_active" bindtap="toGoldExchangeDetail">
+                <view class="weui-cell__hd">
+                    <image src="/images/my/jilu.png" class="icon-image"/>
+                </view>
+
+                <view class="weui-cell__bd weui-cell_primary">
+                    <view>积分记录</view>
+                </view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </view> -->
+
+        </view>
+    </view>
     <view class="weui-panel">
         <view class="weui-panel__bd">
             <view class="weui-media-box weui-media-box_small-appmsg">

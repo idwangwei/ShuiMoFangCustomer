@@ -89,10 +89,11 @@ Page({
                     });
             },
             fail: function (res) {
+                
                 wx.showModal({
                     title: '支付失败' ,
-                    content:res.errMsg,
-                    showCancel:false,
+                    content: res.errMsg == "requestPayment:fail cancel" ? "支付已取消" : res.errMsg,
+                    showCancel: false,
                 });
 
                 // wx.redirectTo({
@@ -154,10 +155,12 @@ Page({
 
     },
 
+
     /**
      * 用户点击右上角分享
      */
     onShareAppMessage: function () {
+        return getApp().shareMessage();
 
     },
 

@@ -1,91 +1,48 @@
-page{
+page {
     height: 100%;
-}
-.container{
-    background-color: #fff;
-    justify-content: initial;
-}
-.form-box{
-    width:100%;
-    background-color: #fff;
-    margin-top: 20rpx;
-    margin-bottom:100rpx;
-
-}
-.row-wrap{
-    width: 720rpx;
-    height: 88rpx;
-    line-height: 88rpx;
-    margin-left: 30rpx;
-    display: flex;
-    font-size: 28rpx;
-    /*justify-content: space-between;*/
-}
-.row-wrap .label{
-    width: 160rpx;
-    color: #000
-}
-.row-wrap .label-right{
-    flex: 1;
-    height: 88rpx;
-    line-height: 88rpx;
-}
-.row-wrap .label-right input{
-    height: 100%;
-    font-size: 28rpx;
-    padding-right: 30rpx;
-}
-.row-wrap .right-box{
-    margin-right: 30rpx; 
-}
-.arrow-right{
-    width: 15rpx;
-    height: 24rpx;
-}
-.save-btn,
-.cancel-btn{
-    width: 690rpx;
-    height: 80rpx;
-    line-height: 80rpx;
-    text-align: center;
-    margin-top:30rpx; 
-    border-radius: 6rpx;
-    box-sizing: border-box;
-}
-.save-btn{
-    background-color: #e64340;
-    color:#fff;
-}
-button[type="default"]{
-    background-color: #ffffff;
-    color:#000;
+    background-color: #f5f5f5;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-
-.exchange-title{
-    width: 720rpx;
-    margin-left: 30rpx;
+.exchange-title {
     display: flex;
     font-size: 28rpx;
     flex-direction: column;
-}
-.gold-num-box{
-    border-bottom:2rpx solid #eee;
-    font-size:40rpx;
-    margin-top:60rpx;
-}
-.gold-num-box input{
-    flex: 1;
-    height: 100%;
-}
-.remark-box{
-    justify-content: space-between;
+    text-align: center;
+    margin-bottom: 30rpx;
+    /* background-color: #ffffff; */
+    padding: 30rpx;
+    margin:30rpx;
+    border-radius: 10rpx;
+    box-shadow: 0 0 5px #b9b9b9;
 }
 
-.credit-title{
-
+.credit-item-box {
+    /* background-color: #ffffff; */
 }
-.credit-content{
+.credit-item {
+    padding: 30rpx 30rpx;
+    border-bottom: 1px solid #c9c9c9;
+    box-shadow: 0 0 5px #b9b9b9;
+    margin: 0 30rpx 30rpx 30rpx;
+    border-radius: 10rpx;
+}
+.credit-title {
     display: flex;
     justify-content: space-between;
+    margin-bottom:20rpx;
+}
+.credit-content {
+    font-size: 30rpx;
+    display: flex;
+    justify-content: space-between;
+}
+.credit-add-color {
+    color: #ff4009;
+}
+.credit-sub-color {
+    color: darkgreen;
+}
+.credit-done-color {
+    color: #454545;
 }

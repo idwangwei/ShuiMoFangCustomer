@@ -4,7 +4,8 @@ module.exports = {
   subDomain: "ww2019", // 如果你的域名是： https://api.it120.cc/abcd 那么这里只要填写 abcd
   appid: "wx37e2e74406c87485", // 您的小程序的appid，购物单功能需要使用
   shareProfile: '税魔方—工商财务代理', // 首页转发的时候话术
-  swiperBannerScale:0.4 //轮播图高宽比
+  swiperBannerScale:0.4, //轮播图高宽比
+  enable:'ENABLE', //账户可用状态值
 }
 /*
 根据自己需要修改下单时候的模板消息内容设置，可增加关闭订单、收货时候模板消息提醒；

@@ -1,16 +1,18 @@
 
 page{
     background-color: #eee;
+    padding-bottom: 100rpx;
 }
 .weui-cells{
     font-size: 34rpx;
 }
-.my-avatar-warp{
-    height:45vw;
-    flex-direction:column;
-    justify-content:center;
-    background: linear-gradient(#1f1b98,#5652c3);
 
+.my-avatar-warp{
+    background: linear-gradient(#1f1b98,#5652c3);
+}
+.my-avatar{
+    justify-content:space-between;
+    border-top: 1px solid #1f1b98;
 }
 .my-avatar-warp .avatar-box{
     width:160rpx;
@@ -24,7 +26,32 @@ page{
     text-align: center;
     color: #fff;
 }
+.nick-name-warp{
+    display: flex;
+    align-items: center;
+    padding: 30rpx;
+}
 .border-left{
     border-left: 2rpx solid #ededed;
 }
 image{display: block}
+.score-record-box{
+    display: flex;
+    justify-content: flex-end;
+    color: #fff;
+    font-size: 34rpx;
+}
+.score-desc-warp{
+    padding: 30rpx;
+    color: #fff;
+    display: flex;
+    justify-content: space-around;
+}
+.score-desc-remain,.score-desc-total,.score-desc-wait{
+    text-align: center;
+}
+
+.score-remain-text,.score-total-text,.score-wait-text{
+    font-size: 26rpx;
+}
+

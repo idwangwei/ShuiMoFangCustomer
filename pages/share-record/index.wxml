@@ -1,5 +1,10 @@
 <view class=" page">
-
+    <view hidden="{{canvasHidden}}" class="canvas-share-box">
+        <canvas canvas-id='share' style='width:375px;height:603px' class="share-canvas"></canvas> 
+    </view>
+    <view class="title-bg-box">
+        <image src="{{qrCode}}" mode="widthFix" class="qr-code-image" bindlongpress="longPressQrCode"></image>
+    </view>
     <view class="page__bd">
         <view class="weui-tab">
             <view class="weui-navbar">
@@ -14,27 +19,65 @@
                 </view>
             </view>
 
-            <view class="weui-tab__panel">
+            <view class="weui-tab__panel" style="-webkit-overflow-scrolling: initial;overflow: initial;padding-top: 110rpx">
                 <!--我的推广-->
                 <view wx:if="{{activeIndex == 0}}" class="share-data-box">
-                    <view class="box-title">
-                        <text class="title-item">邀请人</text>
-                        <text class="title-item">获得积分</text>
-                        <text class="title-item">推广时间</text>
+                    <view class="share-form-title-box">
+                        <view class="share-form-title">
+                            <view class="title-img-box">
+                                <image src="./../../images/my/wo.png" mode="aspectFit"></image>
+                            </view>
+                            <text>受邀人</text>
+                        </view>
+                        <view class="share-form-title">
+                            <view class="title-img-box">
+                                <image src="./../../images/my/integral.png" mode="aspectFit"></image>
+                            </view>
+                            <text>获得积分</text>
+                        </view>
+                        <view class="share-form-title">
+                            <view class="title-img-box">
+                                <image src="./../../images/my/shijian.png" mode="aspectFit"></image>
+                            </view>
+                            <text>获得时间</text>
+                        </view>
                     </view>
-                    <view wx:for="{{shareData}}" class="list-item-box">
-                        <text class="list-item">{{item.to}}</text>
-                        <text class="list-item">{{item.score}}</text>
-                        <text class="list-item">{{item.date}}</text>
+                    <view wx:show="{{!shareData.length}}" class="share-form-row">
+                        <text class="flex-1">~</text>
+                        <text class="flex-1">~</text>
+                        <text class="flex-1">~</text>
+                    </view>
+                    <view wx:for="{{shareData}}" class="share-form-row">
+                        <text class="flex-1">{{item.popularizedName}}</text>
+                        <text class="flex-1">{{item.score}}</text>
+                        <text class="flex-1">{{item.date}}</text>
                     </view>
                 </view>
                 <!--推广海报-->
-                <view wx:elif="{{activeIndex == 1}}">
-                    推广海报
+                <view class="share-poster-box" wx:elif="{{activeIndex == 1}}">
+                    <image src="./../../images/share_img.png" mode="widthFix"
+                           style="width:100vw;height:79.5vw;margin: 0"></image>
+                    <!-- <view class="bottom-bar">
+                        <image src="{{userInfo.avatarUrl}}" style="width:140rpx;height:140rpx"></image>
+                        <view style="flex:1;padding-left: 32rpx">
+                            <view style="font-size:32rpx;font-weight:bold;line-height:70rpx;">
+                                <text >{{userInfo.nickName}}</text>
+                            </view>
+                            <view style="font-size: 24rpx">
+                                <text>来税魔方兼职，告别又穷又闲</text>
+                            </view>
+                        </view>
+                        <image src="{{qrCode}}" style="width: 160rpx;height: 160rpx;"></image>
+                    </view> -->
                 </view>
                 <!--推广规则-->
                 <view wx:else>
-                    规格规则
+                    <view style="font-size: 36rpx;font-weight: bold;text-align: center;color: #3d3d3d;padding: 32rpx">
+                        <text>积分获取规则</text>
+                    </view>
+                    <view style="font-size: 28rpx;color:#8b8b8b;padding: 0 32rpx">
+                        <text>分享小程序给微信好友，好友下单可得10积分，积分可取现，1个积分兑换1元人民币。</text>
+                    </view>
                 </view>
 
             </view>

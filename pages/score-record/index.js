@@ -20,17 +20,11 @@ Page({
      */
     onLoad: function (options) {
         let that = this;
-        wx.startPullDownRefresh({
-            success:(res) => {
-
-            },
-            fail:(res) =>{
-
-            },
-            complete:(res) =>{
-                that.fetchData();
-            }
+        let {creditItems} = this.data.summery;
+        this.setData({
+            summery: {credit: options.creditRemain, creditItems}
         });
+        that.fetchData();
     },
     onPullDownRefresh:function(){
         this.fetchData();
@@ -43,21 +37,13 @@ Page({
         });
         api.fetchRequest('/api/credit/summary',{status :'DONE'})
             .then(function (res) {
-                if (res.data.status != 200) {
-                    wx.showToast({
-                        title: res.data.msg,
-                        icon:'none'
-                    });
-                    that.setData({
-                        isLoading:false
-                    });
-                    return
+                let summery = that.data.summery;
+                if(res.data.data.credit){
+                    summery.credit = res.data.data.credit;
                 }
-                let summery = {
-                    credit:res.data.data.credit,
-                    creditItems:res.data.data.creditItems
-                };
-
+                if(res.data.data.creditItems){
+                    summery.creditItems = res.data.data.creditItems;
+                }
                 that.setData({
                     isLoading:false,
                     summery
@@ -68,9 +54,12 @@ Page({
                     title: res.msg,
                     icon:'none'
                 });
+              
+            }).finally(()=>{
                 that.setData({
                     isLoading:false
                 });
+                wx.stopPullDownRefresh();
             })
     },
 
@@ -78,6 +67,7 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function () {
+        return getApp().shareMessage();
 
-    }
+    },
 });

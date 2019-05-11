@@ -22,50 +22,28 @@ Page({
         }
     },
     onLoad: function () {
-        try {
-            let that = this;
-            let userInfo = app.globalData.userInfo;
-            if (userInfo && userInfo.openId) {
-                wx.showLoading({title: '登录中', mask: true});
-                app.LoginSys(userInfo.openId).then(() => {
-                    wx.hideLoading();
-                    that.goToIndex();
-                }).catch(() => {
-                    wx.hideLoading();
-                    wx.showModal({
-                        title: '提示',
-                        content: '无法登录，请点击进入再次登录',
-                        showCancel: false
-                    });
-                });
-            }
-        } catch (e) {
-            // Do something when catch error
-        }
+        // try {
+        //     let that = this;
+        //     let userInfo = app.globalData.userInfo;
+        //     if (userInfo && userInfo.openId) {
+        //         wx.showLoading({title: '登录中', mask: true});
+        //         app.LoginSys(userInfo.openId).then(() => {
+        //             wx.hideLoading();
+        //             that.goToIndex();
+        //         }).catch(() => {
+        //             wx.hideLoading();
+        //             wx.showModal({
+        //                 title: '提示',
+        //                 content: '登录失败，点击立即体验再次登录',
+        //                 showCancel: false
+        //             });
+        //         });
+        //     }
+        // } catch (e) {
+        //     // Do something when catch error
+        // }
     },
-    onShow: function () {
-    },
-    onReady: function () {
-        const that = this;
-        setTimeout(function () {
-            that.setData({
-                remind: ''
-            });
-        }, 1000);
-        wx.onAccelerometerChange(function (res) {
-            let angle = -(res.x * 30).toFixed(1);
-            if (angle > 14) {
-                angle = 14;
-            } else if (angle < -14) {
-                angle = -14;
-            }
-            if (that.data.angle !== angle) {
-                that.setData({
-                    angle: angle
-                });
-            }
-        });
-    },
+    onShow: function () {},
     bindGetUserInfo: function (e) {
         if (!e.detail.userInfo) {
             return;
@@ -89,6 +67,7 @@ Page({
                 api.fetchRequest('/api/wechat/auth', {
                     code: res.code,
                     role: 'CONSUMER',
+                    popularizeOpenId: app.globalData.shareUserId,
                 }).then(function (res) {
                     wx.hideLoading();
                     if (res.data.status != 200) {
@@ -103,31 +82,46 @@ Page({
                     wx.setStorageSync('userInfo', app.globalData.userInfo);
                     app.LoginSys(app.globalData.userInfo.openId).then(() => {
                         that.goToIndex();
-                    }).catch(() => {
+                    }).catch((res) => {
                         wx.hideLoading();
                         wx.showModal({
                             title: '提示',
-                            content: '无法登录，请重试',
+                            content: res.msg||'无法登录，请重试',
                             showCancel: false
                         });
                     })
-                }).catch(() => {
+                }).catch((res) => {
                     wx.hideLoading();
+                    wx.showModal({
+                        title: '提示',
+                        content: res.message || res.data.msg,
+                        showCancel: false
+                    });
                 })
             },
             fail: function (res) {
                 wx.hideLoading();
-                wx.showToast({
-                    title: '登录失败，重新进入',
-                    icon: 'none',
-                })
+                wx.showModal({
+                    title: '提示',
+                    content: '无法登录，请重试',
+                    showCancel: false
+                });
             }
         })
+    },
+    shareBind: function (popularizeOpenId, popularizedOpenId) {
+        api.fetchRequest('/api/popularize', {
+            popularizeOpenId,
+            popularizedOpenId
+        }, 'POST')
+            .then((res) => {
+                console.log(res.msg);
+            })
     },
     /**
      * 用户点击右上角分享
      */
     onShareAppMessage: function () {
-
+        return getApp().shareMessage();
     }
 });

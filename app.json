@@ -11,11 +11,9 @@
     "pages/company/index",
     "pages/score-record/index",
     "pages/score-rule/index",
-    "pages/share-poster/index",
     "pages/share-record/index",
-    "pages/my/index",
-    "pages/share-rule/index",
-    "pages/note_to_buy/index"
+    "pages/note_to_buy/index",
+    "pages/my/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

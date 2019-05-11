@@ -36,7 +36,7 @@ Page({
         })
     },
     tapBanner: function (e) {
-        getApp().globalData.selectGoodsInfo = this.data.goods.find(item=>item.id==e.currentTarget.dataset.id);
+        getApp().globalData.selectGoodsInfo = this.data.goods.find(item => item.id == e.currentTarget.dataset.id);
         wx.navigateTo({
             url: "/pages/goods-details/index?id=" + e.currentTarget.dataset.id
         })
@@ -60,34 +60,29 @@ Page({
             title: '加载中',
             mask: true
         });
-        api.fetchRequest('/api/products').then(function (res) {
-            wx.hideLoading();
-            if (res.data.status !== 200) {
-                return
-            }
-            res.data.data.forEach((v)=>{
-                v.isShow = v.status === ONLINE;
-                v.titleImage= v.titleImage ? v.titleImage : '/images/goods-default-summary-pic.png';
-                v.descImage= v.descImage ? v.descImage : '/images/goods-default-details-pic.png';
-            });
-            that.setData({
-                goods: [...res.data.data],
-            });
-        })
+        api.fetchRequest('/api/products')
+            .then(function (res) {
+                wx.hideLoading();
+                if (res.data.status !== 200) {
+                    return
+                }
+                res.data.data.forEach((v) => {
+                    v.isShow = v.status === ONLINE && v.prodVariants && v.prodVariants.length > 0;
+                    v.titleImage = v.titleImage ? v.titleImage : '/images/goods-default-summary-pic.png';
+                    v.descImage = v.descImage ? v.descImage : '/images/goods-default-details-pic.png';
+                });
+                that.setData({
+                    goods: [...res.data.data],
+                });
+            })
+            .finally(() => {
+                wx.stopPullDownRefresh();
+            })
+
     },
 
     onShareAppMessage: function () {
-        return {
-            title: CONFIG.shareProfile,
-            path: '/pages/start/start?userId=123',
-            imageUrl: '/images/share_img.png',
-            success: function (res) {
-                // 转发成功
-            },
-            fail: function (res) {
-                // 转发失败
-            }
-        }
+        return getApp().shareMessage();
     },
     listenerSearchInput: function (e) {
         this.setData({
@@ -97,7 +92,7 @@ Page({
     toSearch: function (e) {
         let nameLike = e.detail.value;
         let goods = this.data.goods;
-        for(let item of goods){
+        for (let item of goods) {
             item.isShow = item.status === ONLINE && item.name.indexOf(nameLike) !== -1
         }
         this.setData({
@@ -127,5 +122,9 @@ Page({
             url: "/pages/company/index"
         })
 
+    },
+    onPullDownRefresh: function (e) {
+        this.getGoodsList();
     }
+
 });
